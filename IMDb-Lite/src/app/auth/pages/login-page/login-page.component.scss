@@ -1,0 +1,81 @@
+// Background styling
+.background-container {
+  height: 100vh;
+  background: url('/background.png') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+// Logo styling
+.logo-container {
+  position: absolute;
+  top: 20px;
+  left: 30px;
+}
+
+.logo {
+  width: 100px; // Adjust as needed
+  height: auto;
+}
+
+// Glassmorphism container styling
+.login-card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+
+.glass-card {
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  padding: 2rem;
+  width: 300px;
+}
+
+h2 {
+  margin-bottom: 1.5rem;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+// PrimeNG float labels
+.p-fluid > p-floatLabel {
+  margin-bottom: 1.5rem;
+}
+
+.mt-3 {
+  margin-top: 1rem;
+}
+
+.mt-4 {
+  margin-top: 1.5rem;
+}
+
+// Button
+button {
+  width: 100%;
+}
+
+// Optional: Adjust responsiveness for smaller screens
+@media (max-width: 768px) {
+  .glass-card {
+    width: 90%;
+    padding: 1.5rem;
+  }
+
+  .logo {
+    width: 80px;
+  }
+}
