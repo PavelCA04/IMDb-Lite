@@ -3,6 +3,8 @@ import { RouterOutlet } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Toast } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
+import { PrimeNG } from 'primeng/config';
+import Aura from '@primeng/themes/aura';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +15,21 @@ import { ButtonModule } from 'primeng/button';
 })
 export class AppComponent {
   title = 'IMDb-Lite';
-  constructor(private messageService: MessageService) {}
+
+  public constructor(
+    private primeng: PrimeNG, 
+    private messageService: MessageService
+  ) {
+    this.primeng.theme.set({
+      preset: Aura,
+        options: {
+          cssLayer: {
+            name: 'primeng',
+            order: 'tailwind-base, primeng, tailwind-utilities'
+          }
+        }
+    })
+  }
 
   show() {
     this.messageService.add({ severity: 'info', summary: 'Info', detail: 'Message Content', life: 3000 });
