@@ -1,0 +1,56 @@
+.box {
+  position: relative;                                                                     // to put the overlay on top
+  display: inline-block;                                                                  // to adjust box to img size
+  overflow: hidden;
+  box-shadow: 0 .4rem .8rem rgba(0, 0, 0, .2);
+  transition: transform 0.3s ease-in-out;                                                 // for smooth scale transformation
+
+  & img {
+    display: block;                                                                       // prevent margin or gap 
+    width: 100%;                                                                          // make img fill box
+    height: auto;                                                                         // maintain aspect ratio
+    border-radius: 0;
+    transition: transform .5s;
+  }
+
+  &:hover {
+    transform: scale(1.05);                                                               // make slightly larger on hover
+  }
+}
+
+.overlay {
+  position: absolute;                                                                     // to put over the box
+  top: 0;                                                                                 // position at top-left corner
+  left: 0;                                                                                // position at top-left corner
+  width: 100%;                                                                            // make overlay the same size as box
+  height: 100%;                                                                           // make the overlay the same size as box
+  background: linear-gradient(transparent, #0c0c0c 70%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;                                                              // push text to the bottom of the overlay
+  gap: .3rem;
+  padding-bottom: 1rem;
+  opacity: 0;                                                                             // initially invisible
+  transition: opacity 0.3s ease;                                                          // smooth transition of overlay visibility
+
+  & p {
+    color: #ccc;
+    margin: 0;
+    padding: 0 1rem;
+    line-height: 150%;
+  }
+}
+
+.box:hover .overlay {
+  opacity: 1;                                                                             // show overlay on hover
+}
+
+.title {
+  font-size: .8rem;                                                                       // title is bigger than number
+  font-weight: bold;
+}
+
+.number {
+  font-size: .6rem;                                                                       // number is smaller than title
+  font-weight: italic;
+}

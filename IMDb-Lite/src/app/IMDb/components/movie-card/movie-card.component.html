@@ -1,1 +1,9 @@
-<p>movie-card works!</p>
+<div class="box">
+  <img [src]="imgSource" [alt]="title">
+
+  <div class="overlay">
+    <p class="title">{{ title || 'No title' }}</p>
+    <p class="number">{{ numericValue || '' }}</p>
+  </div>
+  
+</div>

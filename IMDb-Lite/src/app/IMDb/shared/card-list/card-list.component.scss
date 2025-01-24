@@ -1,0 +1,17 @@
+.p-table .p-datatable-tbody>tr>td {
+  padding: 0;
+  border: none;                                                                           // no visible dividers
+  background-color: transparent;
+}
+
+.p-table .p-datatable-thead {
+  display: none;                                                                          // no headers
+}
+
+.p-table .p-datatable-paginator {
+  padding-top: 1rem;                                                                      // space for paginator
+}
+
+.card-row:last-child {
+  margin-bottom: 1rem !important;
+}

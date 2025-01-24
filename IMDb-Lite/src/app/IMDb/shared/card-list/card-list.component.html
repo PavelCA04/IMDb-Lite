@@ -1,1 +1,18 @@
-<p>card-list works!</p>
+<p-table [value]="groupedCards" [paginator]="true" [rows]="2" class="p-datatable-none">
+  <ng-template pTemplate="body" let-group>
+    <div class="grid gap-4 mx-4 mt-4 card-row" [ngClass]="group[0].type === 'movie' ? 'grid-cols-8' : 'grid-cols-6'">
+
+      @for (card of group; track $index) {
+      <div class="card-box">
+        <movie-card *ngIf="card.type === 'movie'" [title]="card.title" [imgSource]="card.imgSource"
+          [numericValue]="card.numericValue">
+        </movie-card>
+        <actor-card *ngIf="card.type === 'actor'" [title]="card.title" [imgSource]="card.imgSource"
+          [numericValue]="card.numericValue">
+        </actor-card>
+      </div>
+      }
+
+    </div>
+  </ng-template>
+</p-table>
