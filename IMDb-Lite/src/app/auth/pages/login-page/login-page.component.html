@@ -5,7 +5,7 @@
 
   <div class="login-card-container">
     <div class="glass-card">
-      <h2 class="text-center">Welcome to IMDB Lite</h2>
+      <h1 class="text-center">Sign In</h1>
       <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
         <p-floatLabel variant="on">
           <input
@@ -14,6 +14,7 @@
             formControlName="username"
             autocomplete="off"
             placeholder=" "
+            class="glass-input"
           />
           <label for="username">Email</label>
         </p-floatLabel>
@@ -26,6 +27,7 @@
             formControlName="password"
             autocomplete="off"
             placeholder=" "
+            class="glass-input"
           />
           <label for="password">Password</label>
         </p-floatLabel>
@@ -35,7 +37,7 @@
             pButton
             type="submit"
             label="Sign In"
-            class="p-button-rounded p-button-primary"
+            class="p-button-rounded p-button-primary glass-button"
             [disabled]="loginForm.invalid"
           ></button>
         </div>

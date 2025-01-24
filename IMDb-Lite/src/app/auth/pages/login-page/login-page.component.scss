@@ -1,4 +1,4 @@
-// Background styling
+
 .background-container {
   height: 100vh;
   background: url('/background.png') no-repeat center center fixed;
@@ -11,7 +11,7 @@
   overflow: hidden;
 }
 
-// Logo styling
+
 .logo-container {
   position: absolute;
   top: 20px;
@@ -19,11 +19,11 @@
 }
 
 .logo {
-  width: 100px; // Adjust as needed
+  width: 100px;
   height: auto;
 }
 
-// Glassmorphism container styling
+
 .login-card-container {
   display: flex;
   justify-content: center;
@@ -40,20 +40,60 @@
   border-radius: 15px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   padding: 2rem;
-  width: 300px;
+  width: 300px; 
 }
 
-h2 {
+h1 {
   margin-bottom: 1.5rem;
   color: white;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   text-align: center;
+  font-weight: bold;
+  font-size: 24px;
 }
 
-// PrimeNG float labels
 .p-fluid > p-floatLabel {
   margin-bottom: 1.5rem;
 }
+
+p-floatLabel:focus-within label {
+  background: rgba(0, 0, 0, 0.7); /* Solid background color */
+  color: white; /* Ensure the text is readable */
+  padding: 0 0.25rem; /* Add padding for spacing */
+  border-radius: 3px; /* Optional: rounded corners */
+  transition: all 0.3s ease; /* Smooth transition */
+}
+
+
+
+.glass-input {
+  background: rgba(255, 255, 255, 0.1); 
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  color: white;
+  font-size: 16px;
+  padding: 0.75rem 1rem; 
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.glass-input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.5); 
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+}
+
+
+.glass-button {
+  width: 100%; 
+  padding: 0.75rem;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
 
 .mt-3 {
   margin-top: 1rem;
@@ -63,12 +103,6 @@ h2 {
   margin-top: 1.5rem;
 }
 
-// Button
-button {
-  width: 100%;
-}
-
-// Optional: Adjust responsiveness for smaller screens
 @media (max-width: 768px) {
   .glass-card {
     width: 90%;
