@@ -3,8 +3,7 @@ import { MovieCardComponent } from "../../components/movie-card/movie-card.compo
 import { ActorCardComponent } from "../../components/actor-card/actor-card.component";
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
-
-type CardType = { title: string; imgSource: string; numericValue: number; type: 'movie' | 'actor' };
+import { BaseCard } from '../../types/BaseCard';
 
 @Component({
   selector: 'shared-card-list',
@@ -14,8 +13,8 @@ type CardType = { title: string; imgSource: string; numericValue: number; type: 
 })
 export class CardListComponent implements OnChanges {
 
-  @Input() public cards: CardType[] = [];                                                 // receive the cards 
-  public groupedCards: CardType[][] = [];                                                 // store cards after grouping according to type
+  @Input() public cards: BaseCard[] = [];                                                 // receive the cards 
+  public groupedCards: BaseCard[][] = [];                                                 // store cards after grouping according to type
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['cards']) {
