@@ -1,9 +1,14 @@
 import cors from "cors";
+import dotenv from "dotenv";
 import express from "express";
 import routes from "../routes/routes";   
 
+import { connectToDatabase } from "../utils/db";
+
+dotenv.config();
 const app = express();
-const port = 3000;
+
+const port = process.env.SERVER_PORT;
 
 app.use('/api/v1', routes);
 
@@ -19,7 +24,7 @@ const corsOptions: cors.CorsOptions = {
 app.use(cors(corsOptions));
 
 app.use((req, res, next) => {
-    'UTC';
+    process.env.TZ;
     next();
 });
 
