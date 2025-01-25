@@ -1,4 +1,6 @@
+@import "primeicons/primeicons.css";
 @layer tailwind-base, primeng, tailwind-utilities;
+
 
 @layer tailwind-base {
   @tailwind base;
@@ -36,6 +38,10 @@
   // to change the paginator colors:
   --p-paginator-nav-button-selected-background: #ae00ff; 
   --p-paginator-nav-button-focus-ring-color: #7c01b6;
+
+  --p-carousel-indicator-active-background:#ae00ff;
+
+  --p-carousel-content-gap: 0rem;
 }
 
 * {
@@ -52,3 +58,4 @@
   display: flex;
   gap: 1rem !important; /* Adjust the gap as needed */
 }
+

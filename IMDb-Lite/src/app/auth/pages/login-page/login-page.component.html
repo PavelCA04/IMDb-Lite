@@ -37,7 +37,10 @@
             pButton
             type="submit"
             label="Sign In"
-            class="p-button-rounded p-button-primary glass-button"
+            [rounded]="true"
+            [raised]="true"
+            severity="info"
+            class="glass-button"
             [disabled]="loginForm.invalid"
           ></button>
         </div>
