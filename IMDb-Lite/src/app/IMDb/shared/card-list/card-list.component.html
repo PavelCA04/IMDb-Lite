@@ -14,9 +14,15 @@
 
 </div>
 
-<div class="card flex justify-center mt-4">
-  <p-paginator [style]="{ borderRadius: '.5rem', color: '#fff'}" [rows]="cardsPerPage" [totalRecords]="cards.length" (onPageChange)="paginate($event)" severity="info"></p-paginator>
-  <!-- rows: cards per page, totalRecords: total number of cards, onPageChange: event emitted when user changes page -->
+<div class="card flex justify-center m-4">
+  <p-paginator 
+    [style]="{ borderRadius: '.8rem', color: '#fff', fontSize: '10pt' }" 
+    [rows]="cardsPerPage" 
+    [totalRecords]="cards.length" 
+    (onPageChange)="paginate($event)" 
+    severity="info">
+  </p-paginator>
 </div>
+
 
 

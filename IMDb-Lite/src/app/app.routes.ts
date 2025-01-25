@@ -1,14 +1,24 @@
 import { Routes } from '@angular/router';
 import { LoginPageComponent } from './auth/pages/login-page/login-page.component';
-import { MainHeaderComponent } from './IMDb/shared/main-header/main-header.component';
+import { MoviesComponent } from './IMDb/pages/movies/movies.component';
+import { ActorsComponent } from './IMDb/pages/actors/actors.component';
 
 export const routes: Routes = [
-{
+  {
     path: 'auth',
     component: LoginPageComponent
-},
-{
-    path: 'imdb',
-    component: MainHeaderComponent
-}
+  }, {
+    path: 'movies',
+    component: MoviesComponent
+  }, {
+    path: 'actors',
+    component: ActorsComponent
+  }, {
+    path: '',
+    redirectTo: 'movies',
+    pathMatch: 'full'
+  }, {
+    path: '**',
+    redirectTo: 'movies'
+  }
 ];

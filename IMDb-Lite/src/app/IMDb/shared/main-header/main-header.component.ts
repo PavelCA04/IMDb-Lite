@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { CarouselModule } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button';
+import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-main-header',
-  imports: [CarouselModule, ButtonModule],
+  selector: 'shared-main-header',
+  imports: [CarouselModule, ButtonModule, RouterModule],
   templateUrl: './main-header.component.html',
   styleUrl: './main-header.component.scss'
 })

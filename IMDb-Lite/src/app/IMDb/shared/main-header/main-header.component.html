@@ -1,10 +1,10 @@
 <div class="custom-carousel">
-  <div class="header">
+  <div class="header sticky">
     <div class="logo">
       <img src="path_to_logo" alt="Logo" />
     </div>
-    <div class="logout">
-      <button pButton label="Logout" [rounded]="true" [raised]="true" icon="pi pi-sign-out" severity="danger"></button>
+    <div>
+      <button pButton icon="pi pi-sign-out text-xs" class="glass text-xs rounded-lg" [routerLink]="['/auth']" routerLinkActive="router-link-active">Logout</button>
     </div>
   </div>
 
@@ -20,17 +20,20 @@
     <ng-template pTemplate="item" let-item>
       <div class="carousel-content">
         <img [src]="item.image" alt="{{ item.title }}" class="carousel-image" />
-        <div class="carousel-info">
+        <!--<div class="carousel-info">
           <h1>{{ item.title }}</h1>
           <p>{{ item.description }}</p>
-          <button pButton label="Details" [rounded]="true" [raised]="true" severity="info"></button>
-        </div>
+          <button pButton label="Details" [rounded]="true" [raised]="true" severity="info" class="text-xs"></button>
+        </div>-->
       </div>
     </ng-template>
   </p-carousel>
 
-  <div class="floating-buttons">
-    <button pButton icon="pi pi-video" class="floating-btn"></button>
-    <button pButton icon="pi pi-user" class="floating-btn"></button>
-  </div>
+  <div class="floating-buttons flex gap-4">
+    <button pButton icon="pi pi-video text-sm" class="glass rounded-full w-10 h-10 flex items-center justify-center" [routerLink]="['/movies']">
+    </button>
+    <button pButton icon="pi pi-user text-sm" class="glass rounded-full w-10 h-10 flex items-center justify-center" [routerLink]="['/actors']">
+    </button>
+</div>
+
 </div>

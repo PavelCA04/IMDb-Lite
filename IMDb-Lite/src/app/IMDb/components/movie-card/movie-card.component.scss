@@ -11,10 +11,11 @@
     height: auto;                                                                         // maintain aspect ratio
     border-radius: 0;
     transition: transform .5s;
+    filter: brightness(85%);
   }
 
   &:hover {
-    transform: scale(1.05);                                                               // make slightly larger on hover
+    transform: scale(1.07);                                                               // make slightly larger on hover
   }
 }
 

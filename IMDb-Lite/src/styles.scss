@@ -36,10 +36,10 @@
   --pill-accent: var(--bright-blue);
 
   // to change the paginator colors:
-  --p-paginator-nav-button-selected-background: #ae00ff; 
-  --p-paginator-nav-button-focus-ring-color: #7c01b6;
+  --p-paginator-nav-button-selected-background: #b6040e; 
+  --p-paginator-nav-button-focus-ring-color: #e50812;
 
-  --p-carousel-indicator-active-background:#ae00ff;
+  --p-carousel-indicator-active-background:#fdfdfd;
 
   --p-carousel-content-gap: 0rem;
 }
@@ -52,10 +52,3 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-/* In your gallery.component.scss or global styles */
-::ng-deep .p-galleria-thumbnail-items {
-  display: flex;
-  gap: 1rem !important; /* Adjust the gap as needed */
-}
-
