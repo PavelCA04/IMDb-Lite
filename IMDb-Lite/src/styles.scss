@@ -46,3 +46,9 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* In your gallery.component.scss or global styles */
+::ng-deep .p-galleria-thumbnail-items {
+  display: flex;
+  gap: 1rem !important; /* Adjust the gap as needed */
+}

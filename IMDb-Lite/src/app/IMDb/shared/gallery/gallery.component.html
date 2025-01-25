@@ -1,1 +1,16 @@
-<p>gallery works!</p>
+<div class="card">
+  <p-galleria [value]="images" [numVisible]="5" [showItemNavigators]="true" [circular]="true"
+    [autoPlay]="true" [containerStyle]="{ 'max-width': '500px' }">
+
+    <ng-template pTemplate="item" let-image>
+      <img [src]="image" style="width: 100%; display: block;" />
+    </ng-template>
+
+    <ng-template pTemplate="thumbnail" let-image>
+      <div class="grid justify-center">
+        <img [src]="image" style="display: block;" width="80%" />
+      </div>
+    </ng-template>
+
+  </p-galleria>
+</div>
