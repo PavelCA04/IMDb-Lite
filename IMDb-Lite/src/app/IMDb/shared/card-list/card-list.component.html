@@ -1,18 +1,22 @@
-<p-table [value]="groupedCards" [paginator]="true" [rows]="2" class="p-datatable-none">
-  <ng-template pTemplate="body" let-group>
-    <div class="grid gap-4 mx-4 mt-4 card-row" [ngClass]="group[0].type === 'movie' ? 'grid-cols-8' : 'grid-cols-6'">
+<div class="grid gap-6 m-4"
+  [ngClass]="displayedCards[0].type === 'movie' ? 'sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-8' : 'sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6'">
 
-      @for (card of group; track $index) {
-      <div class="card-box">
-        <movie-card *ngIf="card.type === 'movie'" [title]="card.title" [imgSource]="card.imgSource"
-          [numericValue]="card.numericValue">
-        </movie-card>
-        <actor-card *ngIf="card.type === 'actor'" [title]="card.title" [imgSource]="card.imgSource"
-          [numericValue]="card.numericValue">
-        </actor-card>
-      </div>
-      }
-
+  @for (card of displayedCards; track $index) {
+    <div>
+      <movie-card *ngIf="card.type === 'movie'" [title]="card.title" [imgSource]="card.imgSource"
+        [numericValue]="card.numericValue">
+      </movie-card>
+      <actor-card *ngIf="card.type === 'actor'" [title]="card.title" [imgSource]="card.imgSource"
+        [numericValue]="card.numericValue">
+      </actor-card>
     </div>
-  </ng-template>
-</p-table>
+  }
+
+</div>
+
+<div class="card flex justify-center mt-4">
+  <p-paginator [style]="{ borderRadius: '.5rem', color: '#fff'}" [rows]="cardsPerPage" [totalRecords]="cards.length" (onPageChange)="paginate($event)" severity="info"></p-paginator>
+  <!-- rows: cards per page, totalRecords: total number of cards, onPageChange: event emitted when user changes page -->
+</div>
+
+

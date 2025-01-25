@@ -24,7 +24,7 @@
   left: 0;                                                                                // position at top-left corner
   width: 100%;                                                                            // make overlay the same size as box
   height: 100%;                                                                           // make the overlay the same size as box
-  background: linear-gradient(transparent, #0c0c0c 70%);
+  background: linear-gradient(transparent, #0c0c0cee 80%);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;                                                              // push text to the bottom of the overlay
