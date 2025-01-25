@@ -1,13 +1,13 @@
-
-<div class="header">
+<div class="custom-carousel">
+  <div class="header">
     <div class="logo">
       <img src="path_to_logo" alt="Logo" />
     </div>
     <div class="logout">
-      <button pButton label="Logout"  [rounded]="true" [raised]="true" icon="pi pi-sign-out" severity="danger"> </button>
+      <button pButton label="Logout" [rounded]="true" [raised]="true" icon="pi pi-sign-out" severity="danger"></button>
     </div>
   </div>
-  
+
   <p-carousel
     [value]="carouselItems"
     [numVisible]="1"
@@ -23,9 +23,14 @@
         <div class="carousel-info">
           <h1>{{ item.title }}</h1>
           <p>{{ item.description }}</p>
-          <button pButton label="Details"  [rounded]="true" [raised]="true" severity="info"></button>
+          <button pButton label="Details" [rounded]="true" [raised]="true" severity="info"></button>
         </div>
       </div>
     </ng-template>
   </p-carousel>
-  
+
+  <div class="floating-buttons">
+    <button pButton icon="pi pi-video" class="floating-btn"></button>
+    <button pButton icon="pi pi-user" class="floating-btn"></button>
+  </div>
+</div>
