@@ -1,9 +1,70 @@
-<div class="flex flex-col">
-  <div>
-    <shared-main-header></shared-main-header>
-  </div>
-  <div>
-    <shared-card-list [cards]="cards"></shared-card-list>
-  </div>
-</div>
+<div class="flex flex-col space-y-6">
+  <!-- Header -->
+  <shared-main-header></shared-main-header>
 
+  <!-- Filters -->
+  <div class="flex flex-wrap items-center justify-between p-0 bg-grey-300 rounded-md shadow">
+    <!-- Left Filters -->
+    <div class="flex flex-wrap items-start space-x-4">
+      <!-- Genre MultiSelect -->
+      <div class="flex flex-col space-y-1 ml-4">
+        <label for="genre" class="text-md font-medium text-center mb-2">Genre:</label>
+        <p-multiSelect
+          [options]="genres"
+          [(ngModel)]="selectedGenres"
+          optionLabel="name"
+          placeholder="Select Genre"
+          class="w-64"
+          display="chip"
+        ></p-multiSelect>
+      </div>
+
+      <!-- Year Range Filter -->
+      <div class="flex flex-col space-y-1" style="margin-left: 1.5rem;">
+        <label for="yearRange" class="text-md font-medium text-center mb-2">Year:</label>
+        <p-datepicker
+          [(ngModel)]="YearRange"
+          selectionMode="range"
+          view="year"
+          placeholder="Select year range"
+          [showIcon]="true"
+          [minDate]="minYear"
+          [maxDate]="maxYear"
+          class="w-full"
+        ></p-datepicker>
+      </div>
+
+      <!-- Rating Filter -->
+      <div class="flex flex-col space-y-1" style="margin-left: 1.5rem;">
+        <label for="rating" class="text-md font-medium text-center mb-2">Rating:</label>
+        <p-rating [(ngModel)]="selectedRating" [stars]="10"></p-rating>
+        <span class="text-md text-center font-bold">{{ selectedRating }}</span>
+      </div>
+    </div>
+
+    <!-- Right Controls: Search Bar and Add Button -->
+    <div class="flex items-center space-x-2 pr-4">
+      <!-- Search Bar -->
+      <div class="flex flex-col space-y-1">
+        <div class="relative flex items-center">
+          <!-- Input Field -->
+          <input
+            type="text"
+            pInputText
+            placeholder="Search..."
+            [(ngModel)]="searchQuery"
+            class="w-full p-2 pl-10 border rounded-md"
+          />
+          <!-- Search Icon -->
+          <i class="pi pi-search absolute left-3 text-gray-500"></i>
+        </div>
+      </div>
+
+      <!-- Add Button -->
+      <button pButton icon="pi pi-plus" class="p-button-success"></button>
+    </div>
+  </div>
+
+  <!-- Cards List -->
+  <shared-card-list [cards]="filteredCards"></shared-card-list>
+</div>
