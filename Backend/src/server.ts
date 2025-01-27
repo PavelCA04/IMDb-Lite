@@ -10,8 +10,6 @@ const app = express();
 
 const port = process.env.SERVER_PORT;
 
-app.use('/api/v1', routes);
-
 const allowedOrigins = ['http://localhost:3000'];
 
 const corsOptions: cors.CorsOptions = {
@@ -22,6 +20,11 @@ const corsOptions: cors.CorsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+// Body parsing middleware should come before routes
+app.use(express.json());
+
+app.use('/api/v1', routes);
 
 app.use((req, res, next) => {
     process.env.TZ;
