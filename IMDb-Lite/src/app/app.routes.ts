@@ -17,7 +17,7 @@ export const routes: Routes = [
     component: ActorsComponent
   }, {
     path: 'test',
-    component: MovieMiniCardListComponent
+    component: ActorMiniCardListComponent
   }, {
     path: '',
     redirectTo: 'movies',

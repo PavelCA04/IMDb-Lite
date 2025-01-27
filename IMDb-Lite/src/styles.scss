@@ -35,8 +35,17 @@
 
   // multiSelect styles
   --p-multiselect-focus-border-color: #fdfdfd88;
-  --p-checkbox-icon-checked-color: #fdfdfd88;
-  --p-checkbox-checked-background-color: #b6040e; // checked background color did not work, must look for another possible style
+
+  // checkbox styles
+  --p-checkbox-checked-hover-background: transparent;
+  --p-checkbox-checked-background: transparent;
+  --p-checkbox-icon-color: #fdfdfd88;
+  --p-checkbox-icon-checked-color: #fdfdfdba;
+  --p-checkbox-icon-checked-hover-color: #fdfdfd;
+  --p-checkbox-hover-border-color: #b6040e;
+  --p-checkbox-checked-border-color: #b6040e;
+  --p-checkbox-checked-hover-border-color: #e50812;
+  --p-checkbox-checked-focus-border-color: #e50812;
 
   // datepicker styles
   --p-datepicker-header-border-color: #fdfdfd88;
@@ -45,6 +54,7 @@
   // rating styles
   --p-rating-icon-active-color	: #b6040e;
   --p-rating-icon-hover-color	: #b6040e;
+  --p-datepicker-buttonbar-border-color: #b6040e;
 
   // input styles
   --p-inputtext-focus-border-color: #fdfdfd88;
