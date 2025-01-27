@@ -1,9 +1,11 @@
 import dotenv from 'dotenv';
 import { Request, Response } from 'express';
-import { connectToDatabase, closeConnection } from '../utils/db';
+import { connectToDatabase } from '../utils/db';
 import { ObjectId } from 'mongodb';
 
 dotenv.config();
+
+const _limit: number = 12;
 
 const actorController = {
     createActor: async (req: Request, res: Response): Promise<void> => {
@@ -64,7 +66,7 @@ const actorController = {
           const collection = db.collection('Actor');
       
           const page = parseInt(req.query.page as string) || 1;
-          const limit = parseInt(req.query.limit as string) || 10;
+          const limit = parseInt(req.query.limit as string) || _limit;
           const skip = (page - 1) * limit;
             
           const pipeline = [
@@ -146,8 +148,6 @@ const actorController = {
           });
         } catch (error) {
           res.status(500).json({ message: 'Internal Server Error' });
-        } finally {
-          await closeConnection();
         }
     },
     deleteActor: async (req: Request, res: Response): Promise<void> => {
@@ -175,9 +175,7 @@ const actorController = {
         } catch (error) {
           console.error('Error deleting actor:', error);
           res.status(500).json({ message: 'Internal Server Error' });
-        } finally {
-          await closeConnection();
-        }
+        } 
     },
       
 };
