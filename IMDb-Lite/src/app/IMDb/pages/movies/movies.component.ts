@@ -29,8 +29,8 @@ export class MoviesComponent {
 
   // Year Range
   YearRange: Date[] = [];
-  minYear: Date = new Date(1950, 0, 1); // January 1, 1900
-  maxYear: Date = new Date(); // Current Date
+  minYear: Date = new Date(1950, 0, 1); 
+  maxYear: Date = new Date(); 
 
   // Rating
   selectedRating = 5;
