@@ -16,9 +16,9 @@
       <!-- Year Range Filter -->
       <div class="flex flex-col space-y-1" style="margin-left: 1.5rem;">
         <label for="yearRange" class="text-md font-medium text-center mb-2">Year</label>
-        <p-datepicker [(ngModel)]="YearRange" selectionMode="range" view="year" placeholder="Select year range"
-          [iconDisplay]="'input'" [showIcon]="true" [minDate]="minYear" [maxDate]="maxYear" class="w-full h-full min-h-[40px]"
-          variant="filled"></p-datepicker>
+        <p-datepicker [(ngModel)]="YearRange" selectionMode="range" view="year" [iconDisplay]="'input'"
+          placeholder="Select year range" [showIcon]="true" [minDate]="minYear" [maxDate]="maxYear"
+          class="w-full h-full min-h-[40px]" variant="filled"></p-datepicker>
       </div>
 
       <!-- Rating Filter -->
@@ -38,13 +38,10 @@
       <div class="flex flex-col space-y-1">
         <label for="rating" class="text-md font-medium text-center mb-2">Search</label>
         <div class="relative flex items-center h-full w-full">
-          <p-floatLabel variant="on" class="w-full">
-            <input type="text" id="search" pInputText placeholder=" " [(ngModel)]="searchQuery"
-              class="w-full p-2 pl-10 border rounded-md h-full min-h-[40px]" variant="filled" />
-            <label for="search" class="pl-6">Search movies</label>
-          </p-floatLabel>
+          <input type="text" id="search" pInputText [(ngModel)]="searchQuery" placeholder="Search movies"
+            class="w-full p-2 pr-10 border rounded-md h-full min-h-[40px]" variant="filled" />
           <!-- Search Icon -->
-          <i class="pi pi-search absolute left-3 text-gray-500"></i>
+          <i class="pi pi-search absolute right-3 text-[#cfcfcf]"></i>
         </div>
       </div>
 

@@ -27,6 +27,9 @@
 
   // select sytles
   --p-select-background: transparent;
+  --p-select-filled-background: transparent;
+  --p-select-filled-focus-background: transparent;
+  --p-select-filled-hover-background: transparent;
   --p-select-color: #fdfdfd;
   --p-select-focus-border-color: #fdfdfd88;
   --p-select-option-selected-background: #b6040e55;
@@ -35,6 +38,9 @@
 
   // multiSelect styles
   --p-multiselect-focus-border-color: #fdfdfd88;
+  --p-multiselect-filled-background: transparent;
+  --p-multiselect-filled-focus-background: transparent;
+  --p-multiselect-filled-hover-background: transparent;
 
   // checkbox styles
   --p-checkbox-checked-hover-background: transparent;
@@ -58,6 +64,9 @@
 
   // input styles
   --p-inputtext-focus-border-color: #fdfdfd88;
+  --p-inputtext-filled-background: transparent;
+  --p-inputtext-filled-focus-background: transparent;
+  --p-inputtext-filled-hover-background: transparent;
 }
 
 * {

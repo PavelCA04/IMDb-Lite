@@ -8,14 +8,14 @@
 
       <div class="flex flex-col space-y-1">
         <label for="order" class="text-md font-medium mb-2 text-center">Order</label>
-        <p-select [options]="orderOptions" [(ngModel)]="selectedOrder" placeholder="Select order"
-          class="w-64 h-full min-h-[40px]" (onChange)="onOrderChange($event)" variant="filled"></p-select>
+        <p-select [options]="orderOptions" [(ngModel)]="selectedOrder" class="w-64 h-full min-h-[40px]"
+          placeholder="Select order" (onChange)="onOrderChange($event)" variant="filled"></p-select>
       </div>
 
       <div class="flex flex-col space-y-1" style="margin-left: 1.5rem;">
         <label for="year" class="text-md font-medium mb-2 text-center">Year</label>
         <p-datepicker [(ngModel)]="selectedYear" [iconDisplay]="'input'" view="year" dateFormat="yy"
-          placeholder="Select year" class="w-64 h-full min-h-[40px]" [showIcon]="true" [minDate]="minYear"
+          placeholder="Select year" class="w-full h-full min-h-[40px]" [showIcon]="true" [minDate]="minYear"
           [maxDate]="maxYear" variant="filled" (onSelect)="onYearSelect($event)"></p-datepicker>
       </div>
     </div>
@@ -27,13 +27,10 @@
       <div class="flex flex-col space-y-1">
         <label for="rating" class="text-md font-medium text-center mb-2">Search</label>
         <div class="relative flex items-center h-full w-full">
-          <p-floatLabel variant="on" class="w-full">
-            <input type="text" id="search" pInputText placeholder=" " [(ngModel)]="searchQuery"
-              class="w-full p-2 pl-10 border rounded-md h-full min-h-[40px]" variant="filled" />
-            <label for="search" class="pl-6">Search actors</label>
-          </p-floatLabel>
+          <input type="text" id="search" pInputText [(ngModel)]="searchQuery" placeholder="Search actors"
+            class="w-full p-2 pr-10 border rounded-md h-full min-h-[40px]" variant="filled" />
           <!-- Search Icon -->
-          <i class="pi pi-search absolute left-3 text-gray-500"></i>
+          <i class="pi pi-search absolute right-3 text-gray-500"></i>
         </div>
       </div>
 

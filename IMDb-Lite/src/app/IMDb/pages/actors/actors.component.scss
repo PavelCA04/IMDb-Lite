@@ -1,9 +1,6 @@
-p-floatLabel:focus-within label {
-  background: rgba(210, 19, 19, 0.7);
-  color: white;
-  padding: 0 0.25rem;
-  border-radius: 3px;
-  transition: all 0.3s ease;
+p-floatLabel {
+  background: #121212;
+  color: #cfcfcf;
 }
 
 .glass {
@@ -11,7 +8,7 @@ p-floatLabel:focus-within label {
   border: none;
   backdrop-filter: blur(10px);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  color: white;
+  color: #cfcfcf;
   cursor: pointer;
   transition: background 0.3s ease, transform 0.3s ease;
 

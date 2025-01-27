@@ -14,15 +14,16 @@
 
 </div>
 
-<div class="card flex justify-center m-4">
+<div class="flex justify-center w-full mt-8 mb-6">
   <p-paginator 
     [style]="{ borderRadius: '.8rem', color: '#fff', fontSize: '10pt' }" 
     [rows]="cardsPerPage" 
     [totalRecords]="cards.length" 
     (onPageChange)="paginate($event)" 
-    severity="info">
+    class="w-[50%]">
   </p-paginator>
 </div>
+
 
 
 
