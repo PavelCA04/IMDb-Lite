@@ -8,7 +8,6 @@ const db_username = process.env.DB_USERNAME;
 const db_password = process.env.DB_PASSWORD;
 
 const uri = `mongodb+srv://${db_username}:${db_password}@cluster0.c010z.mongodb.net/?retryWrites=true&w=majority&appName=${db_cluster}`; // Replace with your MongoDB URI
-console.log(uri);
 
 let client: MongoClient | null = null;
 let db: Db | null = null;
