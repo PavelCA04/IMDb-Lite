@@ -16,6 +16,7 @@
           placeholder="Select Genre"
           class="w-64"
           display="chip"
+          variant="filled"
         ></p-multiSelect>
       </div>
 
@@ -31,6 +32,7 @@
           [minDate]="minYear"
           [maxDate]="maxYear"
           class="w-full"
+          variant="filled"
         ></p-datepicker>
       </div>
 
@@ -47,21 +49,26 @@
       <!-- Search Bar -->
       <div class="flex flex-col space-y-1">
         <div class="relative flex items-center">
-          <!-- Input Field -->
-          <input
-            type="text"
-            pInputText
-            placeholder="Search..."
-            [(ngModel)]="searchQuery"
-            class="w-full p-2 pl-10 border rounded-md"
-          />
+          <p-floatLabel variant="on">
+            <!-- Input Field -->
+            <input
+              type="text"
+              id="search"
+              pInputText
+              placeholder=" "
+              [(ngModel)]="searchQuery"
+              class="w-full p-2 pl-10 border rounded-md"
+              variant="filled"
+            />
+            <label for="search" class="pl-6">Search...</label>
+          </p-floatLabel>
           <!-- Search Icon -->
           <i class="pi pi-search absolute left-3 text-gray-500"></i>
-        </div>
+        </div>        
       </div>
 
       <!-- Add Button -->
-      <button pButton icon="pi pi-plus" class="p-button-success"></button>
+      <button pButton icon="pi pi-plus" class="glass"></button>
     </div>
   </div>
 

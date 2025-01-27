@@ -1,9 +1,75 @@
-<div class="flex flex-col overflow-x-hidden">
+<div class="flex flex-col space-y-6">
   <div>
     <shared-main-header></shared-main-header>
   </div>
+
+  <!-- Filter Section -->
+  <div class="flex flex-wrap items-center justify-between p-0 bg-grey-300 rounded-md shadow">
+    <div class="flex space-x-4 ml-4">
+      <!-- p-select for Sorting Order -->
+      <div class="flex flex-col space-y-1">
+      <label for="order" class="text-md font-medium mb-2 text-center">Order:</label>
+      <p-select
+        [options]="orderOptions"
+        [(ngModel)]="selectedOrder"
+        placeholder="Order"
+        class="w-40"
+        (onChange)="onOrderChange($event)"
+        variant="filled"
+      ></p-select>
+    </div>
+
+    <div style="margin-left: 1.5rem;"></div>
+
+    <div class="flex flex-col space-y-1">
+      <label for="year" class="text-md font-medium mb-2 text-center">Year:</label>
+      <p-datepicker
+        [(ngModel)]="selectedYear"
+        view="year"
+        dateFormat="yy"
+        placeholder="Select Year"
+        class="w-40"
+        [showIcon]="true"
+        [minDate]="minYear"
+        [maxDate]="maxYear"
+        variant="filled"
+        (onSelect)="onYearSelect($event)"
+      ></p-datepicker>
+      </div>
+    </div>
+
+    <!-- Right-Side Controls (Search and Add) -->
+    <div class="flex space-x-4 pr-4 items-center">
+      <!-- Search Bar -->
+      <div class="flex flex-col space-y-1">
+      <div class="relative flex items-center">
+        <p-floatLabel variant="on">
+          <!-- Input Field -->
+          <input
+            type="text"
+            id="search"
+            pInputText
+            placeholder=" "
+            [(ngModel)]="searchQuery"
+            class="w-full p-2 pl-10 border rounded-md"
+            (input)="onSearch()"
+            variant="filled"
+          />
+          <label for="search" class="pl-6">Search...</label>
+        </p-floatLabel>
+        <!-- Search Icon -->
+        <i class="pi pi-search absolute left-3 text-gray-500"></i>
+      </div>
+      </div>
+    
+      <!-- Add Button -->
+      <button pButton icon="pi pi-plus" class="glass"></button>
+    </div>
+    
+  </div>
+
+  <!-- Card List Section -->
   <div>
-    <shared-card-list [cards]="cards"></shared-card-list>
+    <shared-card-list [cards]="filteredCards"></shared-card-list>
   </div>
 </div>
-

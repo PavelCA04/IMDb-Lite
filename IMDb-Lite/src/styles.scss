@@ -32,6 +32,20 @@
   --p-select-option-selected-background: #b6040e55;
   --p-select-option-selected-focus-background: #b6040e55;
   --p-select-color: #fdfdfd88;
+
+  // multiSelect styles
+  --p-multiselect-focus-border-color: #fdfdfd88;
+
+  // datepicker styles
+  --p-datepicker-header-border-color: #fdfdfd88;
+  --p-datepicker-date-selected-background	: #fdfdfd88;
+
+  // rating styles
+  --p-rating-icon-active-color	: #b6040e;
+  --p-rating-icon-hover-color	: #b6040e;
+
+  // input styles
+  --p-inputtext-focus-border-color: #fdfdfd88;
 }
 
 * {
