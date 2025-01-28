@@ -1,0 +1,13 @@
+# Database
+DB_CLUSTER=''
+DB_NAME = ''
+DB_USERNAME = ''
+DB_PASSWORD = '.'
+DB_URI = ''
+
+# Server
+SERVER_PORT = 
+TZ = 'UTC'
+
+# JWT
+SECRET_SIGNATURE = ''
