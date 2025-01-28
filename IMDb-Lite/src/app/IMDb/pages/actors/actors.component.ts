@@ -9,10 +9,13 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-actors',
-  imports: [MainHeaderComponent, CardListComponent, DatePickerModule, ButtonModule, SelectModule, InputTextModule, FloatLabelModule, CommonModule, FormsModule],
+  imports: [MainHeaderComponent, CardListComponent, DatePickerModule, ButtonModule, 
+    SelectModule, InputTextModule, FloatLabelModule, CommonModule, FormsModule, RouterModule
+  ],
   templateUrl: './actors.component.html',
   styleUrl: './actors.component.scss'
 })
@@ -38,6 +41,7 @@ export class ActorsComponent {
     { title: 'Frozen 2', imgSource: "https://cdn.hmv.com/r/w-960/hmv/files/a0/a099c26d-4b1b-43c0-87ef-74d0d728f7b9.jpg", numericValue: 2020, type: 'actor' },
     { title: 'Inside Out 2', imgSource: "https://ik.imagekit.io/9ifn2ouyo26/movies/inside-out-2/inside-out-2-poster.jpg", numericValue: 2020, type: 'actor' },
   ];
+
   // Filter options
   orderOptions = [
     { label: 'A-Z', value: 'asc' },
@@ -47,8 +51,8 @@ export class ActorsComponent {
   // Model variables
   selectedOrder: string | null = null;
   selectedYear: Date | null = null;
-  minYear: Date = new Date(1950, 0, 1); // January 1, 1900
-  maxYear: Date = new Date(); // Current Date
+  minYear: Date = new Date(1950, 0, 1);                                                   // January 1, 1900
+  maxYear: Date = new Date();                                                             // Current Date
   searchQuery: string = '';
 
   filteredCards: BaseCard[] = [...this.cards];
@@ -82,7 +86,7 @@ export class ActorsComponent {
 
     // Apply year filter
     if (this.selectedYear) {
-      const selectedYear = this.selectedYear.getFullYear(); // Extract year from Date
+      const selectedYear = this.selectedYear.getFullYear();                               // Extract year from Date
       filtered = filtered.filter((card) => card.numericValue === selectedYear);
     }
 

@@ -7,5 +7,6 @@ img {
 
   &:hover {
     transform: scale(1.07);                                                               // make slightly larger on hover
+    cursor: pointer;
   }
 }

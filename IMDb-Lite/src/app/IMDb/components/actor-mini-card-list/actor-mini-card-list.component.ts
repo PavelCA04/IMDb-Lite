@@ -6,7 +6,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { SelectModule } from 'primeng/select';
 
 @Component({
-  selector: 'app-actor-mini-card-list',
+  selector: 'actor-mini-card-list',
   imports: [DataViewModule, CommonModule, DropdownModule, SelectModule, FormsModule],
   templateUrl: './actor-mini-card-list.component.html',
   styleUrl: './actor-mini-card-list.component.scss'
@@ -14,25 +14,6 @@ import { SelectModule } from 'primeng/select';
 export class ActorMiniCardListComponent {
 
   @Input() public actors: any[] = [];
-  public sortField: string = 'text';                                                      // default sorting field
-  public sortOrder: number = 1;                                                           // 1 for ascending, -1 for descending
-
-  public sortOptions = [                                                                  // sorting options for the dropdown
-    { label: 'Sort by name - ascending', value: 'text'},
-    { label: 'Sort by name - descending', value: '!text'},
-  ];
-
-  public onSortChange(event: any) {
-    let value = event.value;
-
-    if (value.indexOf('!') === 0) {
-      this.sortOrder = -1;
-      this.sortField = value.substring(1, value.length);
-    } else {
-      this.sortOrder = 1;
-      this.sortField = value;
-    }
-  }
   
   // data to test the component
   items = [

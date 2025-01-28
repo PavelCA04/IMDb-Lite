@@ -1,1 +1,36 @@
-<p>actor-page works!</p>
+<div class="relative w-full h-[17rem] overflow-hidden">
+  <img src="background.png" alt="" class="absolute top-0 left-0 w-full h-[17rem] object-cover">
+</div>
+
+<div class="relative z-10 -mt-32 px-6 mx-28 flex flex-row gap-10">
+
+  <div class="flex flex-col gap-6 items-center flex-none basis-4/12">
+    <img src="https://cdn.hmv.com/r/w-960/hmv/files/a0/a099c26d-4b1b-43c0-87ef-74d0d728f7b9.jpg" alt=""
+      class="w-48 h-48 rounded-full object-cover">
+    <movie-mini-card-list [movies]="items" class="w-full m-5"></movie-mini-card-list>
+  </div>
+
+  <div class="flex-1 px-4">
+    <div class="flex flex-col gap-3 py-2 mt-6">
+      <h1 class="text-4xl font-bold rounded-lg">Actor Name</h1>
+      <p class="text-lg">January 1st, 2025</p>
+    </div>
+
+    <div class="my-10 flex flex-col gap-5">
+      <h2 class="text-lg font-bold">About</h2>
+      <p class="text-[#cfcfcf] text-justify">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rutrum quam vel eleifend molestie. Quisque
+        finibus justo sit amet enim imperdiet vulputate. Pellentesque porttitor rhoncus rutrum. Nam risus tellus, mollis
+        eu nisl ac, molestie vestibulum diam. Quisque suscipit feugiat aliquam. Interdum et malesuada fames ac ante
+        ipsum primis in faucibus. Ut vitae bibendum tellus. Morbi porttitor, velit vitae suscipit interdum, enim lacus
+        laoreet ante, nec vestibulum sapien ante non magna. Sed luctus elit nunc, eu aliquam ex malesuada sit amet.
+        Maecenas tincidunt faucibus justo id egestas. Fusce et lacus sem. Etiam nisi magna, maximus at maximus
+        scelerisque, convallis at mi. Nam id urna eget ex consectetur cursus. In ut dui sit amet nunc aliquam interdum.
+      </p>
+      <h2 class="text-lg font-bold">Gallery</h2>
+      <div class="flex flex-col justify-center items-center">
+        <shared-gallery [images]="images" class="w-full"></shared-gallery>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,20 +1,6 @@
-<div class="sm:w-[38%] md:w-[32%] lg:w-[27%] xl:w-[22%]">
-  <p-dataview [value]="items" [rows]="4" [paginator]="true" [pageLinks]="2" [style]="{ fontSize: '10pt' }" 
-    [sortField]="sortField" [sortOrder]="sortOrder" class="text-center">
-
-    <ng-template #header>
-      <div class="flex flex-col md:flex-row md:justify-between">
-        <p-select
-            [options]="sortOptions"
-            [size]="'small'"
-            [(ngModel)]="sortField"
-            placeholder="Sort By"
-            (onChange)="onSortChange($event)"
-            styleClass="mb-2 md:mb-0"
-          />
-      </div>
-    </ng-template>
-
+<div class="w-full">
+  <p-dataview [value]="movies" [rows]="4" [paginator]="true" [pageLinks]="2" [style]="{ fontSize: '10pt' }"
+    class="text-center">
     <ng-template #list let-items>
       <div class="grid grid-cols-1 m-2 divide-y-2 divide-[#cfcfcf22]">
         <div *ngFor="let item of items">
