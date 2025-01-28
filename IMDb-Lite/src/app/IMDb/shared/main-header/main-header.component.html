@@ -1,7 +1,7 @@
 <div class="custom-carousel">
   <div class="header sticky">
-    <div class="logo">
-      <img src="path_to_logo" alt="Logo" />
+    <div class="logo-container flex justify-center items-center">
+      <img src="assets/logo.png" alt="Logo" class="h-16 p-3 hover:scale-105 transform transition duration-300 cursor-pointer" [routerLink]="['/movies']"/>
     </div>
     <div>
       <button pButton icon="pi pi-sign-out text-xs" class="glass text-xs rounded-lg" [routerLink]="['/auth']" routerLinkActive="router-link-active">Logout</button>
