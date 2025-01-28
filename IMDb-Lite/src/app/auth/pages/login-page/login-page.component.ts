@@ -4,14 +4,17 @@ import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
+import { RegistrationDialogComponent } from '../registration-dialog/registration-dialog.component';
+import { DialogModule } from 'primeng/dialog';
 @Component({
   selector: 'app-login-page',
-  imports: [CardModule, ButtonModule, InputTextModule, FloatLabelModule, ReactiveFormsModule],
+  imports: [CardModule, ButtonModule, InputTextModule, FloatLabelModule, ReactiveFormsModule, RegistrationDialogComponent, DialogModule],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.scss'
 })
 export class LoginPageComponent {
   loginForm: FormGroup;
+  isRegistrationDialogVisible: boolean = false;
 
   constructor(private fb: FormBuilder) {
     this.loginForm = this.fb.group({
@@ -28,5 +31,11 @@ export class LoginPageComponent {
       console.error('Form is invalid');
     }
   }
+
+  showRegistrationDialog() {
+    console.log('showRegistrationDialog');
+    this.isRegistrationDialogVisible = true;
+  }
+
 }
 

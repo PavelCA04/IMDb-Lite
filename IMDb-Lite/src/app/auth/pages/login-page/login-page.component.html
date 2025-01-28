@@ -21,11 +21,14 @@
             <label for="password">Password</label>
           </p-floatLabel>
 
-          <div class="text-right">
+          <div class="text-right flex justify-between">
+            <button pButton label="Register" variant="outlined" size="small" class="glass-input px-3" (click)="showRegistrationDialog()"></button>
             <button pButton label="Sign in" variant="outlined" [disabled]="loginForm.invalid" size="small" class="glass-input px-3"></button>
-          </div>
+          </div>          
         </div>
       </form>
     </div>
   </div>
 </div>
+
+<app-registration-dialog [(visible)]="isRegistrationDialogVisible"></app-registration-dialog>
