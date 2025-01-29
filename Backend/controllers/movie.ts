@@ -84,10 +84,33 @@ const movieController = {
           const skip = (page - 1) * limit;
       
           const filters: any = {};
-          if (req.query.genre) filters.genre = req.query.genre;
+          if (req.query.genre) {
+            if (Array.isArray(req.query.genre)) {
+                filters.genre = { $in: req.query.genre }; 
+            } else {
+                filters.genre = req.query.genre;
+            }
+          }
+          if (req.query.title) { filters.title = { $regex: req.query.title } }
           if (req.query.director) filters.director = req.query.director;
-          if (req.query.release_year) filters.release_year = parseInt(req.query.release_year as string);
-          if (req.query.rating) filters.rating = { $gte: parseFloat(req.query.rating as string) };
+          if (req.query.release_year){
+            filters.release_year = parseInt(req.query.release_year as string);
+          } else if (req.query.year_start || req.query.year_end) {
+            filters.release_year = {};
+            if (req.query.year_start) {
+              filters.release_year.$gte = parseInt(req.query.year_start as string);
+            }
+            if (req.query.year_end) {
+              filters.release_year.$lte = parseInt(req.query.year_end as string);
+            }
+          }
+          if (req.query.rating) {
+            const rating = parseFloat(req.query.rating as string);
+            filters.rating = {
+                $gte: rating - 0.5,
+                $lte: rating + 0.5,
+            };
+          }
       
           const movies = await collection
             .find(filters)
