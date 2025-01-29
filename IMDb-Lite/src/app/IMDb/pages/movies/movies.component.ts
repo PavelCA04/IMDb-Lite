@@ -15,22 +15,39 @@ import { Genre, Movie, MovieSearchParams } from '../../interfaces/imdb.interface
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { environment } from '../../../../environments/environment'; 
 import { RouterModule } from '@angular/router';
+import { IMDbService } from '../../services/imdb.service';
+import { Genre, Movie, MovieSearchParams } from '../../interfaces/imdb.interfaces';
+import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { environment } from '../../../../environments/environment'; 
 
 @Component({
   selector: 'app-movies',
   imports: [
+    
     MainHeaderComponent, 
+    
     CardListComponent, 
+    
     FloatLabelModule, 
+    
     DatePickerModule, 
     
+    
     InputTextModule, 
+    
     MultiSelectModule, 
+    
     RatingModule, 
+    
     ButtonModule, 
+    
     FormsModule, 
+    
     CommonModule,
     CommonModule,
+    CommonModule, 
+    PaginatorModule
+  ,
     RouterModule
   , 
     PaginatorModule
@@ -39,6 +56,28 @@ import { RouterModule } from '@angular/router';
   styleUrl: './movies.component.scss'
 })
 export class MoviesComponent {
+
+  private movies: Movie[] = [];
+
+  public totalMovies = 120;
+  public pagination = 18;
+
+  public selectedRating = undefined;
+  
+  public selectedGenres: Genre[] = [];
+
+  public searchQuery = '';
+  
+  public dates: Date[] | undefined;
+  public minYear: Date = new Date(1950, 0, 1); 
+  public maxYear: Date = new Date(); 
+
+
+  public searchParams: MovieSearchParams = {};
+
+  constructor(
+    private imdbService: IMDbService
+  ){}
 
   private movies: Movie[] = [];
 
