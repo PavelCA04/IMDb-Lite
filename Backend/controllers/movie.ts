@@ -91,7 +91,7 @@ const movieController = {
                 filters.genre = req.query.genre;
             }
           }
-          if (req.query.title) { filters.title = { $regex: req.query.title } }
+          if (req.query.title) { filters.title = { $regex: req.query.title, $options: 'i' } }
           if (req.query.director) filters.director = req.query.director;
           if (req.query.release_year){
             filters.release_year = parseInt(req.query.release_year as string);

@@ -61,32 +61,48 @@ const actorController = {
         }
     },
     readActors: async (req: Request, res: Response): Promise<void> => {
-        try {
+      try {
           const db = await connectToDatabase();
           const collection = db.collection('Actor');
       
           const page = parseInt(req.query.page as string) || 1;
           const limit = parseInt(req.query.limit as string) || _limit;
           const skip = (page - 1) * limit;
-            
-          const pipeline = [
-            { $skip: skip },
-            { $limit: limit },
-            { $project: { _id: 1, name: 1, birth_date: 1, biography: 1, images: 1, movies: 1 } }
-          ];
-      
-          const actors = await collection.aggregate(pipeline).toArray();
-            
-          if (actors.length === 0) {
-            res.status(404).json({ message: 'No actors found' });
-          } else {
-            res.status(200).json({
-              page,
-              limit,
-              totalActors: actors.length,
-              actors,
-            });
+
+          const filters: any = {};
+
+          if (req.query.name) { filters.name = { $regex: req.query.name, $options: 'i' } }
+          if (req.query.birth_date) {
+            const birthYear = parseInt(req.query.birth_date as string);
+            filters.birth_date = {
+                $regex: `^${birthYear}`,
+            };
+        }
+
+          const sort: any = {};
+          if (req.query.sort === 'asc') {
+            sort.name = 1;
+          } else if (req.query.sort === 'desc') {
+            sort.name = -1;
           }
+
+          const actors = await collection
+          .find(filters)
+          .sort(sort)
+          .skip(skip)
+          .limit(limit)
+          .toArray();
+
+          const totalActors = await collection.countDocuments(filters);
+
+          res.status(200).json({
+            page,
+            limit,
+            totalActors,
+            totalPages: Math.ceil(totalActors / limit),
+            actors,
+          });
+          
         } catch (error) {
           console.error('Error reading actors:', error);
           res.status(500).json({ message: 'Internal Server Error' });
