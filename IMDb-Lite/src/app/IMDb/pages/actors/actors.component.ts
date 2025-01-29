@@ -10,16 +10,40 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { IMDbService } from '../../services/imdb.service';
+import { Actor, ActorSearchParams } from '../../interfaces/imdb.interfaces';
+import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 
 @Component({
   selector: 'app-actors',
-  imports: [MainHeaderComponent, CardListComponent, DatePickerModule, ButtonModule, 
-    SelectModule, InputTextModule, FloatLabelModule, CommonModule, FormsModule, RouterModule
+  imports: [
+    MainHeaderComponent, 
+    CardListComponent, 
+    DatePickerModule, 
+    ButtonModule, 
+    SelectModule, 
+    InputTextModule, 
+    FloatLabelModule, 
+    CommonModule, 
+    FormsModule, 
+    RouterModule,
+    PaginatorModule
   ],
   templateUrl: './actors.component.html',
   styleUrl: './actors.component.scss'
 })
 export class ActorsComponent {
+
+  public actors: Actor[] = [];
+
+  private searchParams: ActorSearchParams = {};
+
+  public totalActors = 120;
+  public pagination = 18;
+
+  constructor(
+    private imdbService: IMDbService
+  ) { }
 
   cards: BaseCard[] = [
     { title: 'Elemental', imgSource: "https://www.youloveit.com/uploads/posts/2023-05/1683139077_youloveit_com_elemental_new_poster.jpg", numericValue: 2020, type: 'actor' },
@@ -98,5 +122,71 @@ export class ActorsComponent {
     }
 
     this.filteredCards = filtered;
+  }
+
+  getActors(): void {
+    this.imdbService.getActors(this.searchParams).subscribe((response: any) => {
+      const newCards: BaseCard[] = response.actors.map((actor: any) => ({
+        id: actor._id,
+        title: actor.name,
+        imgSource: "https://cdn.hmv.com/r/w-960/hmv/files/a0/a099c26d-4b1b-43c0-87ef-74d0d728f7b9.jpg",
+        numericValue: actor.birth_date.split('-')[0],
+        type: 'actor'
+      }));
+      this.cards = newCards;
+
+      this.totalActors = response.totalActors;
+      this.pagination = response.limit;          
+    });
+  }
+
+  handleSearch(event: any) {    
+    console.log('searching');
+    
+    console.log(this.searchQuery);
+    
+    if (this.searchQuery.length <= 3) {
+      delete this.searchParams.name;
+    } else{      
+      this.searchParams.name = this.searchQuery;
+    }
+    this.getActors();
+  }
+
+  onSearchQueryChange() {
+    if (!this.searchQuery) {
+      this.handleSearch(null);
+    }
+  }
+
+  handleYearChange(event: any) {
+    if (!event) {
+      if (!this.searchParams.birth_date) {
+        return;
+      }
+      delete this.searchParams.birth_date;
+    } else {
+      this.searchParams.birth_date = this.selectedYear?.getFullYear().toString();
+    }
+    this.getActors();
+  }
+
+  handleSortChange(event: any) {
+    if (this.selectedOrder?.length === 0 || !this.selectedOrder) {
+      delete this.searchParams.sort;
+    } else {      
+      this.searchParams.sort = event.value;
+    }    
+    this.getActors();
+  }
+
+  handlePageChange(event: PaginatorState): void {
+    this.searchParams.page = (event.page || 0) + 1 ;
+    this.getActors()
+  }
+
+
+  ngOnInit(): void {
+    this.getActors();
   }
 }

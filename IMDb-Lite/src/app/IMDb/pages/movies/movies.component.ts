@@ -52,7 +52,7 @@ export class MoviesComponent {
   public maxYear: Date = new Date(); 
 
 
-  public searchParams: MovieSearchParams = {};
+  private searchParams: MovieSearchParams = {};
 
   constructor(
     private imdbService: IMDbService
@@ -97,10 +97,7 @@ export class MoviesComponent {
       this.cards = newCards;      
 
       this.totalMovies = response.totalMovies;
-      this.pagination = response.limit;
-
-      console.log(this.searchParams);
-      
+      this.pagination = response.limit;      
     });
   }
 

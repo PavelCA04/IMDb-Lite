@@ -8,15 +8,32 @@
 
       <div class="flex flex-col space-y-1">
         <label for="order" class="text-md font-medium mb-2 text-center">Order</label>
-        <p-select [options]="orderOptions" [(ngModel)]="selectedOrder" class="w-64 h-full min-h-[40px]"
-          placeholder="Select order" (onChange)="onOrderChange($event)" variant="filled"></p-select>
+        <p-select 
+          [options]="orderOptions" 
+          [(ngModel)]="selectedOrder" 
+          class="w-64 h-full min-h-[40px]"
+          placeholder="Select order" 
+          (onChange)="handleSortChange($event)" 
+          variant="filled"
+          [showClear]="true">
+        </p-select>
       </div>
 
       <div class="flex flex-col space-y-1" style="margin-left: 1.5rem;">
         <label for="year" class="text-md font-medium mb-2 text-center">Year</label>
-        <p-datepicker [(ngModel)]="selectedYear" [iconDisplay]="'input'" view="year" dateFormat="yy"
-          placeholder="Select year" class="w-full h-full min-h-[40px]" [showIcon]="true" [minDate]="minYear"
-          [maxDate]="maxYear" variant="filled" (onSelect)="onYearSelect($event)"></p-datepicker>
+        <p-datepicker 
+          [(ngModel)]="selectedYear" 
+          [iconDisplay]="'input'" 
+          view="year" dateFormat="yy"
+          placeholder="Select year" 
+          class="w-full h-full min-h-[40px]" 
+          [showIcon]="true" 
+          [minDate]="minYear"
+          [maxDate]="maxYear" 
+          variant="filled" 
+          (on)="handleYearChange($event)"
+          (ngModelChange)="handleYearChange($event)">
+          </p-datepicker>
       </div>
     </div>
 
@@ -27,8 +44,16 @@
       <div class="flex flex-col space-y-1">
         <label for="rating" class="text-md font-medium text-center mb-2">Search</label>
         <div class="relative flex items-center h-full w-full">
-          <input type="text" id="search" pInputText [(ngModel)]="searchQuery" placeholder="Search actors"
-            class="w-full p-2 pr-10 border rounded-md h-full min-h-[40px]" variant="filled" />
+          <input 
+            type="text" 
+            id="search" 
+            pInputText 
+            [(ngModel)]="searchQuery" 
+            placeholder="Search actors"
+            class="w-full p-2 pr-10 border rounded-md h-full min-h-[40px]" 
+            variant="filled"
+            (keydown.enter)="handleSearch($event)"
+            (ngModelChange)="onSearchQueryChange()"/>
           <!-- Search Icon -->
           <i class="pi pi-search absolute right-3 text-gray-500"></i>
         </div>
@@ -44,9 +69,28 @@
   </div>
 
   <!-- Card List Section -->
-  <div>
-    <shared-card-list [cards]="filteredCards"></shared-card-list>
-  </div>
+  @if (cards.length !== 0) {
+    <div>
+      <shared-card-list [cards]="cards"></shared-card-list>
+    </div>
+
+    <!-- Footer -->
+    <div class="flex justify-center w-full mt-8 mb-6" style="margin-bottom: 20px;">
+      <p-paginator 
+        [style]="{ borderRadius: '.8rem', color: '#fff', fontSize: '10pt' }" 
+        [rows]="pagination" 
+        [totalRecords]="totalActors" 
+        (onPageChange)="handlePageChange($event)" 
+        class="w-[50%]">
+      </p-paginator>
+    </div>
+  }
+  @else {
+    <div class="flex justify-center items-center h-96">
+      <p class="text-2xl font-bold text-gray-400">There is nothing here...</p>
+    </div>
+  }
+
 </div>
 
 <router-outlet></router-outlet>
