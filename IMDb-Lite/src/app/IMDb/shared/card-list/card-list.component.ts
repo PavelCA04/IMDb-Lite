@@ -52,7 +52,7 @@ export class CardListComponent implements OnInit, OnChanges, OnDestroy {
     if (this.cards.length === 0) return;
 
     let columns = 3;
-    let rowsPerPage = 2;
+    let rowsPerPage = 4;
 
     if (screenWidth >= 1280) {
       columns = this.cards[0].type === 'movie' ? 8 : 6;                                   // xl screen

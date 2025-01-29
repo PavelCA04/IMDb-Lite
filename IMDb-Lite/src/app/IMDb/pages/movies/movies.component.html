@@ -9,23 +9,36 @@
       <!-- Genre MultiSelect -->
       <div class="flex flex-col space-y-1 ml-4">
         <label for="genre" class="text-md font-medium text-center mb-2">Genre</label>
-        <p-multiSelect [options]="genres" [(ngModel)]="selectedGenres" optionLabel="name" placeholder="Select genre"
+        <p-multiSelect (onChange)="handleGenreChange($event)" [options]="genres" [(ngModel)]="selectedGenres" optionLabel="name" placeholder="Select genre"
           class="w-64 h-full min-h-[40px]" display="chip" variant="filled"></p-multiSelect>
       </div>
 
       <!-- Year Range Filter -->
       <div class="flex flex-col space-y-1" style="margin-left: 1.5rem;">
         <label for="yearRange" class="text-md font-medium text-center mb-2">Year</label>
-        <p-datepicker [(ngModel)]="YearRange" selectionMode="range" view="year" [iconDisplay]="'input'"
-          placeholder="Select year range" [showIcon]="true" [minDate]="minYear" [maxDate]="maxYear"
-          class="w-full h-full min-h-[40px]" variant="filled"></p-datepicker>
+        <p-datepicker 
+          [(ngModel)]="dates"
+          selectionMode="range" 
+          view="year" 
+          [iconDisplay]="'input'"
+          placeholder="Select year range" 
+          [showIcon]="true" 
+          class="w-full h-full min-h-[40px]" 
+          variant="filled"
+          [dateFormat]="'yy'"
+          [minDate]="minYear" 
+          [maxDate]="maxYear"
+          [showClear]="true"
+          (onClear)="handleYearChange($event)"
+          (onSelect)="handleYearChange($event)">
+        </p-datepicker>
       </div>
 
       <!-- Rating Filter -->
       <div class="flex flex-col space-y-1" style="margin-left: 1.5rem; min-height: 40px;">
         <label for="rating" class="text-md font-medium text-center mb-2">Rating</label>
         <div class="flex flex-row gap-3 justify-center items-center h-full min-h-[40px]">
-          <p-rating [(ngModel)]="selectedRating" [stars]="10" class="h-full"></p-rating>
+          <p-rating (ngModelChange)="handleRatingChange($event)" [(ngModel)]="selectedRating" [stars]="10" class="h-full"></p-rating>
           <span class="text-md text-center font-bold">{{ selectedRating }}</span>
         </div>
       </div>
@@ -38,7 +51,7 @@
       <div class="flex flex-col space-y-1">
         <label for="rating" class="text-md font-medium text-center mb-2">Search</label>
         <div class="relative flex items-center h-full w-full">
-          <input type="text" id="search" pInputText [(ngModel)]="searchQuery" placeholder="Search movies"
+          <input (keydown.enter)="handleSearch($event)" type="text" id="search" pInputText [(ngModel)]="searchQuery" placeholder="Search movies"
             class="w-full p-2 pr-10 border rounded-md h-full min-h-[40px]" variant="filled" />
           <!-- Search Icon -->
           <i class="pi pi-search absolute right-3 text-[#cfcfcf]"></i>
@@ -54,6 +67,24 @@
 
   </div>
 
-  <!-- Cards List -->
-  <shared-card-list [cards]="filteredCards"></shared-card-list>
+  @if(cards.length > 0){
+    <!-- Cards List -->
+    <shared-card-list [cards]="cards"></shared-card-list>
+
+    <!-- Footer -->
+    <div class="flex justify-center w-full mt-8 mb-6" style="margin-bottom: 20px;">
+      <p-paginator 
+        [style]="{ borderRadius: '.8rem', color: '#fff', fontSize: '10pt' }" 
+        [rows]="pagination" 
+        [totalRecords]="totalMovies" 
+        (onPageChange)="handlePageChange($event)" 
+        class="w-[50%]">
+      </p-paginator>
+    </div>
+  }
+  @else {
+    <div class="flex justify-center items-center h-96">
+      <p class="text-2xl font-bold text-gray-400">There is nothing here...</p>
+    </div>
+  }
 </div>
