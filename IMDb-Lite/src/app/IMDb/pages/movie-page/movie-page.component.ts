@@ -4,6 +4,7 @@ import { CardModule } from 'primeng/card';
 import { RatingModule } from 'primeng/rating';
 import { ChipModule } from 'primeng/chip';
 import { DividerModule } from 'primeng/divider';
+import { ButtonModule } from 'primeng/button';
 import { MainHeaderComponent } from "../../shared/main-header/main-header.component";
 import { GalleryComponent } from "../../shared/gallery/gallery.component";
 import { ActorMiniCardListComponent } from "../../components/actor-mini-card-list/actor-mini-card-list.component";
@@ -12,7 +13,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-movie-page',
   imports: [TabsModule, CardModule, MainHeaderComponent, GalleryComponent, ActorMiniCardListComponent, 
-    RatingModule, FormsModule, ChipModule, DividerModule
+    RatingModule, FormsModule, ChipModule, DividerModule, ButtonModule
   ],
   templateUrl: './movie-page.component.html',
   styleUrl: './movie-page.component.scss'

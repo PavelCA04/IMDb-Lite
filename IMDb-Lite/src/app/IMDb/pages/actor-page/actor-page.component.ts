@@ -4,10 +4,13 @@ import { GalleryComponent } from "../../shared/gallery/gallery.component";
 import { MainHeaderComponent } from "../../shared/main-header/main-header.component";
 import { TabsModule } from 'primeng/tabs';
 import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-actor-page',
-  imports: [MovieMiniCardListComponent, GalleryComponent, MainHeaderComponent, TabsModule, CardModule],
+  imports: [MovieMiniCardListComponent, GalleryComponent, MainHeaderComponent, TabsModule, CardModule,
+    ButtonModule,
+  ],
   templateUrl: './actor-page.component.html',
   styleUrl: './actor-page.component.scss'
 })

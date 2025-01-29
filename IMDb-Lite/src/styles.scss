@@ -15,6 +15,7 @@
   // paginator styles
   --p-paginator-nav-button-selected-background: #dd1234; 
   --p-paginator-nav-button-focus-ring-color: #9b141c;
+  --p-paginator-border-radius: 1rem;
 
   // carousel styles
   --p-carousel-indicator-active-background:#fdfdfd;
@@ -68,6 +69,7 @@
   --p-inputtext-filled-focus-background: transparent;
   --p-inputtext-filled-hover-background: transparent;
 
+  // tabs styles
   --p-tabs-tab-color: #fdfdfd;
   --p-tabs-tab-active-color: #fdfdfd;
   --p-tabs-tab-active-border-color: #fdfdfd;
@@ -83,4 +85,24 @@
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: #cfcfcf;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(1.1);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+  }
 }
