@@ -16,8 +16,8 @@ export class ActorCardComponent {
 
   constructor(private router: Router) {}
 
-  navigateToActor() {
-    const actorId = encodeURIComponent(this.title.trim());
-    this.router.navigate(['/actors', actorId]);
+  public navigateToActor() : void {
+    const actorID = encodeURIComponent(this.title.trim());
+    this.router.navigate(['/actors', actorID]);
   }
 }

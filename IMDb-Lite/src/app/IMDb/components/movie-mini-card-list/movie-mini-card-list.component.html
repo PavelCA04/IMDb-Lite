@@ -1,11 +1,11 @@
 <div class="w-full">
-  <p-dataview [value]="movies" [rows]="4" [paginator]="true" [pageLinks]="2" [style]="{ fontSize: '10pt' }"
+  <p-dataview [value]="items" [rows]="6" [paginator]="true" [pageLinks]="3" [style]="{ fontSize: '10pt' }"
     class="text-center">
     <ng-template #list let-items>
-      <div class="grid grid-cols-1 m-2 divide-y-2 divide-[#cfcfcf22]">
+      <div class="grid grid-cols-3 divide-y-2 divide-[transparent]">
         <div *ngFor="let item of items">
           <div class="flex flex-row items-center p-4 rounded-md shadow-lg dark:bg-transparent gap-5">
-            <img class="w-1/5 h-20 object-cover rounded-sm" [src]="item.image" [alt]="item.text" />
+            <img class="w-4/12 h-20 object-cover rounded-sm" [src]="item.image" [alt]="item.text" />
             <div class="flex flex-col gap-2 w-full text-left">
               <h2 class="text-sm font-semibold">{{ item.text }}</h2>
               <p class="text-xs italic">{{ item.year }}</p>

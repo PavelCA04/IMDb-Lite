@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'movie-card',
@@ -12,4 +13,10 @@ export class MovieCardComponent {
   @Input() public imgSource: string = '';                                                 // movie's poster
   @Input() public numericValue: number = NaN;                                             // movie's year of release
 
+  constructor(private router: Router) { }
+
+  public navigateToMovie() : void {
+    const movieID = encodeURIComponent(this.title.trim());
+    this.router.navigate(['/movies', movieID]);
+  }
 }

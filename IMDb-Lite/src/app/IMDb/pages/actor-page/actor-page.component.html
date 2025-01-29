@@ -2,35 +2,55 @@
   <shared-main-header></shared-main-header>
 </div>
 
-<div class="relative z-10 -mt-32 px-6 mx-28 flex flex-row gap-10">
+<div class="relative z-10 -mt-28 mx-20 flex flex-row gap-10 mb-10">
 
-  <div class="flex flex-col gap-6 items-center flex-none basis-4/12">
+  <div class="flex flex-col gap-6 items-center flex-none basis-3/12">
     <img src="https://cdn.hmv.com/r/w-960/hmv/files/a0/a099c26d-4b1b-43c0-87ef-74d0d728f7b9.jpg" alt=""
       class="w-48 h-48 rounded-full object-cover">
-    <movie-mini-card-list [movies]="items" class="w-full m-5"></movie-mini-card-list>
-  </div>
-
-  <div class="flex-1 px-4">
-    <div class="flex flex-col gap-3 py-2 mt-6">
-      <h1 class="text-4xl font-bold rounded-lg">Actor Name</h1>
-      <p class="text-lg">January 1st, 2025</p>
-    </div>
-
-    <div class="my-10 flex flex-col gap-5">
-      <h2 class="text-lg font-bold">About</h2>
-      <p class="text-[#cfcfcf] w-full">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rutrum quam vel eleifend molestie. Quisque
-        finibus justo sit amet enim imperdiet vulputate. Pellentesque porttitor rhoncus rutrum. Nam risus tellus, mollis
-        eu nisl ac, molestie vestibulum diam. Quisque suscipit feugiat aliquam. Interdum et malesuada fames ac ante
-        ipsum primis in faucibus. Ut vitae bibendum tellus. Morbi porttitor, velit vitae suscipit interdum, enim lacus
-        laoreet ante, nec vestibulum sapien ante non magna. Sed luctus elit nunc, eu aliquam ex malesuada sit amet.
-        Maecenas tincidunt faucibus justo id egestas. Fusce et lacus sem. Etiam nisi magna, maximus at maximus
-        scelerisque, convallis at mi. Nam id urna eget ex consectetur cursus. In ut dui sit amet nunc aliquam interdum.
-      </p>
-      <h2 class="text-lg font-bold">Gallery</h2>
-      <div class="flex flex-col justify-center items-center">
-        <shared-gallery [images]="images" class="w-full"></shared-gallery>
-      </div>
+    <div class="flex flex-col gap-3 text-center">
+      <h1 class="text-3xl font-bold">Actor Name</h1>
+      <p class="text-xs uppercase">January 1, 1990</p>
+     <!-- <p class="text-xs mt-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+        ut labore et
+        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+        ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+        fugiat
+        nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+        anim id est laborum.</p> -->
     </div>
   </div>
+
+  <div class="mt-36">
+    <p-card>
+      <p-tabs value="0" class="p-3">
+        <p-tablist>
+          <p-tab value="0">About</p-tab>
+          <p-tab value="1">Portfolio</p-tab>
+          <p-tab value="2">Gallery</p-tab>
+        </p-tablist>
+        <p-tabpanels>
+          <p-tabpanel value="0">
+            <p class="m-0 mt-5 px-[1.3rem] text-sm">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+              dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+              ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+              fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+              anim id est laborum.
+            </p>
+          </p-tabpanel>
+          <p-tabpanel value="1">
+            <p class="m-0 mt-5 px-[1.3rem]">
+              <movie-mini-card-list [movies]="items"></movie-mini-card-list>
+            </p>
+          </p-tabpanel>
+          <p-tabpanel value="2">
+            <p class="m-0 mt-5">
+              <shared-gallery [images]="images"></shared-gallery>
+            </p>
+          </p-tabpanel>
+        </p-tabpanels>
+      </p-tabs>
+    </p-card>
+  </div>
+
 </div>

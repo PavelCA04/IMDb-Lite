@@ -2,9 +2,8 @@ import { Routes } from '@angular/router';
 import { LoginPageComponent } from './auth/pages/login-page/login-page.component';
 import { MoviesComponent } from './IMDb/pages/movies/movies.component';
 import { ActorsComponent } from './IMDb/pages/actors/actors.component';
-import { MovieMiniCardListComponent } from './IMDb/components/movie-mini-card-list/movie-mini-card-list.component';
-import { ActorMiniCardListComponent } from './IMDb/components/actor-mini-card-list/actor-mini-card-list.component';
 import { ActorPageComponent } from './IMDb/pages/actor-page/actor-page.component';
+import { MoviePageComponent } from './IMDb/pages/movie-page/movie-page.component';
 
 export const routes: Routes = [
   {
@@ -16,12 +15,12 @@ export const routes: Routes = [
   }, { 
     path: 'actors', 
     component: ActorsComponent
-  }, {
-    path: 'test',
-    component: ActorMiniCardListComponent
   },{
     path: 'actors/:id',
     component: ActorPageComponent
+  }, {
+    path: 'movies/:id',
+    component: MoviePageComponent
   }, {
     path: '',
     redirectTo: 'movies',

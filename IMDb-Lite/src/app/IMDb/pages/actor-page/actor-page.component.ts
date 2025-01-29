@@ -2,10 +2,12 @@ import { Component } from '@angular/core';
 import { MovieMiniCardListComponent } from "../../components/movie-mini-card-list/movie-mini-card-list.component";
 import { GalleryComponent } from "../../shared/gallery/gallery.component";
 import { MainHeaderComponent } from "../../shared/main-header/main-header.component";
+import { TabsModule } from 'primeng/tabs';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-actor-page',
-  imports: [MovieMiniCardListComponent, GalleryComponent, MainHeaderComponent],
+  imports: [MovieMiniCardListComponent, GalleryComponent, MainHeaderComponent, TabsModule, CardModule],
   templateUrl: './actor-page.component.html',
   styleUrl: './actor-page.component.scss'
 })
@@ -46,16 +48,7 @@ export class ActorPageComponent {
     "https://primefaces.org/cdn/primeng/images/galleria/galleria12.jpg",
     "https://primefaces.org/cdn/primeng/images/galleria/galleria13.jpg",
     "https://primefaces.org/cdn/primeng/images/galleria/galleria14.jpg",
-    "https://primefaces.org/cdn/primeng/images/galleria/galleria15.jpg",
-    "https://primefaces.org/cdn/primeng/images/galleria/galleria16.jpg"
+    "https://primefaces.org/cdn/primeng/images/galleria/galleria15.jpg"
   ];
-
-  public carouselItems = [
-    {
-      image: 'main-background.png',
-      title: '',
-      description: ''
-    },
-  ]
 
 }
