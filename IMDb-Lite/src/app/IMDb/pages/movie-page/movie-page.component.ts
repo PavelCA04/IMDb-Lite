@@ -12,9 +12,8 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-movie-page',
-  imports: [TabsModule, CardModule, MainHeaderComponent, GalleryComponent, ActorMiniCardListComponent, 
-    RatingModule, FormsModule, ChipModule, DividerModule, ButtonModule
-  ],
+  imports: [TabsModule, CardModule, MainHeaderComponent, GalleryComponent, ActorMiniCardListComponent,
+    RatingModule, FormsModule, ChipModule, DividerModule, ButtonModule],
   templateUrl: './movie-page.component.html',
   styleUrl: './movie-page.component.scss'
 })

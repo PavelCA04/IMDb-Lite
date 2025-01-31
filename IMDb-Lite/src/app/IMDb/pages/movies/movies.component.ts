@@ -10,10 +10,14 @@ import { RatingModule } from 'primeng/rating';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-movies',
-  imports: [MainHeaderComponent, CardListComponent, FloatLabelModule, DatePickerModule, InputTextModule, MultiSelectModule, RatingModule, ButtonModule, FormsModule, CommonModule],
+  imports: [MainHeaderComponent, CardListComponent, FloatLabelModule, DatePickerModule, 
+    InputTextModule, MultiSelectModule, RatingModule, ButtonModule, FormsModule, CommonModule,
+    RouterModule
+  ],
   templateUrl: './movies.component.html',
   styleUrl: './movies.component.scss'
 })

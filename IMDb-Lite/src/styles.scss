@@ -76,6 +76,29 @@
   --p-tabs-active-bar-background: #fdfdfd;
   --p-tabs-tab-hover-color: #dd1234;
   --p-tabs-tabpanel-padding: 0;
+
+  // text area styles
+  --p-textarea-color: #cfcfcf;
+
+  // file upload styles
+  --p-fileupload-progressbar-height: 0;
+  --p-fileupload-color: #cfcfcf;
+
+  // stepper styles
+  --p-stepper-step-title-active-color: #dd1234;
+  --p-stepper-step-number-active-color: #dd1234;
+  --p-stepper-step-number-active-border-color: #9b141c;
+  --p-stepper-steppanel-color: #cfcfcf;
+
+  // generic styles
+  --p-primary-color: #9b141c;
+  --p-primary-hover-color: #dd1234;
+  --p-primary-active-color: #dd1234;
+  --p-button-primary-color: #cfcfcf;
+  --p-button-primary-hover-color: #cfcfcf;
+  --p-button-primary-active-color: #cfcfcf;
+
+  --p-fileupload-background: #09090b;
 }
 
 * {
