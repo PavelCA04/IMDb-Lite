@@ -14,6 +14,7 @@ import { IMDbService } from '../../services/imdb.service';
 import { Genre, Movie, MovieSearchParams } from '../../interfaces/imdb.interfaces';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { environment } from '../../../../environments/environment'; 
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-movies',
@@ -22,13 +23,16 @@ import { environment } from '../../../../environments/environment';
     CardListComponent, 
     FloatLabelModule, 
     DatePickerModule, 
+    
     InputTextModule, 
     MultiSelectModule, 
     RatingModule, 
     ButtonModule, 
     FormsModule, 
     CommonModule,
-    CommonModule, 
+    CommonModule,
+    RouterModule
+  , 
     PaginatorModule
   ],
   templateUrl: './movies.component.html',

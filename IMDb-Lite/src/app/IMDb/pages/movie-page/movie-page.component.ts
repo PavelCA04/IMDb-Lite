@@ -15,7 +15,7 @@ import { DeleteBtnComponent } from "../../shared/delete-btn/delete-btn.component
 @Component({
   selector: 'app-movie-page',
   imports: [TabsModule, CardModule, MainHeaderComponent, GalleryComponent, ActorMiniCardListComponent,
-    RatingModule, FormsModule, ChipModule, DividerModule, ButtonModule, RouterModule, DeleteBtnComponent],
+    RatingModule, FormsModule, ChipModule, DividerModule, ButtonModule],
   templateUrl: './movie-page.component.html',
   styleUrl: './movie-page.component.scss'
 })
