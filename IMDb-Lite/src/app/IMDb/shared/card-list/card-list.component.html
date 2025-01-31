@@ -3,8 +3,12 @@
 
   @for (card of cards; track $index) {
     <div>
-      <movie-card *ngIf="card.type === 'movie'" [title]="card.title" [imgSource]="card.imgSource"
-        [numericValue]="card.numericValue">
+      <movie-card 
+        *ngIf="card.type === 'movie'" 
+        [title]="card.title" 
+        [imgSource]="card.imgSource"
+        [numericValue]="card.numericValue"
+        [id]="card.id || ''">
       </movie-card>
       <actor-card *ngIf="card.type === 'actor'" [title]="card.title" [imgSource]="card.imgSource"
         [numericValue]="card.numericValue">

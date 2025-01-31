@@ -1,19 +1,25 @@
+export interface ActorImage {
+  url: string;
+  is_cover: boolean;
+}
+
+export interface CastMember {
+  actor_id: string;
+  character_name: string;
+  actor_name: string;
+  images: ActorImage[];
+}
+
 export interface Movie {
   _id: string;
   title: string;
   description: string;
   genre: string[];
   director: string;
-  cast: {
-    actor_id: string;
-    character_name: string;
-  }[];
+  cast: CastMember[];
   release_year: number;
   rating: number;
-  images: {
-    url: string;
-    is_cover: boolean;
-  }[];
+  images: ActorImage[];
 }
 
 export interface MovieSearchParams {

@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class MovieCardComponent {
 
+  @Input() public id: string = '';                                                        // movie's id
   @Input() public title: string = '';                                                     // movie's title
   @Input() public imgSource: string = '';                                                 // movie's poster
   @Input() public numericValue: number = NaN;                                             // movie's year of release
@@ -16,7 +17,6 @@ export class MovieCardComponent {
   constructor(private router: Router) { }
 
   public navigateToMovie() : void {
-    const movieID = encodeURIComponent(this.title.trim());
-    this.router.navigate(['/movies', movieID]);
+    this.router.navigate(['/movies', this.id]);
   }
 }

@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { DataViewModule } from 'primeng/dataview';
 import { DropdownModule } from 'primeng/dropdown';
 import { SelectModule } from 'primeng/select';
+import { CastMember } from '../../interfaces/imdb.interfaces';
 
 @Component({
   selector: 'actor-mini-card-list',
@@ -13,6 +14,11 @@ import { SelectModule } from 'primeng/select';
 })
 export class ActorMiniCardListComponent {
 
-  @Input() public actors: any[] = [];
+  @Input() public actors: CastMember[] | undefined = [];
+  public url = 'actor/';
+
+  ngOnInit(){
+    console.log('Actor mini card', this.actors);
+  }
   
 }

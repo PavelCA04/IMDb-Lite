@@ -5,16 +5,16 @@
 <div class="relative z-10 -mt-28 mx-20 flex flex-row gap-10 mb-10">
 
   <div class="flex flex-col gap-6 items-center flex-none basis-3/12">
-    <img src="https://cdn.hmv.com/r/w-960/hmv/files/a0/a099c26d-4b1b-43c0-87ef-74d0d728f7b9.jpg" alt=""
+    <img src="{{imgPath}}" alt=""
       class="w-48 h-auto object-cover">
     <div class="flex flex-col gap-3 text-center">
-      <h1 class="text-3xl font-bold">Movie Name</h1>
-      <p class="text-xs uppercase">January 1, 2024</p>
+      <h1 class="text-3xl font-bold">{{movie?.title}}</h1>
+      <p class="text-xs uppercase">{{ movie?.release_year}}</p>
       <div class="flex flex-row gap-3 justify-center items-center h-full min-h-[40px] cursor-auto mt-1">
-        <p-rating [(ngModel)]="selectedRating" [stars]="10" class="h-full" [readonly]="true"></p-rating>
+        <p-rating [(ngModel)]="movieRating" [stars]="10" class="h-full" [readonly]="true"></p-rating>
       </div>
       <div class="flex flex-row gap-3 justify-center">
-        <button pButton icon="pi pi-pencil" class="glass h-12 w-12 rounded-full" [routerLink]="['/movies/edit', movieTitle]"></button>
+        <button pButton icon="pi pi-pencil" class="glass h-12 w-12 rounded-full"></button>
         <shared-delete-btn></shared-delete-btn>
       </div>
     </div>
@@ -33,24 +33,18 @@
             <div class="m-0 mt-3 p-[1.3rem] flex flex-col gap-3">
               <h2 class="font-bold text-xl">Genre</h2>
             <div class="flex flex-row gap-3">
-              <p-chip class="px-4"><span class="text-sm">Action</span></p-chip>
-              <p-chip class="px-4"><span class="text-sm">Comedy</span></p-chip>
-              <p-chip class="px-4"><span class="text-sm">Mystery</span></p-chip>
+              @for (item of movie?.genre; track $index) {
+                <p-chip class="px-4"><span class="text-sm">{{item}}</span></p-chip>
+              }
             </div>
             <p-divider />
             <h2 class="font-bold text-xl">Synopsys</h2>
-            <p class="text-sm">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-              ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-              fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-              mollit anim id est laborum.
-            </p>
+            <p class="text-sm">{{movie?.description}}</p>
             </div>
           </p-tabpanel>
           <p-tabpanel value="1">
             <p class="m-0 mt-5 px-[1.3rem]">
-              <actor-mini-card-list [actors]="items"></actor-mini-card-list>
+              <actor-mini-card-list [actors]="movie?.cast"></actor-mini-card-list>
             </p>
           </p-tabpanel>
           <p-tabpanel value="2">
