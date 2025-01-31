@@ -16,6 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-movie-form',
@@ -29,8 +30,9 @@ import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocompl
 })
 export class MovieFormComponent {
 
-  public uploadedFiles: any[] = [];
-  public castSuggestions: any[] = [];
+  public uploadedFiles: any[] = [];                                                       // files received for the gallery
+  public castSuggestions: any[] = [];                                                     // cast (actors) suggestions for autocomplete
+  public formMode: 'new' | 'edit' = 'new';                                                // form mode
 
   public movieForm: FormGroup = new FormGroup({
     title: new FormControl<string>(''),
@@ -42,9 +44,19 @@ export class MovieFormComponent {
     gallery: new FormControl<File[]>([])
   });
 
-  constructor(private messageService: MessageService) {}
+  constructor(
+    private messageService: MessageService,
+    private router: Router
+  ) { }
 
-  public onGalleryUpload(event: FileUploadEvent) : void {
+  public ngOnInit(): void {
+    if (!this.router.url.includes('edit')) {
+      return;                                                                             // not in edit mode, do nothing
+    }
+    this.formMode = 'edit';
+  }
+
+  public onGalleryUpload(event: FileUploadEvent): void {
     this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Gallery uploaded successfully' });
 
     const uploadedFiles: File[] = event.files || [];
@@ -54,13 +66,13 @@ export class MovieFormComponent {
 
   public onMainImageUpload(event: FileUploadEvent): void {
     this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Main image uploaded successfully' });
-  
+
     const uploadedFile: File = event.files[0] || null;
     this.movieForm.patchValue({ mainImage: uploadedFile.name });
   }
 
-  public search(event: AutoCompleteCompleteEvent) : void {
-    
+  public search(event: AutoCompleteCompleteEvent): void {
+    // logic for the autocomplete
   }
 
   public onSubmit(): void {
@@ -70,5 +82,5 @@ export class MovieFormComponent {
       this.messageService.add({ severity: 'error', summary: 'Fail', detail: 'Invalid, please complete all required fields.' });
     }
   }
-  
+
 }

@@ -5,16 +5,20 @@ import { MainHeaderComponent } from "../../shared/main-header/main-header.compon
 import { TabsModule } from 'primeng/tabs';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
+import { RouterModule } from '@angular/router';
+import { DeleteBtnComponent } from "../../shared/delete-btn/delete-btn.component";
 
 @Component({
   selector: 'app-actor-page',
   imports: [MovieMiniCardListComponent, GalleryComponent, MainHeaderComponent, TabsModule, CardModule,
-    ButtonModule,
-  ],
+    ButtonModule, RouterModule, DeleteBtnComponent],
   templateUrl: './actor-page.component.html',
   styleUrl: './actor-page.component.scss'
 })
 export class ActorPageComponent {
+
+  // data to test the id of the url when edit
+  public actorName : string = 'actor';
 
   // data to test the movie mini card list component
   items = [

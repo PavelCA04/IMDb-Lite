@@ -16,6 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-actor-form',
@@ -30,6 +31,7 @@ export class ActorFormComponent {
 
   public uploadedFiles: any[] = [];
   public movieSuggestions: any[] = [];
+  public formMode: 'new' | 'edit' = 'new';
 
   public actorForm: FormGroup = new FormGroup({
     name: new FormControl<string>(''),
@@ -40,9 +42,19 @@ export class ActorFormComponent {
     gallery: new FormControl<File[]>([])
   });
 
-  constructor(private messageService: MessageService) {}
+  constructor(
+    private messageService: MessageService,
+    private router: Router
+  ) { }
 
-  public onGalleryUpload(event: FileUploadEvent) : void {
+  public ngOnInit(): void {
+    if (!this.router.url.includes('edit')) {
+      return;                                                                             // not in edit mode, do nothing
+    }
+    this.formMode = 'edit';
+  }
+
+  public onGalleryUpload(event: FileUploadEvent): void {
     this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Gallery uploaded successfully' });
 
     const uploadedFiles: File[] = event.files || [];
@@ -52,13 +64,13 @@ export class ActorFormComponent {
 
   public onMainImageUpload(event: FileUploadEvent): void {
     this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Main image uploaded successfully' });
-  
+
     const uploadedFile: File = event.files[0] || null;
     this.actorForm.patchValue({ mainImage: uploadedFile.name });
   }
 
-  public search(event: AutoCompleteCompleteEvent) : void {
-    
+  public search(event: AutoCompleteCompleteEvent): void {
+
   }
 
   public onSubmit(): void {

@@ -9,16 +9,22 @@ import { MainHeaderComponent } from "../../shared/main-header/main-header.compon
 import { GalleryComponent } from "../../shared/gallery/gallery.component";
 import { ActorMiniCardListComponent } from "../../components/actor-mini-card-list/actor-mini-card-list.component";
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { DeleteBtnComponent } from "../../shared/delete-btn/delete-btn.component";
 
 @Component({
   selector: 'app-movie-page',
   imports: [TabsModule, CardModule, MainHeaderComponent, GalleryComponent, ActorMiniCardListComponent,
-    RatingModule, FormsModule, ChipModule, DividerModule, ButtonModule],
+    RatingModule, FormsModule, ChipModule, DividerModule, ButtonModule, RouterModule, DeleteBtnComponent],
   templateUrl: './movie-page.component.html',
   styleUrl: './movie-page.component.scss'
 })
 export class MoviePageComponent {
 
+  // data to test the id of the url when edit
+  public movieTitle : string = 'movie';
+
+  // data to test the rating
   public selectedRating : number = 5;
 
    // data to test the component

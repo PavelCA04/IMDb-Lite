@@ -1,0 +1,20 @@
+<div class="card flex justify-center">
+  <p-toast class="text-left" />
+  <p-confirmdialog #cd>
+    <ng-template #headless let-message let-onAccept="onAccept" let-onReject="onReject">
+      <div class="flex flex-col items-center p-8 rounded-md">
+        <div class="rounded-full bg-[#cfcfcf] text-[#121212] inline-flex justify-center items-center h-24 w-24 -mt-20">
+          <i class="pi pi-question !text-5xl"></i>
+        </div>
+        <span class="font-bold text-2xl block mb-2 mt-6 text-[#dd1234]">{{ message.header }}</span>
+        <p class="mb-0 text-[#cfcfcf]">{{ message.message }}</p>
+        <div class="flex items-center gap-6 mt-6">
+          <p-button label="Cancel" [outlined]="true" (onClick)="onReject()" styleClass="w-32"
+            severity="contrast"></p-button>
+          <p-button label="Delete" (onClick)="onAccept()" styleClass="w-32"></p-button>
+        </div>
+      </div>
+    </ng-template>
+  </p-confirmdialog>
+  <button pButton icon="pi pi-trash" class="glass h-12 w-12 rounded-full" (click)="confirm()"></button>
+</div>

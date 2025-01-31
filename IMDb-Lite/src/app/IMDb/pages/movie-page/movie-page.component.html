@@ -14,8 +14,8 @@
         <p-rating [(ngModel)]="selectedRating" [stars]="10" class="h-full" [readonly]="true"></p-rating>
       </div>
       <div class="flex flex-row gap-3 justify-center">
-        <button pButton icon="pi pi-pencil" class="glass h-12 w-12 rounded-full "></button>
-        <button pButton icon="pi pi-trash" class="glass h-12 w-12 rounded-full "></button>
+        <button pButton icon="pi pi-pencil" class="glass h-12 w-12 rounded-full" [routerLink]="['/movies/edit', movieTitle]"></button>
+        <shared-delete-btn></shared-delete-btn>
       </div>
     </div>
   </div>

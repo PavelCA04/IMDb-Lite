@@ -11,8 +11,8 @@
       <h1 class="text-3xl font-bold">Actor Name</h1>
       <p class="text-xs uppercase">January 1, 1990</p>
       <div class="flex flex-row gap-3 justify-center mt-3">
-        <button pButton icon="pi pi-pencil" class="glass h-12 w-12 rounded-full "></button>
-        <button pButton icon="pi pi-trash" class="glass h-12 w-12 rounded-full "></button>
+        <button pButton icon="pi pi-pencil" class="glass h-12 w-12 rounded-full" [routerLink]="['/actors/edit', actorName]"></button>
+        <shared-delete-btn></shared-delete-btn>
       </div>
     </div>
   </div>
