@@ -1,0 +1,28 @@
+:host ::ng-deep .p-datepicker {
+  font-size: 10pt !important;
+}
+
+:host ::ng-deep .p-datepicker-calendar {
+  font-size: 10pt !important;
+}
+
+:host ::ng-deep .p-datepicker td {
+  font-size: 10pt !important;
+}
+
+:host ::ng-deep .p-datepicker th {
+  font-size: 10pt !important;
+}
+
+:host ::ng-deep .p-fileupload-choose-button {
+  background-color: #9b141c;
+  border-color: #9b141c;
+  color: #cfcfcf;
+}
+
+:host ::ng-deep {
+  --p-inputtext-border-color: #cfcfcf !important;
+  --p-inputtext-hover-border-color: #cfcfcf !important;
+  --p-inputtext-focus-border-color: #cfcfcf !important;
+  --p-card-body-padding: 0;
+}
