@@ -11,46 +11,26 @@ import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { IMDbService } from '../../services/imdb.service';
-import { Genre, Movie, MovieSearchParams } from '../../interfaces/imdb.interfaces';
+import { Genre, Movie, MovieInformation, MovieSearchParams } from '../../interfaces/imdb.interfaces';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { environment } from '../../../../environments/environment'; 
 import { RouterModule } from '@angular/router';
-import { IMDbService } from '../../services/imdb.service';
-import { Genre, Movie, MovieSearchParams } from '../../interfaces/imdb.interfaces';
-import { PaginatorModule, PaginatorState } from 'primeng/paginator';
-import { environment } from '../../../../environments/environment'; 
 
 @Component({
   selector: 'app-movies',
   imports: [
-    
     MainHeaderComponent, 
-    
     CardListComponent, 
-    
     FloatLabelModule, 
-    
     DatePickerModule, 
-    
-    
-    InputTextModule, 
-    
+    InputTextModule,
     MultiSelectModule, 
-    
     RatingModule, 
-    
     ButtonModule, 
-    
     FormsModule, 
-    
     CommonModule,
-    CommonModule,
-    CommonModule, 
-    PaginatorModule
-  ,
+    PaginatorModule,
     RouterModule
-  , 
-    PaginatorModule
   ],
   templateUrl: './movies.component.html',
   styleUrl: './movies.component.scss'
@@ -74,28 +54,6 @@ export class MoviesComponent {
 
 
   public searchParams: MovieSearchParams = {};
-
-  constructor(
-    private imdbService: IMDbService
-  ){}
-
-  private movies: Movie[] = [];
-
-  public totalMovies = 120;
-  public pagination = 18;
-
-  public selectedRating = undefined;
-  
-  public selectedGenres: Genre[] = [];
-
-  public searchQuery = '';
-  
-  public dates: Date[] | undefined;
-  public minYear: Date = new Date(1950, 0, 1); 
-  public maxYear: Date = new Date(); 
-
-
-  private searchParams: MovieSearchParams = {};
 
   constructor(
     private imdbService: IMDbService
@@ -133,11 +91,13 @@ export class MoviesComponent {
     this.imdbService.getMovies(this.searchParams).subscribe((response: any) => {
       const newCards: BaseCard[] = response.movies.map((movie: any) => ({
         title: movie.title,
-        imgSource: "https://www.youloveit.com/uploads/posts/2023-05/1683139077_youloveit_com_elemental_new_poster.jpg", //TODO: Modify the right image source
+        imgSource: movie.images.find((image: any) => image.is_cover === true)?.url,
         numericValue: movie.release_year,
         type: 'movie'
       }));      
       this.cards = newCards;      
+      console.log(response);  
+      
 
       this.totalMovies = response.totalMovies;
       this.pagination = response.limit;      
