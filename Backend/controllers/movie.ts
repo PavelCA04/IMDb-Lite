@@ -4,6 +4,23 @@ import { ObjectId } from 'mongodb';
 
 const _limit: number = 18;
 
+interface Movie {
+  _id: ObjectId;
+  title: string;
+  genre: string[];
+  director: string;
+  cast: Cast[];
+  release_year: number;
+  rating: number;
+  // Add other fields here as needed
+}
+
+interface Cast {
+  actor_id: string; // or ObjectId, depending on your setup
+  character_name: string;
+}
+
+
 const movieController = {
     createMovie: async (req: Request, res: Response): Promise<void> => {
         try {
@@ -78,6 +95,7 @@ const movieController = {
         try {
           const db = await connectToDatabase();
           const collection = db.collection('Movie');
+          const actorCollection = db.collection('Actor');
       
           const page = parseInt(req.query.page as string) || 1;
           const limit = parseInt(req.query.limit as string) || _limit;
@@ -119,13 +137,31 @@ const movieController = {
             .toArray();
       
           const totalMovies = await collection.countDocuments(filters);
-      
+
+          const updatedMovies = await Promise.all(
+            movies.map(async (movie: any) => {
+              movie.cast = await Promise.all(
+                movie.cast.map(async (c: any) => {
+                  const actorId = new ObjectId(c.actor_id);  // Convert actor_id to ObjectId
+                  const actor = await actorCollection.findOne({ _id: actorId });  // Query with ObjectId
+                  if (actor) {
+                    c.actor_name = actor.name;
+                    c.images = actor.images;
+                  }
+                  return c;
+                })
+              );
+              return movie;
+            })
+          );
+          
+                
           res.status(200).json({
             page,
             limit,
             totalMovies,
             totalPages: Math.ceil(totalMovies / limit),
-            movies,
+            movies: updatedMovies,
           });
         } catch (error) {
           console.error('Error reading movies:', error);
@@ -134,23 +170,37 @@ const movieController = {
     },
       
     readMovieByID: async (req: Request, res: Response): Promise<void> => {
-        try {
+      try {
           const db = await connectToDatabase();
           const collection = db.collection('Movie');
-      
+          const actorCollection = db.collection('Actor');
+
           const { id } = req.params;
-      
+
           const movie = await collection.findOne({ _id: new ObjectId(id) });
-      
+
           if (!movie) {
-            res.status(404).json({ message: 'Movie not found.' });
-            return
+              res.status(404).json({ message: 'Movie not found.' });
+              return;
           }
-      
+
+          movie.cast = await Promise.all(
+            movie.cast.map(async (c: any) => {
+                const actorId = new ObjectId(c.actor_id);  // Convert actor_id to ObjectId
+                const actor = await actorCollection.findOne({ _id: actorId });  // Query with ObjectId
+                if (actor) {
+                    c.actor_name = actor.name;
+                    c.images = actor.images;
+                }
+                return c;
+            })
+        );
+        
+
           res.status(200).json(movie);
-        } catch (error) {
-          console.error('Error reading movie by ID:', error);
-          res.status(500).json({ message: 'Internal Server Error' });
+      } catch (error) {
+            console.error('Error reading movie by ID:', error);
+            res.status(500).json({ message: 'Internal Server Error' });
         }
       },
       
