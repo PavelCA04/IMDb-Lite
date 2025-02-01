@@ -7,6 +7,22 @@ dotenv.config();
 
 const _limit: number = 12;
 
+interface Movie {
+  _id: ObjectId;
+  title: string;
+  images: { url: string; is_cover: boolean }[];
+  cast: { actor_id: ObjectId; character_name: string }[];
+}
+
+interface Actor {
+  _id: ObjectId;
+  name: string;
+  birth_date: string;
+  biography: string;
+  images: { url: string; is_profile: boolean }[];
+  movies: { movie_id: ObjectId; character_name: string }[];
+}
+
 const actorController = {
     createActor: async (req: Request, res: Response): Promise<void> => {
         try {
@@ -109,28 +125,43 @@ const actorController = {
         }
     },
     readActorByID: async (req: Request, res: Response): Promise<void> => {
-        try {
+      try {
           const db = await connectToDatabase();
-          const collection = db.collection('Actor');
-      
-          const actor = await collection.findOne({ _id: new ObjectId(req.params.id) });
-      
+          const actorCollection = db.collection<Actor>('Actor');
+          const movieCollection = db.collection<Movie>('Movie');
+  
+          const actorId = new ObjectId(req.params.id);
+          const actor = await actorCollection.findOne({ _id: actorId });
+  
           if (!actor) {
-            res.status(404).json({ message: 'Actor not found' });
-          } else {
-            res.status(200).json({
-              name: actor.name,
-              birth_date: actor.birth_date,
-              biography: actor.biography,
-              images: actor.images,
-              movies: actor.movies,
-            });
+              res.status(404).json({ message: 'Actor not found' });
+              return;
           }
-        } catch (error) {
+  
+          // Fetch all movies where this actor appears in the cast
+          const movies: Movie[] = await movieCollection.find({ "cast.actor_id": actorId }).toArray();
+  
+          // Enrich movies with character_name from the cast
+          actor.movies = movies.map((movie: Movie) => {
+              // Find the character_name for this actor in the cast array
+              const castEntry = movie.cast.find((c: { actor_id: ObjectId; character_name: string }) => c.actor_id.equals(actorId));
+              
+              return {
+                  movie_id: movie._id,
+                  title: movie.title,
+                  images: movie.images,
+                  character_name: castEntry ? castEntry.character_name : 'Unknown'
+              };
+          });
+  
+          res.status(200).json(actor);
+      } catch (error) {
           console.error('Error reading actor by ID:', error);
           res.status(500).json({ message: 'Internal Server Error' });
-        }
-    },
+      }
+  },
+  
+  
     updateActor: async (req: Request, res: Response): Promise<void> => {
         try {
           const db = await connectToDatabase();

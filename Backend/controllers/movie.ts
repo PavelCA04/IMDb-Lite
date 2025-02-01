@@ -138,30 +138,12 @@ const movieController = {
       
           const totalMovies = await collection.countDocuments(filters);
 
-          const updatedMovies = await Promise.all(
-            movies.map(async (movie: any) => {
-              movie.cast = await Promise.all(
-                movie.cast.map(async (c: any) => {
-                  const actorId = new ObjectId(c.actor_id);  // Convert actor_id to ObjectId
-                  const actor = await actorCollection.findOne({ _id: actorId });  // Query with ObjectId
-                  if (actor) {
-                    c.actor_name = actor.name;
-                    c.images = actor.images;
-                  }
-                  return c;
-                })
-              );
-              return movie;
-            })
-          );
-          
-                
           res.status(200).json({
             page,
             limit,
             totalMovies,
             totalPages: Math.ceil(totalMovies / limit),
-            movies: updatedMovies,
+            movies: movies,
           });
         } catch (error) {
           console.error('Error reading movies:', error);
@@ -186,16 +168,16 @@ const movieController = {
 
           movie.cast = await Promise.all(
             movie.cast.map(async (c: any) => {
-                const actorId = new ObjectId(c.actor_id);  // Convert actor_id to ObjectId
-                const actor = await actorCollection.findOne({ _id: actorId });  // Query with ObjectId
+                const actorId = new ObjectId(c.actor_id);
+                const actor = await actorCollection.findOne({ _id: actorId });
                 if (actor) {
                     c.actor_name = actor.name;
                     c.images = actor.images;
+                    
                 }
                 return c;
             })
-        );
-        
+          );
 
           res.status(200).json(movie);
       } catch (error) {
