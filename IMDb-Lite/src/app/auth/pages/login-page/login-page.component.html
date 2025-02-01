@@ -1,3 +1,6 @@
+<p-toast></p-toast>
+
+
 <div class="background-container h-screen w-full">
   <div class="logo-container flex justify-center items-center">
     <img src="assets/logo.png" alt="Logo" class="h-16 p-3 hover:scale-105 transform transition duration-300"/>
@@ -23,7 +26,7 @@
 
           <div class="text-right flex justify-between">
             <button pButton label="Register" variant="outlined" size="small" class="glass-input px-3" (click)="showRegistrationDialog()"></button>
-            <button pButton label="Sign in" variant="outlined" [disabled]="loginForm.invalid" size="small" class="glass-input px-3"></button>
+            <button pButton label="Sign in" variant="outlined" [disabled]="loginForm.invalid" size="small" class="glass-input px-3" (click)="onLogin()"></button>
           </div>          
         </div>
       </form>
