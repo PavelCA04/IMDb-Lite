@@ -91,7 +91,7 @@
                   <div
                     class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded-md bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium p-5">
                     <p-autocomplete formControlName="cast" multiple fluid [suggestions]="castSuggestions"
-                      (completeMethod)="search($event)" class="w-full" placeholder="Search for actors."
+                      (completeMethod)="search($event)" class="w-full" placeholder="Search for actors." [virtualScroll]="true"
                       required="true" />
                   </div>
                 </div>
