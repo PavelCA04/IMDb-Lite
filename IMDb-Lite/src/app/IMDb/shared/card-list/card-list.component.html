@@ -10,8 +10,12 @@
         [numericValue]="card.numericValue"
         [id]="card.id || ''">
       </movie-card>
-      <actor-card *ngIf="card.type === 'actor'" [title]="card.title" [imgSource]="card.imgSource"
-        [numericValue]="card.numericValue">
+      <actor-card 
+        *ngIf="card.type === 'actor'" 
+        [title]="card.title" 
+        [imgSource]="card.imgSource"
+        [numericValue]="card.numericValue"
+        [id]="card.id || ''">
       </actor-card>
     </div>
   }

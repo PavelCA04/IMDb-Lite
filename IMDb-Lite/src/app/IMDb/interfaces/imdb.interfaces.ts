@@ -50,7 +50,7 @@ export interface Actor {
 export interface MovieInformation {
   movie_id: string;
   title: string;
-  role: string;
+  images: Image[];
 }
 
 export interface Image {

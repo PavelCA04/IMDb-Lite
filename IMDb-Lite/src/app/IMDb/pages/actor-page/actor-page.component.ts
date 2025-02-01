@@ -5,57 +5,62 @@ import { MainHeaderComponent } from "../../shared/main-header/main-header.compon
 import { TabsModule } from 'primeng/tabs';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { DeleteBtnComponent } from "../../shared/delete-btn/delete-btn.component";
+import { IMDbService } from '../../services/imdb.service';
+import { Actor } from '../../interfaces/imdb.interfaces';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-actor-page',
-  imports: [MovieMiniCardListComponent, GalleryComponent, MainHeaderComponent, TabsModule, CardModule,
-    ButtonModule, RouterModule, DeleteBtnComponent],
+  imports: [
+    MovieMiniCardListComponent, 
+    GalleryComponent, 
+    MainHeaderComponent, 
+    TabsModule, 
+    CardModule,
+    ButtonModule, 
+    RouterModule, 
+    DeleteBtnComponent,
+    CommonModule
+  ],
   templateUrl: './actor-page.component.html',
   styleUrl: './actor-page.component.scss'
 })
 export class ActorPageComponent {
 
+  public imgPath = '';
+  public id: string = '';
+  public actor: Actor | undefined = undefined;
+
+  constructor(
+    private imdbService: IMDbService,
+    private route: ActivatedRoute
+  ){}
+
   // data to test the id of the url when edit
   public actorName : string = 'actor';
 
   // data to test the movie mini card list component
-  items = [
-    { image: 'https://primefaces.org/cdn/primeng/images/galleria/galleria1.jpg', text: 'Movie name 1', year: 2020 },
-    { image: 'https://primefaces.org/cdn/primeng/images/galleria/galleria2.jpg', text: 'Movie name 2', year: 2019 },
-    { image: 'https://primefaces.org/cdn/primeng/images/galleria/galleria3.jpg', text: 'Movie name 3', year: 2021 },
-    { image: 'https://primefaces.org/cdn/primeng/images/galleria/galleria4.jpg', text: 'Movie name 4', year: 2018 },
-    { image: 'https://primefaces.org/cdn/primeng/images/galleria/galleria5.jpg', text: 'Movie name 5', year: 2022 },
-    { image: 'https://primefaces.org/cdn/primeng/images/galleria/galleria6.jpg', text: 'Movie name 6', year: 2017 },
-    { image: 'https://primefaces.org/cdn/primeng/images/galleria/galleria7.jpg', text: 'Movie name 7', year: 2023 },
-    { image: 'https://primefaces.org/cdn/primeng/images/galleria/galleria8.jpg', text: 'Movie name 8', year: 2020 },
-    { image: 'https://primefaces.org/cdn/primeng/images/galleria/galleria9.jpg', text: 'Movie name 9', year: 2016 },
-    { image: 'https://primefaces.org/cdn/primeng/images/galleria/galleria10.jpg', text: 'Movie name 10', year: 2015 },
-    { image: 'https://primefaces.org/cdn/primeng/images/galleria/galleria11.jpg', text: 'Movie name 11', year: 2019 },
-    { image: 'https://primefaces.org/cdn/primeng/images/galleria/galleria12.jpg', text: 'Movie name 12', year: 2014 },
-    { image: 'https://primefaces.org/cdn/primeng/images/galleria/galleria13.jpg', text: 'Movie name 13', year: 2021 },
-    { image: 'https://primefaces.org/cdn/primeng/images/galleria/galleria14.jpg', text: 'Movie name 14', year: 2013 },
-    { image: 'https://primefaces.org/cdn/primeng/images/galleria/galleria15.jpg', text: 'Movie name 15', year: 2022 }
-  ];
+  items = [];
 
   // data to test the gallery component
-  public images: string[] = [
-    "https://primefaces.org/cdn/primeng/images/galleria/galleria1.jpg",
-    "https://primefaces.org/cdn/primeng/images/galleria/galleria2.jpg",
-    "https://primefaces.org/cdn/primeng/images/galleria/galleria3.jpg",
-    "https://primefaces.org/cdn/primeng/images/galleria/galleria4.jpg",
-    "https://primefaces.org/cdn/primeng/images/galleria/galleria5.jpg",
-    "https://primefaces.org/cdn/primeng/images/galleria/galleria6.jpg",
-    "https://primefaces.org/cdn/primeng/images/galleria/galleria7.jpg",
-    "https://primefaces.org/cdn/primeng/images/galleria/galleria8.jpg",
-    "https://primefaces.org/cdn/primeng/images/galleria/galleria9.jpg",
-    "https://primefaces.org/cdn/primeng/images/galleria/galleria10.jpg",
-    "https://primefaces.org/cdn/primeng/images/galleria/galleria11.jpg",
-    "https://primefaces.org/cdn/primeng/images/galleria/galleria12.jpg",
-    "https://primefaces.org/cdn/primeng/images/galleria/galleria13.jpg",
-    "https://primefaces.org/cdn/primeng/images/galleria/galleria14.jpg",
-    "https://primefaces.org/cdn/primeng/images/galleria/galleria15.jpg"
-  ];
+  public images: string[] = [];
 
+  public getMovie() {
+    this.imdbService.getActorById(this.id).subscribe(actor => {
+      this.actor = actor;
+      this.imgPath = actor?.images.find((image: any) => image.is_profile === true)?.url || '';  
+      this.images = actor?.images
+        .filter((image: any) => image.is_cover !== true)
+        .map((image: any) => image.url) || [];
+    });
+  }
+
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.id = params['id'];
+      this.getMovie();      
+    });
+  }
 }

@@ -54,4 +54,12 @@ export class IMDbService {
     return this.httpClient.get<Actor[]>(`${this.url}/actor`, { params });
   }
 
+  getActorById(id: string): Observable<Actor | undefined> {
+    return this.httpClient.get<Actor>(`${this.url}/actor/${id}`)
+      .pipe(
+        catchError(err => of(undefined))
+      )
+    ;
+  }
+
 }

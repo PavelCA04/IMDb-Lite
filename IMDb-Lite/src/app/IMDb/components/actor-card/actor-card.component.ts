@@ -10,6 +10,7 @@ import { CardModule } from 'primeng/card';
 })
 export class ActorCardComponent {
 
+  @Input() public id: string = '';
   @Input() public title: string = '';                                                     // actor's name
   @Input() public imgSource: string = '';                                                 // actor's image
   @Input() public numericValue: number = NaN;                                             // birth year
@@ -17,7 +18,6 @@ export class ActorCardComponent {
   constructor(private router: Router) {}
 
   public navigateToActor() : void {
-    const actorID = encodeURIComponent(this.title.trim());
-    this.router.navigate(['/actors', actorID]);
+    this.router.navigate(['/actors', this.id]);
   }
 }

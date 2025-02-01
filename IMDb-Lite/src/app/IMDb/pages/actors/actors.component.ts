@@ -129,7 +129,7 @@ export class ActorsComponent {
       const newCards: BaseCard[] = response.actors.map((actor: any) => ({
         id: actor._id,
         title: actor.name,
-        imgSource: "https://cdn.hmv.com/r/w-960/hmv/files/a0/a099c26d-4b1b-43c0-87ef-74d0d728f7b9.jpg",
+        imgSource: actor.images.find((image: any) => image.is_profile === true)?.url,
         numericValue: actor.birth_date.split('-')[0],
         type: 'actor'
       }));
