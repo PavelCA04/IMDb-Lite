@@ -19,27 +19,32 @@ import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocompl
 import { ActivatedRoute, Router } from '@angular/router';
 import { Actor, Movie, MovieInformation } from '../../interfaces/imdb.interfaces';
 import { IMDbService } from '../../services/imdb.service';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { ChipModule } from 'primeng/chip';
 
 @Component({
   selector: 'app-actor-form',
   imports: [
-    MainHeaderComponent, 
-    RatingModule, 
-    FormsModule, 
-    StepperModule, 
-    ButtonModule, 
+    MainHeaderComponent,
+    RatingModule,
+    FormsModule,
+    StepperModule,
+    ButtonModule,
     ReactiveFormsModule,
-    InplaceModule, 
-    DatePickerModule, 
-    TextareaModule, 
-    FileUploadModule, 
-    CommonModule, 
-    ToastModule, 
+    InplaceModule,
+    DatePickerModule,
+    TextareaModule,
+    FileUploadModule,
+    CommonModule,
+    ToastModule,
     HttpClientModule,
-    CardModule, 
+    CardModule,
     InputTextModule,
-     AutoCompleteModule
-    ],
+    AutoCompleteModule,
+    InputGroupModule,
+    ChipModule,
+    CommonModule
+  ],
   templateUrl: './actor-form.component.html',
   styleUrl: './actor-form.component.scss',
   providers: [MessageService]
@@ -52,7 +57,7 @@ export class ActorFormComponent {
   public edit: boolean = false;
   public formMode: 'new' | 'edit' = 'new';
   public items: any[] = [];
-  public value: any = []  ;
+  public value: any = [];
 
   private params: any = {};
 
@@ -78,10 +83,10 @@ export class ActorFormComponent {
     }
 
     this.edit = true;
-    this.formMode = 'edit';   
+    this.formMode = 'edit';
     this.route.params.subscribe(params => {
       this.id = params['id'];
-    }); 
+    });
 
     this.getActor();
   }
@@ -105,21 +110,21 @@ export class ActorFormComponent {
 
   search(event: AutoCompleteCompleteEvent) {
     let _items: MovieInformation[] = [];
-    
-    this.imdbService.getMovies({ limit: 10, title: event.query }).subscribe((response: any) => {      
+
+    this.imdbService.getMovies({ limit: 10, title: event.query }).subscribe((response: any) => {
       _items = response.movies.map((movie: any) => ({
-        movie_id: movie._id,  
+        movie_id: movie._id,
         title: movie.title,
       }));
       this.items = _items;
-    });    
+    });
   }
 
   public onSubmit(): void {
     if (this.value.length > 0 || this.validations()) {
       this.params.movies = this.value.map((movie: any) => ({
-        movie_id: movie.movie_id      
-     }));
+        movie_id: movie.movie_id
+      }));
     }
     if (this.actorForm.get('name') || this.validations()) {
       this.params.name = this.actorForm.get('name')?.value;
@@ -145,11 +150,11 @@ export class ActorFormComponent {
   public addActor(): void {
     if (this.value.length > 0) {
       this.params.movies = this.value.map((movie: any) => ({
-        movie_id: movie.movie_id      
-     }));
+        movie_id: movie.movie_id
+      }));
     }
     this.imdbService.addActor(this.params).subscribe(actor => {
-      if (actor){
+      if (actor) {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Actor submitted successfully!' });
       } else {
         this.messageService.add({ severity: 'error', summary: 'Fail', detail: 'Invalid, please complete all required fields.' });
@@ -158,7 +163,7 @@ export class ActorFormComponent {
   }
 
   public updateActor(): void {
-    this.imdbService.updateActor(this.id, this.params).subscribe(actor =>{
+    this.imdbService.updateActor(this.id, this.params).subscribe(actor => {
       this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Actor submitted successfully!' });
     });
     this.router.navigate(['/actors', this.id]);
@@ -173,18 +178,18 @@ export class ActorFormComponent {
       this.urls = actor?.images
         .filter((image: any) => image.is_profile === false)
         .map((image: any) => image.url) || [];
-    
+
       this.value = actor?.movies.map(movie => {
         return {
           movie_id: movie.movie_id,
           title: movie.title
         }
-      }) || [] ;
-      
+      }) || [];
+
       let mainImageUrl = actor?.images.find((image: any) => image.is_profile === true)?.url || null;
       this.actorForm.patchValue({ mainImageUrl: mainImageUrl || '' });
       console.log('Main Image', this.actorForm.get('mainImage')?.value);
-      
+
 
       this.images = actor?.images
         .filter((image: any) => image.is_cover !== true)
@@ -192,20 +197,21 @@ export class ActorFormComponent {
     });
   }
 
-  addUrl() {
-    const newUrl = this.actorForm.get('newUrl')?.value;    
+  public addUrl() {
+    const newUrl = this.actorForm.get('newUrl')?.value;
     if (newUrl) {
       this.urls.push(newUrl);
+      this.actorForm.get('newUrl')?.reset();
     }
   }
 
   public validations(): boolean {
-    if (this.edit){      
+    if (this.edit) {
       return false;
-    } else if(
-      this.actorForm.get('name')?.value 
-      && this.actorForm.get('birthDate')?.value 
-      && this.actorForm.get('biography')?.value 
+    } else if (
+      this.actorForm.get('name')?.value
+      && this.actorForm.get('birthDate')?.value
+      && this.actorForm.get('biography')?.value
     ) {
       return false;
     }

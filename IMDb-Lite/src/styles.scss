@@ -98,7 +98,20 @@
   --p-button-primary-hover-color: #cfcfcf;
   --p-button-primary-active-color: #cfcfcf;
 
+  // file upload styles
   --p-fileupload-background: #09090b;
+
+  // chip styles
+  --p-chip-border-radius: .5rem;
+  --p-chip-gap: 2rem;
+  --p-chip-remove-icon-color: #dd1234;
+  --p-chip-padding-x: 1rem;
+  --p-chip-padding-y: .8rem;
+  --p-chip-color: #cfcfcf;
+
+  // autocomplete styles
+  --p-autocomplete-option-selected-background: #9b141c88;
+  --p-autocomplete-option-selected-focus-background: #dd123488;
 }
 
 * {
