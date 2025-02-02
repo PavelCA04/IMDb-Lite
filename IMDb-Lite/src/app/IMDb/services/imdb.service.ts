@@ -73,4 +73,11 @@ export class IMDbService {
     return this.httpClient.post<Actor>(`${this.url}/actor`, actor)
   }
 
+  deleteActorById(id:string):Observable<Actor | undefined>{
+    return this.httpClient.delete<Actor>(`${this.url}/actor/${id}`)
+      .pipe(
+        catchError(err => of(undefined))
+      )
+  }
+
 }
