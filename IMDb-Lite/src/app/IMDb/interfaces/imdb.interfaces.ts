@@ -39,7 +39,7 @@ export interface Genre {
 }
 
 export interface Actor {
-  actor_id: string;
+  _id: string;
   name: string;
   birth_date: string;
   biography: string;
@@ -50,7 +50,7 @@ export interface Actor {
 export interface MovieInformation {
   movie_id: string;
   title: string;
-  images: Image[];
+  images?: Image[];
 }
 
 export interface Image {

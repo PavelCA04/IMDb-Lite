@@ -62,4 +62,15 @@ export class IMDbService {
     ;
   }
 
+  updateActor(id: string, params:any):Observable<Actor>{
+    if (!id){
+      throw new Error('El id es necesatio')
+    } 
+    return this.httpClient.patch<Actor>(`${this.url}/actor/${id}`, params)
+  }
+
+  addActor(actor:Actor):Observable<Actor>{
+    return this.httpClient.post<Actor>(`${this.url}/actor`, actor)
+  }
+
 }

@@ -28,39 +28,33 @@ import { CommonModule } from '@angular/common';
   styleUrl: './actor-page.component.scss'
 })
 export class ActorPageComponent {
-
-  public imgPath = '';
+  
   public id: string = '';
+  public imgPath: string = '';
   public actor: Actor | undefined = undefined;
+  public images: string[] = [];
 
   constructor(
     private imdbService: IMDbService,
     private route: ActivatedRoute
   ){}
 
-  // data to test the id of the url when edit
-  public actorName : string = 'actor';
-
-  // data to test the movie mini card list component
-  items = [];
-
-  // data to test the gallery component
-  public images: string[] = [];
-
-  public getMovie() {
+  public getActor() {
     this.imdbService.getActorById(this.id).subscribe(actor => {
       this.actor = actor;
+      console.log(this.actor);
+
       this.imgPath = actor?.images.find((image: any) => image.is_profile === true)?.url || '';  
       this.images = actor?.images
-        .filter((image: any) => image.is_cover !== true)
+        .filter((image: any) => image.is_profile === false)
         .map((image: any) => image.url) || [];
-    });
+      });
   }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.id = params['id'];
-      this.getMovie();      
+      this.getActor();      
     });
   }
 }
