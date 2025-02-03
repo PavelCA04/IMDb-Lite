@@ -62,25 +62,6 @@
             </ng-template>
           </p-inplace>
 
-          <p-inplace class="text-xs font-bold w-full">
-            <ng-template #display>
-              <span class="block max-w-[400px] break-words whitespace-normal" [ngClass]="{
-                'text-[#dd1234]': movieForm.get('director')?.touched && movieForm.get('director')?.invalid,
-                'text-[#cfcfcf]': !(movieForm.get('director')?.touched && movieForm.get('director')?.invalid)
-              }">
-                {{ movieForm.get('director')?.value || 'Add movie director' }}
-              </span>
-            </ng-template>
-            <ng-template #content let-closeCallback="closeCallback">
-              <span class="inline-flex items-center gap-2 w-full min-w-0">
-                <input type="text" pInputText autofocus formControlName="director" required="true" class="w-full"
-                  variant="filled" />
-
-                <button (click)="closeCallback($event)" pButton icon="pi pi-times" text severity="danger"></button>
-              </span>
-            </ng-template>
-          </p-inplace>
-
           <p-inplace class="text-xs uppercase">
             <ng-template #display>
               <span class="truncate" [ngClass]="{
@@ -154,7 +135,28 @@
 
             <p-step-panel [value]="3">
               <ng-template #content let-activateCallback="activateCallback">
-                <div class="flex flex-col">
+                <div class="flex flex-col gap-3">
+                  <div
+                    class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded-md bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium p-5">
+                    <p-inplace class="w-full">
+                      <ng-template #display>
+                        <span class="block max-w-[400px] break-words whitespace-normal" [ngClass]="{
+                          'text-[#dd1234]': movieForm.get('director')?.touched && movieForm.get('director')?.invalid,
+                          'text-[#cfcfcf]': !(movieForm.get('director')?.touched && movieForm.get('director')?.invalid)
+                        }">
+                          {{ movieForm.get('director')?.value || 'Add movie director' }}
+                        </span>
+                      </ng-template>
+                      <ng-template #content let-closeCallback="closeCallback">
+                        <span class="inline-flex items-center gap-2 w-full min-w-0">
+                          <input type="text" pInputText autofocus formControlName="director" required="true" class="w-full"
+                            variant="filled"/>
+          
+                          <button (click)="closeCallback($event)" pButton icon="pi pi-times" text severity="danger"></button>
+                        </span>
+                      </ng-template>
+                    </p-inplace>
+                  </div>
                   <div
                     class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded-md bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium p-5">
                     <p-autocomplete [(ngModel)]="value" [dropdown]="true" [suggestions]="items"
