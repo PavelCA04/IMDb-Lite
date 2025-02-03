@@ -39,34 +39,53 @@ export class MoviesComponent {
 
   private movies: Movie[] = [];
 
+  public searchParams: MovieSearchParams = {"limit": 16};
+
   public totalMovies = 120;
-  public pagination = 18;
+  public pagination = 16;
+  public cards: BaseCard[] = [];
 
   public selectedRating = undefined;
-  
   public selectedGenres: Genre[] = [];
-
   public searchQuery = '';
   
   public dates: Date[] | undefined;
   public minYear: Date = new Date(1950, 0, 1); 
   public maxYear: Date = new Date(); 
 
-
-  public searchParams: MovieSearchParams = {};
-
   constructor(
     private imdbService: IMDbService
   ){}
 
-  genres = [ 
+  // genre
+  genres = [
     { name: 'Action', value: 'action' },
+    { name: 'Adventure', value: 'adventure' },
+    { name: 'Animation', value: 'animation' },
+    { name: 'Biography', value: 'biography' },
     { name: 'Comedy', value: 'comedy' },
+    { name: 'Coming-of-Age', value: 'coming-of-age' },
+    { name: 'Crime', value: 'crime' },
+    { name: 'Dark Fantasy', value: 'dark-fantasy' },
+    { name: 'Documentary', value: 'documentary' },
     { name: 'Drama', value: 'drama' },
+    { name: 'Fantasy', value: 'fantasy' },
+    { name: 'Film Noir', value: 'film-noir' },
+    { name: 'Family', value: 'family' },
     { name: 'Horror', value: 'horror' },
+    { name: 'Historical', value: 'historical' },
+    { name: 'Mystery', value: 'mystery' },
+    { name: 'Psychological', value: 'psychological' },
+    { name: 'Romance', value: 'romance' },
+    { name: 'Sci-Fi', value: 'sci-fi' },
+    { name: 'Sport', value: 'sport' },
+    { name: 'Superhero', value: 'superhero' },
+    { name: 'Supernatural Fantasy', value: 'supernatural-fantasy' },
+    { name: 'Suspense', value: 'suspense' },
+    { name: 'Thriller', value: 'thriller' },
+    { name: 'Western', value: 'western' },
+    { name: 'War', value: 'war' }
   ]; //TODO: Remove this mock data and get the genres from the API
-
-  cards: BaseCard[] = [];
 
   getMovies(): void {
     this.imdbService.getMovies(this.searchParams).subscribe((response: any) => {
@@ -77,12 +96,11 @@ export class MoviesComponent {
         numericValue: movie.release_year,
         type: 'movie'
       }));      
-      this.cards = newCards;      
-      console.log(response);  
+      this.cards = newCards;
       
-
       this.totalMovies = response.totalMovies;
-      this.pagination = response.limit;      
+      this.pagination = response.limit;     
+      console.log(this.pagination); 
     });
   }
 

@@ -137,7 +137,7 @@
 
                     <ul class="flex flex-col gap-3">
                       <li *ngFor="let url of urls; let i = index">
-                        <div class="flex flex-row gap-3">
+                        <div class="flex flex-row gap-3 items-center">
                           <p-chip [label]="url" class="p-chip-gallery"></p-chip>
                           <p-button icon="pi pi-times" [rounded]="true" [text]="true" severity="danger" (click)="removeUrl(i)" />
                         </div>
