@@ -102,7 +102,7 @@ export class MovieFormComponent {
     });
 
     this.genreForm = new FormGroup({
-      selectedGenres: new FormControl<Genre[] | null>([{ name: 'Action', value: 'action' }])
+      selectedGenres: new FormControl<Genre[] | null>([])
     });
 
     this.genres = [
