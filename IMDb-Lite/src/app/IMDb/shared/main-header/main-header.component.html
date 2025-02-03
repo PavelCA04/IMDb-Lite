@@ -26,11 +26,9 @@
     <ng-template pTemplate="item" let-item>
       <div class="carousel-content">
         <img [src]="item.image" alt="{{ item.title }}" class="carousel-image" />
-        <!--<div class="carousel-info">
-          <h1>{{ item.title }}</h1>
-          <p>{{ item.description }}</p>
-          <button pButton label="Details" [rounded]="true" [raised]="true" severity="info" class="text-xs"></button>
-        </div>-->
+        <div class="z-10 text-3xl font-bold ml-5 mb-4 text-white ">
+          <h1 class="">{{ item.title }}</h1>
+        </div>
       </div>
     </ng-template>
   </p-carousel>
