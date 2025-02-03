@@ -78,4 +78,18 @@ export class IMDbService {
       )
   }
 
+  checkUserAdmin(): boolean {
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user).role === 'admin' : false;
+  }
+
+  checkUser(): boolean {
+    const user = localStorage.getItem('user');
+    return user ? true : false
+  }
+
+  logout(){
+    localStorage.removeItem('user')
+  }
+
 }

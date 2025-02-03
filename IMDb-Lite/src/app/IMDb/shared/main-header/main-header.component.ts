@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { CarouselModule } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { IMDbService } from '../../services/imdb.service';
 
 @Component({
   selector: 'shared-main-header',
@@ -10,6 +11,12 @@ import { RouterModule } from '@angular/router';
   styleUrl: './main-header.component.scss'
 })
 export class MainHeaderComponent {
+
+  constructor(
+    private imdbService: IMDbService,
+    private router: Router,
+  ) { }
+
   carouselItems = [
     {
       image: 'background.png',
@@ -27,5 +34,19 @@ export class MainHeaderComponent {
       description: 'A brief description about Interstellar.'
     }
   ];
+
+  public userAuth(): boolean {
+    return this.imdbService.checkUser();
+  }
+
+  public logout(): void {
+    this.imdbService.logout();
+    this.router.navigate(['/']);
+  }
+
+  public login(): void {
+    this.router.navigate(['/login']);
+  }
+
 }
 

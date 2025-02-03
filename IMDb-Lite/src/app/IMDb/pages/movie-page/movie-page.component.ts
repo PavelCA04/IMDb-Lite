@@ -66,4 +66,8 @@ export class MoviePageComponent {
       this.getMovie();
     });
   }
+
+  public userAuth(): boolean {
+    return this.imdbService.checkUserAdmin();
+  }
 }

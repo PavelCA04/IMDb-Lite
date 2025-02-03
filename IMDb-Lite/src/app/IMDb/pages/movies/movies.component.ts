@@ -135,4 +135,8 @@ export class MoviesComponent {
   ngOnInit(): void{
     this.getMovies();
   }
+
+  public userAuth(): boolean {
+    return this.imdbService.checkUserAdmin();
+  }
 }

@@ -189,4 +189,8 @@ export class ActorsComponent {
   ngOnInit(): void {
     this.getActors();
   }
+
+  public userAuth(): boolean {
+    return this.imdbService.checkUserAdmin();
+  }
 }

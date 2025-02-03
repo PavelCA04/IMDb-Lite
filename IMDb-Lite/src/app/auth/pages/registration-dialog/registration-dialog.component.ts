@@ -9,6 +9,8 @@ import { MessageService } from 'primeng/api';
 import { CommonModule } from '@angular/common';
 import { IMDbService } from '../../../IMDb/services/imdb.service';
 import { ToastModule } from 'primeng/toast';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registration-dialog',
@@ -25,7 +27,11 @@ export class RegistrationDialogComponent {
   email: string = '';
   password: string = '';
 
-  constructor(private registrationService: IMDbService, private messageService: MessageService) {}
+  constructor(
+    private authService: AuthService, 
+    private messageService: MessageService,
+    private router: Router
+  ) {}
 
   get isFormInvalid(): boolean {
     return !this.name.trim() || !this.email.trim() || !this.password.trim();
@@ -50,22 +56,25 @@ export class RegistrationDialogComponent {
 
   register() {
     console.log('register', this.name, this.email, this.password);
-    /*
     if (this.isFormInvalid) {
       this.messageService.add({ severity: 'warn', summary: 'Warning', detail: 'All fields are required.' });
       return;
     }
 
-    this.registrationService.register(this.name, this.email, this.password).subscribe({
-      next: () => {
+    this.authService.signUp({name: this.name, email: this.email, password: this.password}).subscribe({
+      next: (response: any) => {
+        localStorage.setItem('user', JSON.stringify(response));
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Registration successful!' });
         this.resetForm();
+        setTimeout(() => {
+          this.router.navigate(['/']);
+        }, 2000)
         this.closeDialog();
       },
       error: () => {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Registration failed. Try again.' });
       }
-    });*/
+    });
   }
 
   private resetForm() {

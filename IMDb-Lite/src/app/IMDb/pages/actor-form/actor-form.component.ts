@@ -172,7 +172,7 @@ export class ActorFormComponent {
       this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Actor submitted successfully!' });
       this.router.navigate(['/actors']);
     });
-    //this.router.navigate(['/actors', this.id]);
+    this.router.navigate(['/actors', this.id]);
   }
 
   public getActor() {

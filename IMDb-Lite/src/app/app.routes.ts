@@ -9,37 +9,51 @@ import { ActorFormComponent } from './IMDb/pages/actor-form/actor-form.component
 
 export const routes: Routes = [
   {
-    path: 'auth',
+    path: 'login',
     component: LoginPageComponent
-  }, {
+  }, 
+  {
+    path: 'signup',
+    component: LoginPageComponent
+  },
+  {
     path: 'movies',
     component: MoviesComponent
-  }, {
+  }, 
+  {
     path: 'movies/new',
     component: MovieFormComponent
-  }, {
+  }, 
+  {
     path: 'movies/edit/:id',
     component: MovieFormComponent
-  }, {
+  }, 
+  {
     path: 'movies/:id',
     component: MoviePageComponent
-  }, {
+  }, 
+  {
     path: 'actors',
     component: ActorsComponent
-  }, {
+  }, 
+  {
     path: 'actors/new',
     component: ActorFormComponent
-  }, {
+  }, 
+  {
     path: 'actors/edit/:id',
     component: ActorFormComponent
-  }, {
+  }, 
+  {
     path: 'actors/:id',
     component: ActorPageComponent
-  }, {
+  }, 
+  {
     path: '',
     redirectTo: 'movies',
     pathMatch: 'full'
-  }, {
+  }, 
+  {
     path: '**',
     redirectTo: 'movies'
   }

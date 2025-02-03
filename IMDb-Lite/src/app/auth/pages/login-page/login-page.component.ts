@@ -8,8 +8,10 @@ import { RegistrationDialogComponent } from '../registration-dialog/registration
 import { DialogModule } from 'primeng/dialog';
 import { MessageService } from 'primeng/api';
 import { CommonModule } from '@angular/common';
-import { IMDbService } from '../../../IMDb/services/imdb.service';
 import { ToastModule } from 'primeng/toast';
+import { AuthService } from '../../services/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
+
 @Component({
   selector: 'app-login-page',
   imports: [CardModule, ButtonModule, InputTextModule, FloatLabelModule, ReactiveFormsModule, RegistrationDialogComponent, DialogModule, CommonModule, ToastModule],
@@ -21,33 +23,42 @@ export class LoginPageComponent {
   loginForm: FormGroup;
   isRegistrationDialogVisible: boolean = false;
 
-  constructor(private fb: FormBuilder, private messageService: MessageService, private loginService: IMDbService) {
+  constructor(
+    private fb: FormBuilder, 
+    private messageService: MessageService, 
+    private loginService: AuthService,
+    private router: Router,
+  ) {
     this.loginForm = this.fb.group({
-      username: ['', [Validators.required]],
+      email: ['', [Validators.required]],
       password: ['', [Validators.required]],
     });
   }
 
   onLogin() {
     console.log('onLogin', this.loginForm.value);
-    /*
+    
     if (this.loginForm.invalid) {
       this.messageService.add({ severity: 'warn', summary: 'Warning', detail: 'Please fill in all fields.' });
       return;
     }
 
-    const { username, password } = this.loginForm.value;
+    const { email, password } = this.loginForm.value;
 
-    this.loginService.login(username, password).subscribe({
+    this.loginService.logIn({email, password}).subscribe({
       next: (response: any) => {
+        localStorage.setItem('user', JSON.stringify(response));
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Login successful!' });
-        console.log('User logged in:', response);
+        setTimeout(() => {
+          this.router.navigate(['/']);
+        }, 2000)
+        
       },
       error: (err: any) => {
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Invalid username or password.' });
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Invalid email or password.' });
         console.error('Login failed:', err);
       }
-    });*/
+    });
   }
 
   showRegistrationDialog() {

@@ -62,4 +62,8 @@ export class ActorPageComponent {
       this.getActor();      
     });
   }
+  
+  public userAuth(): boolean {
+    return this.imdbService.checkUserAdmin();
+  }
 }
