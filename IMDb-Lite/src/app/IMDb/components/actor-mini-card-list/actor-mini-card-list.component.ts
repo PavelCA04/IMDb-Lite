@@ -17,8 +17,8 @@ export class ActorMiniCardListComponent {
   @Input() public actors: CastMember[] | undefined = [];
   public url = 'actor/';
 
-  ngOnInit(){
-    console.log('Actor mini card', this.actors);
+  public getProfileImage(item: any): string {
+    return item.images?.find((img: any) => img.is_profile)?.url;
   }
   
 }

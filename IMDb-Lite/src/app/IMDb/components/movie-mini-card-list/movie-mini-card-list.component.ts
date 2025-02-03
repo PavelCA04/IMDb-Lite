@@ -14,6 +14,10 @@ import { MovieInformation } from '../../interfaces/imdb.interfaces';
 })
 export class MovieMiniCardListComponent {
 
-
   @Input() public movies: MovieInformation[] | undefined = [];
+
+  public getCoverImage(item: any): string {
+    return item.images?.find((img: any) => img.is_cover)?.url;
+  }
+
 }
