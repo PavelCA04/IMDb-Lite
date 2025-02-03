@@ -11,7 +11,7 @@
       <h1 class="text-3xl font-bold">{{movie?.title}}</h1>
       <p class="text-xs uppercase">{{ movie?.release_year}}</p>
       <div class="flex flex-row gap-3 justify-center items-center h-full min-h-[40px] cursor-auto mt-1">
-        <p-rating [(ngModel)]="movieRating" [stars]="10" class="h-full" [readonly]="true"></p-rating>
+        <p-rating [(ngModel)]="selectedRating" [stars]="10" class="h-full" [readonly]="true"></p-rating>
       </div>
       <div class="flex flex-row gap-3 justify-center">
         <button 

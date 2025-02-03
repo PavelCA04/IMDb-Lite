@@ -12,11 +12,11 @@
           <img 
             *ngIf="movieForm.get('mainImage')?.value" 
             [src]="movieForm.get('mainImage')?.value" 
-            alt="Actor Image"
+            alt="Movie Image"
             class="w-48 h-auto object-cover">
           <p *ngIf="!movieForm.get('mainImage')?.value" 
             class="absolute inset-0 flex items-center justify-center text-[#696969] text-center">
-            Click here to add the main image of the actor.
+            Click here to add the main image of the movie.
           </p>
         </div>
       </div>
@@ -29,7 +29,7 @@
                 'text-[#dd1234]': movieForm.get('mainImage')?.touched && movieForm.get('mainImage')?.invalid,
                 'text-[#cfcfcf]': !(movieForm.get('mainImage')?.touched && movieForm.get('mainImage')?.invalid)
               }">
-              {{ movieForm.get('mainImage')?.value || 'Add actor image url' }}
+              {{ movieForm.get('mainImage')?.value || 'Add movie image url' }}
             </span>
           </ng-template>
           <ng-template #content let-closeCallback="closeCallback">

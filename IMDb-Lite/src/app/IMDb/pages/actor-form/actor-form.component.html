@@ -23,7 +23,7 @@
                   'text-[#dd1234]': actorForm.get('mainImageUrl')?.touched && actorForm.get('mainImageUrl')?.invalid,
                   'text-[#cfcfcf]': !(actorForm.get('mainImageUrl')?.touched && actorForm.get('mainImageUrl')?.invalid)
                 }">
-              {{ actorForm.get('mainImageUrl')?.value || 'Add actor name' }}
+              {{ actorForm.get('mainImageUrl')?.value || 'Add actor image by URL' }}
             </span>
           </ng-template>
           <ng-template #content let-closeCallback="closeCallback">
