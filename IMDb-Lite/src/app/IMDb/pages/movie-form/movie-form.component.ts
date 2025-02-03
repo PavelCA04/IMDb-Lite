@@ -225,8 +225,9 @@ export class MovieFormComponent {
   public getMovie() {
     this.imdbService.getMovieById(this.id).subscribe(movie => {
       this.movieForm.patchValue({ title: movie?.title || '' });
-      this.movieForm.patchValue({ release_year: movie?.release_year || null });
-      this.movieForm.patchValue({ rating: new Date(movie?.rating || 0) });
+      this.movieForm.patchValue({ 
+        release_year: movie?.release_year ? new Date(movie.release_year, 0, 1) : null 
+      });            this.movieForm.patchValue({ rating: new Date(movie?.rating || 0) });
       this.movieForm.patchValue({ description: movie?.description || '' });
       this.movieForm.patchValue({ cast: movie?.cast || [] });
       this.movieForm.patchValue({ mainImage: movie?.images.find((image: any) => image.is_cover === true)?.url || null });
@@ -247,9 +248,7 @@ export class MovieFormComponent {
         return genreObj ? { name: genreObj.name, value: genreObj.value } : null;
       }).filter(Boolean) || [];
 
-      this.genreForm.patchValue({ selectedGenres });
-      console.log('Selected Genres', this.genreForm.get('selectedGenres')?.value);
-      
+      this.genreForm.patchValue({ selectedGenres });      
     });
   }
 

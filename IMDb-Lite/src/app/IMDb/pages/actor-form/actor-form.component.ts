@@ -180,7 +180,9 @@ export class ActorFormComponent {
     this.imdbService.getActorById(this.id).subscribe(actor => {
       this.actorForm.patchValue({ mainImage: actor?.images.find((image: any) => image.is_profile === true)?.url || undefined });
       this.actorForm.patchValue({ name: actor?.name || '' });
-      this.actorForm.patchValue({ birthDate: actor?.birth_date || undefined });
+      this.actorForm.patchValue({ 
+        birthDate: actor?.birth_date ? new Date(actor.birth_date) : null 
+      });    
       this.actorForm.patchValue({ biography: actor?.biography || '' });
       this.urls = actor?.images
         .filter((image: any) => image.is_profile === false)

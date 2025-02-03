@@ -41,7 +41,7 @@ export interface Genre {
 export interface Actor {
   _id: string;
   name: string;
-  birth_date: string;
+  birth_date: Date;
   biography: string;
   images: Image[];
   movies: MovieInformation[];
