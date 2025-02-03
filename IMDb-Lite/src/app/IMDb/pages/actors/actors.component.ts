@@ -36,7 +36,7 @@ export class ActorsComponent {
 
   public actors: Actor[] = [];
 
-  private searchParams: ActorSearchParams = {};
+  private searchParams: ActorSearchParams = {"limit": 12};
 
   public totalActors = 120;
   public pagination = 18;
