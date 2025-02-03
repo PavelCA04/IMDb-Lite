@@ -159,6 +159,7 @@ export class ActorFormComponent {
     this.imdbService.addActor(this.params).subscribe(actor => {
       if (actor) {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Actor submitted successfully!' });
+        this.router.navigate(['/actors']);
       } else {
         this.messageService.add({ severity: 'error', summary: 'Fail', detail: 'Invalid, please complete all required fields.' });
       }
@@ -169,6 +170,7 @@ export class ActorFormComponent {
     console.log('Params', this.params);
     this.imdbService.updateActor(this.id, this.params).subscribe(actor => {
       this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Actor submitted successfully!' });
+      this.router.navigate(['/actors']);
     });
     //this.router.navigate(['/actors', this.id]);
   }
