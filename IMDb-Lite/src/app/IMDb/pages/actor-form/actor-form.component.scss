@@ -1,0 +1,62 @@
+:host ::ng-deep .p-datepicker {
+  font-size: 10pt !important;
+}
+
+:host ::ng-deep .p-datepicker-calendar {
+  font-size: 10pt !important;
+}
+
+:host ::ng-deep .p-datepicker td {
+  font-size: 10pt !important;
+}
+
+:host ::ng-deep .p-datepicker th {
+  font-size: 10pt !important;
+}
+
+:host ::ng-deep .p-fileupload-choose-button {
+  background-color: #9b141c;
+  border-color: #9b141c;
+  color: #cfcfcf;
+}
+
+:host ::ng-deep .p-chip {
+  max-width: 47rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+
+:host ::ng-deep .p-chip-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex-grow: 1;
+  min-width: 0;
+}
+
+:host ::ng-deep {
+  --p-inputtext-border-color: #cfcfcf !important;
+  --p-inputtext-hover-border-color: #cfcfcf !important;
+  --p-inputtext-focus-border-color: #cfcfcf !important;
+  --p-card-body-padding: 0;
+}
+
+.p-chip-gallery {
+  width: 45rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+
+.p-chip-gallery label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex-grow: 1;
+  min-width: 0;
+}

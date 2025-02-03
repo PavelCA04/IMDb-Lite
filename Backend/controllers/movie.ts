@@ -4,12 +4,26 @@ import { ObjectId } from 'mongodb';
 
 const _limit: number = 18;
 
+interface Movie {
+  _id: ObjectId;
+  title: string;
+  genre: string[];
+  director: string;
+  cast: Cast[];
+  release_year: number;
+  rating: number;
+}
+
+interface Cast {
+  actor_id: string;
+  character_name: string;
+}
+
 const movieController = {
     createMovie: async (req: Request, res: Response): Promise<void> => {
         try {
           const { title, description, genre, director, cast, release_year, rating, images } = req.body;
-      
-          if (!title || typeof title !== 'string' || title.trim().length < 3) {
+          if (!title || title.trim().length < 3) {
             res.status(400).json({ message: 'Invalid title. It must be a non-empty string with at least 3 characters.' });
             return;
           }
@@ -19,22 +33,7 @@ const movieController = {
             return;
           }
       
-          if (!Array.isArray(genre) || genre.some((g) => typeof g !== 'string')) {
-            res.status(400).json({ message: 'Invalid genre. Provide an array of strings.' });
-            return;
-          }
-      
-          if (!director || typeof director !== 'string' || director.trim().length < 3) {
-            res.status(400).json({ message: 'Invalid director. It must be a non-empty string with at least 3 characters.' });
-            return;
-          }
-      
-          if (!Array.isArray(cast) || cast.some((c) => typeof c !== 'object' || !c.name)) {
-            res.status(400).json({ message: 'Invalid cast. Each cast member must be an object with a `name` field.' });
-            return;
-          }
-      
-          if (!release_year || typeof release_year !== 'number' || release_year < 1900 || release_year > new Date().getFullYear() + 1) {
+          if (!release_year) {
             res.status(400).json({ message: 'Invalid release year. Provide a valid year.' });
             return;
           }
@@ -53,7 +52,6 @@ const movieController = {
             title: title.trim(),
             description: description.trim(),
             genre,
-            director: director.trim(),
             cast,
             release_year,
             rating,
@@ -78,16 +76,40 @@ const movieController = {
         try {
           const db = await connectToDatabase();
           const collection = db.collection('Movie');
+          const actorCollection = db.collection('Actor');
       
           const page = parseInt(req.query.page as string) || 1;
           const limit = parseInt(req.query.limit as string) || _limit;
           const skip = (page - 1) * limit;
       
           const filters: any = {};
-          if (req.query.genre) filters.genre = req.query.genre;
+          if (req.query.genre) {
+            if (Array.isArray(req.query.genre)) {
+                filters.genre = { $in: req.query.genre }; 
+            } else {
+                filters.genre = req.query.genre;
+            }
+          }
+          if (req.query.title) { filters.title = { $regex: req.query.title, $options: 'i' } }
           if (req.query.director) filters.director = req.query.director;
-          if (req.query.release_year) filters.release_year = parseInt(req.query.release_year as string);
-          if (req.query.rating) filters.rating = { $gte: parseFloat(req.query.rating as string) };
+          if (req.query.release_year){
+            filters.release_year = parseInt(req.query.release_year as string);
+          } else if (req.query.year_start || req.query.year_end) {
+            filters.release_year = {};
+            if (req.query.year_start) {
+              filters.release_year.$gte = parseInt(req.query.year_start as string);
+            }
+            if (req.query.year_end) {
+              filters.release_year.$lte = parseInt(req.query.year_end as string);
+            }
+          }
+          if (req.query.rating) {
+            const rating = parseFloat(req.query.rating as string);
+            filters.rating = {
+                $gte: rating - 0.5,
+                $lte: rating + 0.5,
+            };
+          }
       
           const movies = await collection
             .find(filters)
@@ -96,13 +118,13 @@ const movieController = {
             .toArray();
       
           const totalMovies = await collection.countDocuments(filters);
-      
+
           res.status(200).json({
             page,
             limit,
             totalMovies,
             totalPages: Math.ceil(totalMovies / limit),
-            movies,
+            movies: movies,
           });
         } catch (error) {
           console.error('Error reading movies:', error);
@@ -111,35 +133,49 @@ const movieController = {
     },
       
     readMovieByID: async (req: Request, res: Response): Promise<void> => {
-        try {
+      try {
           const db = await connectToDatabase();
           const collection = db.collection('Movie');
-      
+          const actorCollection = db.collection('Actor');
+
           const { id } = req.params;
-      
+
           const movie = await collection.findOne({ _id: new ObjectId(id) });
-      
+
           if (!movie) {
-            res.status(404).json({ message: 'Movie not found.' });
-            return
+              res.status(404).json({ message: 'Movie not found.' });
+              return;
           }
-      
+
+          movie.cast = await Promise.all(
+            movie.cast.map(async (c: any) => {
+                const actorId = new ObjectId(c.actor_id);
+                const actor = await actorCollection.findOne({ _id: new ObjectId(actorId) });
+                
+                if (actor) {
+                    c.actor_name = actor.name;
+                    c.images = actor.images;
+                }
+                return c;
+            })
+          );
+
           res.status(200).json(movie);
-        } catch (error) {
-          console.error('Error reading movie by ID:', error);
-          res.status(500).json({ message: 'Internal Server Error' });
+      } catch (error) {
+            console.error('Error reading movie by ID:', error);
+            res.status(500).json({ message: 'Internal Server Error' });
         }
       },
       
       updateMovie: async (req: Request, res: Response): Promise<void> => {
         try {
           const db = await connectToDatabase();
-          const collection = db.collection('Movie');
+          const movieCollection = db.collection("Movie");
+          const actorCollection = db.collection("Actor");
       
           const { id } = req.params;
-      
           const { title, description, genre, director, cast, release_year, rating, images } = req.body;
-    
+      
           const updateData: any = {};
       
           if (title) updateData.title = title;
@@ -151,23 +187,35 @@ const movieController = {
           if (rating) updateData.rating = rating;
           if (images) updateData.images = images;
       
-          const result = await collection.updateOne(
-            { _id: new ObjectId(id) }, 
-            { $set: updateData } 
+          const result = await movieCollection.updateOne(
+            { _id: new ObjectId(id) },
+            { $set: updateData }
           );
       
           if (result.matchedCount === 0) {
-            res.status(404).json({ message: 'Movie not found' });
+            res.status(404).json({ message: "Movie not found" });
             return;
           }
       
-          const updatedMovie = await collection.findOne({ _id: new ObjectId(id) });
-          res.status(200).json({ message: 'Movie updated successfully', movie: updatedMovie });
+          if (cast) {
+            for (const actor of cast) {
+              const actorId = new ObjectId(actor.actor_id);
+              
+              await actorCollection.updateOne(
+                { _id: actorId },
+                { $addToSet: { movies: { movie_id: id } } }
+              );
+            }
+          }
+      
+          const updatedMovie = await movieCollection.findOne({ _id: new ObjectId(id) });
+          res.status(200).json({ message: "Movie updated successfully", movie: updatedMovie });
+      
         } catch (error) {
-          console.error('Error updating movie:', error);
-          res.status(500).json({ message: 'Internal Server Error' });
+          console.error("Error updating movie:", error);
+          res.status(500).json({ message: "Internal Server Error" });
         }
-    },
+      },
     deleteMovie: async (req: Request, res: Response): Promise<void> => {
         try {
           const db = await connectToDatabase();

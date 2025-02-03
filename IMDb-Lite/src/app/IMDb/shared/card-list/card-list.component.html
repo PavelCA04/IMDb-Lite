@@ -1,1 +1,22 @@
-<p>card-list works!</p>
+<div class="grid gap-6 m-4"
+  [ngClass]="displayedCards[0].type === 'movie' ? 'sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-8' : 'sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6'">
+
+  @for (card of cards; track $index) {
+    <div>
+      <movie-card 
+        *ngIf="card.type === 'movie'" 
+        [title]="card.title" 
+        [imgSource]="card.imgSource"
+        [numericValue]="card.numericValue"
+        [id]="card.id || ''">
+      </movie-card>
+      <actor-card 
+        *ngIf="card.type === 'actor'" 
+        [title]="card.title" 
+        [imgSource]="card.imgSource"
+        [numericValue]="card.numericValue"
+        [id]="card.id || ''">
+      </actor-card>
+    </div>
+  }
+</div>

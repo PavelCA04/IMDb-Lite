@@ -1,4 +1,6 @@
+@import "primeicons/primeicons.css";
 @layer tailwind-base, primeng, tailwind-utilities;
+
 
 @layer tailwind-base {
   @tailwind base;
@@ -10,28 +12,106 @@
 }
 
 :root {
-  --bright-blue: oklch(51.01% 0.274 263.83);
-  --electric-violet: oklch(53.18% 0.28 296.97);
-  --french-violet: oklch(47.66% 0.246 305.88);
-  --vivid-pink: oklch(69.02% 0.277 332.77);
-  --hot-red: oklch(61.42% 0.238 15.34);
-  --orange-red: oklch(63.32% 0.24 31.68);
+  // paginator styles
+  --p-paginator-nav-button-selected-background: #dd1234; 
+  --p-paginator-nav-button-focus-ring-color: #9b141c;
+  --p-paginator-border-radius: 1rem;
 
-  --gray-900: oklch(19.37% 0.006 300.98);
-  --gray-700: oklch(36.98% 0.014 302.71);
-  --gray-400: oklch(70.9% 0.015 304.04);
+  // carousel styles
+  --p-carousel-indicator-active-background:#fdfdfd;
+  --p-carousel-content-gap: 0rem;
 
-  --red-to-pink-to-purple-vertical-gradient: linear-gradient(180deg,
-      var(--orange-red) 0%,
-      var(--vivid-pink) 50%,
-      var(--electric-violet) 100%);
+  // dataview styles
+  --p-dataview-header-border-color: transparent;
+  --p-dataview-header-border-radius: .5rem;
+  --p-dataview-content-border-radius: .5rem;
 
-  --red-to-pink-to-purple-horizontal-gradient: linear-gradient(90deg,
-      var(--orange-red) 0%,
-      var(--vivid-pink) 50%,
-      var(--electric-violet) 100%);
+  // select sytles
+  --p-select-background: transparent;
+  --p-select-filled-background: transparent;
+  --p-select-filled-focus-background: transparent;
+  --p-select-filled-hover-background: transparent;
+  --p-select-color: #fdfdfd;
+  --p-select-focus-border-color: #fdfdfd88;
+  --p-select-option-selected-background: #9b141c88;
+  --p-select-option-selected-focus-background: #9b141c88;
+  --p-select-color: #fdfdfd88;
 
-  --pill-accent: var(--bright-blue);
+  // multiSelect styles
+  --p-multiselect-focus-border-color: #fdfdfd88;
+  --p-multiselect-filled-background: transparent;
+  --p-multiselect-filled-focus-background: transparent;
+  --p-multiselect-filled-hover-background: transparent;
+
+  // checkbox styles
+  --p-checkbox-checked-hover-background: transparent;
+  --p-checkbox-checked-background: transparent;
+  --p-checkbox-icon-color: #fdfdfd88;
+  --p-checkbox-icon-checked-color: #fdfdfdba;
+  --p-checkbox-icon-checked-hover-color: #fdfdfd;
+  --p-checkbox-hover-border-color: #dd1234;
+  --p-checkbox-checked-border-color: #dd1234;
+  --p-checkbox-checked-hover-border-color: #dd1234;
+  --p-checkbox-checked-focus-border-color: #dd1234;
+
+  // datepicker styles
+  --p-datepicker-header-border-color: #fdfdfd88;
+  --p-datepicker-date-selected-background	: #fdfdfd88;
+
+  // rating styles
+  --p-rating-icon-active-color	: #dd1234;
+  --p-rating-icon-hover-color	: #dd1234;
+  --p-datepicker-buttonbar-border-color: #dd1234;
+
+  // input styles
+  --p-inputtext-focus-border-color: #fdfdfd88;
+  --p-inputtext-filled-background: transparent;
+  --p-inputtext-filled-focus-background: transparent;
+  --p-inputtext-filled-hover-background: transparent;
+
+  // tabs styles
+  --p-tabs-tab-color: #fdfdfd;
+  --p-tabs-tab-active-color: #fdfdfd;
+  --p-tabs-tab-active-border-color: #fdfdfd;
+  --p-tabs-active-bar-background: #fdfdfd;
+  --p-tabs-tab-hover-color: #dd1234;
+  --p-tabs-tabpanel-padding: 0;
+
+  // text area styles
+  --p-textarea-color: #cfcfcf;
+
+  // file upload styles
+  --p-fileupload-progressbar-height: 0;
+  --p-fileupload-color: #cfcfcf;
+
+  // stepper styles
+  --p-stepper-step-title-active-color: #dd1234;
+  --p-stepper-step-number-active-color: #dd1234;
+  --p-stepper-step-number-active-border-color: #9b141c;
+  --p-stepper-steppanel-color: #cfcfcf;
+
+  // generic styles
+  --p-primary-color: #9b141c;
+  --p-primary-hover-color: #dd1234;
+  --p-primary-active-color: #dd1234;
+  --p-button-primary-color: #cfcfcf;
+  --p-button-primary-hover-color: #cfcfcf;
+  --p-button-primary-active-color: #cfcfcf;
+
+  // file upload styles
+  --p-fileupload-background: #09090b;
+
+  // chip styles
+  --p-chip-border-radius: .5rem;
+  --p-chip-gap: 2rem;
+  --p-chip-remove-icon-color: #dd1234;
+  --p-chip-padding-x: 1rem;
+  --p-chip-padding-y: .8rem;
+  --p-chip-color: #cfcfcf;
+
+  // autocomplete styles
+  --p-autocomplete-option-selected-background: #9b141c88;
+  --p-autocomplete-option-selected-focus-background: #dd123488;
 }
 
 * {
@@ -41,4 +121,24 @@
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: #cfcfcf;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(1.1);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+  }
 }

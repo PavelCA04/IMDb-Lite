@@ -1,0 +1,95 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment.development';
+import { catchError, Observable, of } from 'rxjs';
+import { Movie, Actor } from '../interfaces/imdb.interfaces';
+
+
+@Injectable({
+  providedIn: 'root'
+})
+export class IMDbService {
+
+  private url = environment.baseUrl;
+
+  constructor(
+    private httpClient: HttpClient
+  ) { }
+
+  getMovies(searchParams: { [key: string]: any } = {}): Observable<Movie[]> {
+    const params = new HttpParams({ fromObject: searchParams });
+    return this.httpClient.get<Movie[]>( `${this.url}/movie`, { params });
+  }
+  
+  getMovieById(id: string): Observable<Movie | undefined> {
+    return this.httpClient.get<Movie>(`${this.url}/movie/${id}`)
+      .pipe(
+        catchError(err => of(undefined))
+      )
+    ;
+  }
+
+  updateMovie(movie:Movie):Observable<Movie>{
+    if (!movie._id){
+      throw new Error('El id es necesatio')
+    } 
+    return this.httpClient.patch<Movie>(`${this.url}/movie/${movie._id}`, movie)
+  }
+
+  deleteMovieById(id:string):Observable<Movie | undefined>{
+    return this.httpClient.delete<Movie>(`${this.url}/movie/${id}`)
+      .pipe(
+        catchError(err => of(undefined))
+      )
+  }
+
+  addMovie(movie:Movie):Observable<Movie>{
+    return this.httpClient.post<Movie>(`${this.url}/movie`, movie)
+  }
+
+  getActors(searchParams: { [key: string]: any } = {}): Observable<Actor[]> {
+    const params = new HttpParams({ fromObject: searchParams });        
+    return this.httpClient.get<Actor[]>(`${this.url}/actor`, { params });
+  }
+
+  getActorById(id: string): Observable<Actor | undefined> {
+    return this.httpClient.get<Actor>(`${this.url}/actor/${id}`)
+      .pipe(
+        catchError(err => of(undefined))
+      )
+    ;
+  }
+
+  updateActor(id: string, params:any):Observable<Actor>{
+    if (!id){
+      throw new Error('El id es necesatio')
+    } 
+    return this.httpClient.patch<Actor>(`${this.url}/actor/${id}`, params)
+  }
+
+  addActor(actor:Actor):Observable<Actor>{
+    return this.httpClient.post<Actor>(`${this.url}/actor`, actor)
+  }
+
+  deleteActorById(id:string):Observable<Actor | undefined>{
+    return this.httpClient.delete<Actor>(`${this.url}/actor/${id}`)
+      .pipe(
+        catchError(err => of(undefined))
+      )
+  }
+
+  checkUserAdmin(): boolean {
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user).role === 'admin' : false;
+  }
+
+  checkUser(): boolean {
+    const user = localStorage.getItem('user');
+    return user ? true : false
+  }
+
+  logout(){
+    localStorage.removeItem('user')
+  }
+
+}

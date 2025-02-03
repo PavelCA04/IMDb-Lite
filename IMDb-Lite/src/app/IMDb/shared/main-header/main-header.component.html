@@ -1,1 +1,43 @@
-<p>main-header works!</p>
+<div class="custom-carousel">
+  <div class="header sticky">
+    <div class="logo-container flex justify-center items-center">
+      <img src="assets/logo.png" alt="Logo" class="h-16 p-3 hover:scale-105 transform transition duration-300 cursor-pointer" [routerLink]="['/']"/>
+    </div>
+    <div>
+      <button 
+        pButton icon="pi pi-sign-out text-xs" 
+        class="glass text-xs rounded-lg" 
+        (click)="userAuth() ? logout() : login()"
+        routerLinkActive="router-link-active">
+        {{ userAuth() ? 'Logout' : 'Login' }}
+      </button>
+    </div>
+  </div>
+
+  <p-carousel
+    [value]="carouselItems"
+    [numVisible]="1"
+    [circular]="true"
+    [autoplayInterval]="3000"
+    [showIndicators]="true"
+    [showNavigators]="false"
+    class="custom-carousel"
+  >
+    <ng-template pTemplate="item" let-item>
+      <div class="carousel-content">
+        <img [src]="item.image" alt="{{ item.title }}" class="carousel-image" />
+        <div class="z-10 text-3xl font-bold ml-5 mb-4 text-white ">
+          <h1 class="">{{ item.title }}</h1>
+        </div>
+      </div>
+    </ng-template>
+  </p-carousel>
+
+  <div class="floating-buttons flex gap-4">
+    <button pButton icon="pi pi-video text-sm" class="glass rounded-full w-10 h-10 flex items-center justify-center" [routerLink]="['/movies']">
+    </button>
+    <button pButton icon="pi pi-star text-sm" class="glass rounded-full w-10 h-10 flex items-center justify-center" [routerLink]="['/actors']">
+    </button>
+</div>
+
+</div>

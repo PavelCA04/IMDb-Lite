@@ -7,6 +7,22 @@ dotenv.config();
 
 const _limit: number = 12;
 
+interface Movie {
+  _id: ObjectId;
+  title: string;
+  images: { url: string; is_cover: boolean }[];
+  cast: { actor_id: ObjectId; character_name: string }[];
+}
+
+interface Actor {
+  _id: ObjectId;
+  name: string;
+  birth_date: string;
+  biography: string;
+  images: { url: string; is_profile: boolean }[];
+  movies: { movie_id: ObjectId; character_name: string, title?: string }[];
+}
+
 const actorController = {
     createActor: async (req: Request, res: Response): Promise<void> => {
         try {
@@ -27,13 +43,8 @@ const actorController = {
             return;
           }
       
-          if (!Array.isArray(images) || images.some((img) => typeof img !== 'string')) {
+          if (!Array.isArray(images)) {
             res.status(400).json({ message: 'Invalid images. Provide an array of strings.' });
-            return;
-          }
-      
-          if (!Array.isArray(movies) || movies.some((movie) => typeof movie !== 'string')) {
-            res.status(400).json({ message: 'Invalid movies. Provide an array of strings.' });
             return;
           }
       
@@ -61,75 +72,103 @@ const actorController = {
         }
     },
     readActors: async (req: Request, res: Response): Promise<void> => {
-        try {
+      try {
           const db = await connectToDatabase();
           const collection = db.collection('Actor');
       
           const page = parseInt(req.query.page as string) || 1;
           const limit = parseInt(req.query.limit as string) || _limit;
           const skip = (page - 1) * limit;
-            
-          const pipeline = [
-            { $skip: skip },
-            { $limit: limit },
-            { $project: { _id: 1, name: 1, birth_date: 1, biography: 1, images: 1, movies: 1 } }
-          ];
-      
-          const actors = await collection.aggregate(pipeline).toArray();
-            
-          if (actors.length === 0) {
-            res.status(404).json({ message: 'No actors found' });
-          } else {
-            res.status(200).json({
-              page,
-              limit,
-              totalActors: actors.length,
-              actors,
-            });
+
+          const filters: any = {};
+
+          if (req.query.name) { filters.name = { $regex: req.query.name, $options: 'i' } }
+          if (req.query.birth_date) {
+            const birthYear = parseInt(req.query.birth_date as string);
+            filters.birth_date = {
+                $regex: `^${birthYear}`,
+            };
+        }
+
+          const sort: any = {};
+          if (req.query.sort === 'asc') {
+            sort.name = 1;
+          } else if (req.query.sort === 'desc') {
+            sort.name = -1;
           }
+
+          const actors = await collection
+          .find(filters)
+          .sort(sort)
+          .skip(skip)
+          .limit(limit)
+          .toArray();
+
+          const totalActors = await collection.countDocuments(filters);
+
+          res.status(200).json({
+            page,
+            limit,
+            totalActors,
+            totalPages: Math.ceil(totalActors / limit),
+            actors,
+          });
+          
         } catch (error) {
           console.error('Error reading actors:', error);
           res.status(500).json({ message: 'Internal Server Error' });
         }
     },
     readActorByID: async (req: Request, res: Response): Promise<void> => {
-        try {
+      try {
           const db = await connectToDatabase();
-          const collection = db.collection('Actor');
-      
-          const actor = await collection.findOne({ _id: new ObjectId(req.params.id) });
-      
+          const actorCollection = db.collection<Actor>('Actor');
+          const movieCollection = db.collection<Movie>('Movie');
+  
+          const actorId = req.params.id;
+          const actor = await actorCollection.findOne({ _id: new ObjectId(actorId) });
+  
           if (!actor) {
-            res.status(404).json({ message: 'Actor not found' });
-          } else {
-            res.status(200).json({
-              name: actor.name,
-              birth_date: actor.birth_date,
-              biography: actor.biography,
-              images: actor.images,
-              movies: actor.movies,
-            });
+              res.status(404).json({ message: 'Actor not found' });
+              return;
           }
-        } catch (error) {
+  
+          actor.movies = await Promise.all(
+              actor.movies.map(async (movie) => {
+                  const movieId = movie.movie_id;
+                  const movieData = await movieCollection.findOne({ _id: new ObjectId( movieId) });
+  
+                  return {
+                      ...movie,
+                      title: movieData?.title || 'Unknown Title',
+                      images: movieData?.images
+                  };
+              })
+          );
+            res.status(200).json(actor);
+      } catch (error) {
           console.error('Error reading actor by ID:', error);
           res.status(500).json({ message: 'Internal Server Error' });
-        }
-    },
+      }
+  }
+  ,
+  
+  
     updateActor: async (req: Request, res: Response): Promise<void> => {
         try {
           const db = await connectToDatabase();
           const collection = db.collection('Actor');
-      
+          
           const actorId = new ObjectId(req.params.id);
           const updateFields = req.body;
       
           const actorToUpdate = await collection.findOne({ _id: actorId });
-      
+          
           if (!actorToUpdate) {
             res.status(404).json({ message: 'Actor not found' });
             return;
           }
-      
+
           const result = await collection.updateOne(
             { _id: actorId },
             { $set: updateFields }

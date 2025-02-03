@@ -1,11 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { GalleriaModule } from 'primeng/galleria';
 
 @Component({
-  selector: 'app-gallery',
-  imports: [],
+  selector: 'shared-gallery',
+  imports: [GalleriaModule],
   templateUrl: './gallery.component.html',
-  styleUrl: './gallery.component.scss'
+  styleUrls: ['./gallery.component.scss']
 })
 export class GalleryComponent {
+
+  @Input() public images:string[] = [];
 
 }

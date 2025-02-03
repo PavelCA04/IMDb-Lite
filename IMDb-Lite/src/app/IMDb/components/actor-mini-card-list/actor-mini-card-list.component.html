@@ -1,0 +1,22 @@
+<div class="w-full">
+  <p-dataview [value]="actors" [rows]="6" [paginator]="true" [pageLinks]="3" [style]="{ fontSize: '10pt' }" class="text-center">
+    <ng-template #list let-items>
+      <div class="grid grid-cols-3 divide-y-2 divide-[transparent]">
+        <div *ngFor="let item of items">
+          <a [href]="url + item.actor_id" target="_blank">
+            <div class="flex flex-row items-center py-4 rounded-md shadow-lg dark:bg-transparent gap-5">
+              <!-- Assuming each actor has an image array -->
+              <img class="w-16 h-16 object-cover rounded-full" [src]="item.images?.[0]?.url" [alt]="item.actor_name" />
+              <div class="flex flex-col gap-2 w-full text-left">
+                <!-- Display actor's name -->
+                <h2 class="text-sm">{{ item.actor_name || 'Unknown Actor' }}</h2>
+                <!-- Display character's name -->
+                <p class="text-xs text-gray-500">{{ item.character_name }}</p>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </ng-template>
+  </p-dataview>
+</div>

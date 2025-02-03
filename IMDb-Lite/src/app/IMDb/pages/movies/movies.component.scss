@@ -1,0 +1,25 @@
+p-floatLabel label {
+  background: #121212;
+  color: #cfcfcf;
+}
+
+::ng-deep .p-datepicker-prev-button, 
+::ng-deep .p-datepicker-next-button  {
+  color: #fdfdfd;
+
+  &:active {
+    background-color: #44010588;
+  }
+
+  &:hover {
+    background-color: #44010588;
+  }
+
+  &:focus {
+    border-color: #44010588;
+  }
+}
+
+:host ::ng-deep .p-datepicker-clear-button {
+  margin-left: 1rem;
+}

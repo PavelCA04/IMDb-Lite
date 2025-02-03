@@ -1,1 +1,37 @@
-<p>login-page works!</p>
+<p-toast></p-toast>
+
+
+<div class="background-container h-screen w-full">
+  <div class="logo-container flex justify-center items-center">
+    <img src="assets/logo.png" alt="Logo" class="h-16 p-3 hover:scale-105 transform transition duration-300"/>
+  </div>
+  
+
+  <div class="login-card-container flex justify-center items-center w-full h-full">
+    <div class="glass-card p-6 w-[30%]">
+      <h1 class="text-center">Welcome!</h1>
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+        <div class="flex flex-col gap-7">
+          <p-floatLabel>
+            <input pInputText type="text" id="email" formControlName="email" autocomplete="off" placeholder=" "
+              class="w-full glass-input" />
+            <label for="email">Email</label>
+          </p-floatLabel>
+
+          <p-floatLabel>
+            <input pInputText id="password" type="password" formControlName="password" autocomplete="off"
+              placeholder=" " class="w-full glass-input" />
+            <label for="password">Password</label>
+          </p-floatLabel>
+
+          <div class="text-right flex justify-between">
+            <button pButton label="Register" variant="outlined" size="small" class="glass-input px-3" (click)="showRegistrationDialog()"></button>
+            <button pButton label="Sign in" variant="outlined" [disabled]="loginForm.invalid" size="small" class="glass-input px-3" (click)="onLogin()"></button>
+          </div>          
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<app-registration-dialog [(visible)]="isRegistrationDialogVisible"></app-registration-dialog>

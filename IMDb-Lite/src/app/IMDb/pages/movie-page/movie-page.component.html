@@ -1,1 +1,65 @@
-<p>movie-page works!</p>
+<div class="relative w-full h-[17rem] overflow-hidden">
+  <shared-main-header></shared-main-header>
+</div>
+
+<div class="relative z-10 -mt-28 mx-20 flex flex-row gap-10 mb-10">
+
+  <div class="flex flex-col gap-6 items-center flex-none basis-3/12">
+    <img src="{{imgPath}}" alt=""
+      class="w-48 h-auto object-cover">
+    <div class="flex flex-col gap-3 text-center">
+      <h1 class="text-3xl font-bold">{{movie?.title}}</h1>
+      <p class="text-xs uppercase">{{ movie?.release_year}}</p>
+      <div class="flex flex-row gap-3 justify-center items-center h-full min-h-[40px] cursor-auto mt-1">
+        <p-rating [(ngModel)]="selectedRating" [stars]="10" class="h-full" [readonly]="true"></p-rating>
+      </div>
+      @if(userAuth() && movie){
+        <div class="flex flex-row gap-3 justify-center">
+          <button 
+            pButton icon="pi pi-pencil"  
+            class="glass h-12 w-12 rounded-full"
+            [routerLink]="['/movies/edit', movie?._id]"></button>
+          <shared-delete-btn></shared-delete-btn>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="mt-36 w-full">
+    <p-card class="w-full">
+      <p-tabs value="0" class="p-3">
+        <p-tablist>
+          <p-tab value="0">About</p-tab>
+          <p-tab value="1">Cast</p-tab>
+          <p-tab value="2">Gallery</p-tab>
+        </p-tablist>
+        <p-tabpanels>
+          <p-tabpanel value="0">
+            <div class="m-0 mt-3 p-[1.3rem] flex flex-col gap-3">
+              <h2 class="font-bold text-xl">Genre</h2>
+            <div class="flex flex-row gap-3">
+              @for (item of movie?.genre; track $index) {
+                <p-chip class="px-4"><span class="text-sm">{{item}}</span></p-chip>
+              }
+            </div>
+            <p-divider />
+            <h2 class="font-bold text-xl">Synopsis</h2>
+            <p class="text-sm">{{movie?.description}}</p>
+            </div>
+          </p-tabpanel>
+          <p-tabpanel value="1">
+            <p class="m-0 mt-5 px-[1.3rem]">
+              <actor-mini-card-list [actors]="movie?.cast"></actor-mini-card-list>
+            </p>
+          </p-tabpanel>
+          <p-tabpanel value="2">
+            <p class="m-0 mt-5">
+              <shared-gallery [images]="images"></shared-gallery>
+            </p>
+          </p-tabpanel>
+        </p-tabpanels>
+      </p-tabs>
+    </p-card>
+  </div>
+
+</div>

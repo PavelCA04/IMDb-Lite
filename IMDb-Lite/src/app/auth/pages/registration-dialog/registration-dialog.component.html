@@ -1,0 +1,78 @@
+<p-toast></p-toast>
+
+<div class="card flex justify-center">
+  <p-dialog
+    maskStyleClass="backdrop-blur-sm"
+    [(visible)]="visible"
+    styleClass="!border-0 !bg-transparent"
+  >
+    <ng-template #headless>
+      <div
+        class="flex flex-col px-6 py-6 gap-6 rounded-xl"
+        style="border-radius: 8px; background: linear-gradient(to bottom, #240d0e, #5a0f0f, #7d1414, #a01515)"
+      >
+        <img
+          src="assets/logo.png"
+          alt="Logo"
+          class="block mx-auto w-full max-w-xs hover:scale-105 transform transition duration-300"
+        />
+
+        <div class="inline-flex flex-col gap-7">
+          <p-floatLabel>
+            <input
+              pInputText
+              id="name"
+              [(ngModel)]="name"
+              class="!bg-white/20 !border-0 !p-3 !text-primary-50 w-80 text-sm"
+            />
+            <label for="name" class="text-primary-50 text-sm font-medium">Name</label>
+          </p-floatLabel>
+        </div>
+
+        <div class="inline-flex flex-col gap-7">
+          <p-floatLabel>
+            <input
+              pInputText
+              id="email"
+              [(ngModel)]="email"
+              class="!bg-white/20 !border-0 !p-3 !text-primary-50 w-80 text-sm"
+              type="email"
+            />
+            <label for="email" class="text-primary-50 text-sm font-medium">Email</label>
+          </p-floatLabel>
+        </div>
+
+        <div class="inline-flex flex-col gap-7">
+          <p-floatLabel>
+            <input
+              pInputText
+              id="password"
+              [(ngModel)]="password"
+              class="!bg-white/20 !border-0 !p-3 !text-primary-50 w-80 text-sm"
+              type="password"
+            />
+            <label for="password" class="text-primary-50 text-sm font-medium">Password</label>
+          </p-floatLabel>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <p-button
+            label="Cancel"
+            (click)="closeDialog()"
+            [text]="true"
+            styleClass="!p-3 w-full !text-primary-50 !border !border-white/30 hover:!bg-white/10 text-sm"
+            class="w-full"
+          ></p-button>
+          <p-button
+            label="Register"
+            (click)="register()"
+            [text]="true"
+            [disabled]="isFormInvalid"
+            styleClass="!p-3 w-full !text-primary-50 !border !border-white/30 hover:!bg-white/10 text-sm"
+            class="w-full"
+          ></p-button>
+        </div>
+      </div>
+    </ng-template>
+  </p-dialog>
+</div>

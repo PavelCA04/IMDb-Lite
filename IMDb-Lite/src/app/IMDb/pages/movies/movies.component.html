@@ -1,1 +1,92 @@
-<p>movies works!</p>
+<div class="flex flex-col space-y-6">
+  <!-- Header -->
+  <shared-main-header></shared-main-header>
+
+  <!-- Filters -->
+  <div class="flex flex-wrap items-center justify-between p-0 bg-grey-300 rounded-md shadow">
+    <!-- Left Filters -->
+    <div class="flex flex-wrap items-start space-x-4">
+      <!-- Genre MultiSelect -->
+      <div class="flex flex-col space-y-1 ml-4">
+        <label for="genre" class="text-md font-medium text-center mb-2">Genre</label>
+        <p-multiSelect (onChange)="handleGenreChange($event)" [options]="genres" [(ngModel)]="selectedGenres" optionLabel="name" placeholder="Select genre"
+          class="w-64 h-full min-h-[40px]" display="chip" variant="filled"></p-multiSelect>
+      </div>
+
+      <!-- Year Range Filter -->
+      <div class="flex flex-col space-y-1" style="margin-left: 1.5rem;">
+        <label for="yearRange" class="text-md font-medium text-center mb-2">Year</label>
+        <p-datepicker 
+          [(ngModel)]="dates"
+          selectionMode="range" 
+          view="year" 
+          [showIcon]="true"
+          [iconDisplay]="'input'"
+          placeholder="Select year range" 
+          class="w-full h-full min-h-[40px]" 
+          variant="filled"
+          [dateFormat]="'yy'"
+          [minDate]="minYear" 
+          [maxDate]="maxYear"
+          [showClear]="true"
+          (onClear)="handleYearChange($event)"
+          (onSelect)="handleYearChange($event)">
+        </p-datepicker>
+      </div>
+
+      <!-- Rating Filter -->
+      <div class="flex flex-col space-y-1" style="margin-left: 2rem; min-height: 40px;">
+        <label for="rating" class="text-md font-medium text-center mb-2">Rating</label>
+        <div class="flex flex-row gap-3 justify-center items-center h-full min-h-[40px]">
+          <p-rating (ngModelChange)="handleRatingChange($event)" [(ngModel)]="selectedRating" [stars]="10" class="h-full"></p-rating>
+          <span class="text-md text-center font-bold">{{ selectedRating }}</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right Controls: Search Bar and Add Button -->
+    <div class="flex items-center space-x-2 pr-4 h-full">
+      <!-- Search Bar -->
+      <div class="flex flex-col space-y-1">
+        <label for="rating" class="text-md font-medium text-center mb-2">Search</label>
+        <div class="relative flex items-center h-full w-full">
+          <input (keydown.enter)="handleSearch($event)" type="text" id="search" pInputText [(ngModel)]="searchQuery" placeholder="Search movies"
+            class="w-full p-2 pr-10 border rounded-md h-full min-h-[40px]" variant="filled" />
+          <!-- Search Icon -->
+          <i class="pi pi-search absolute right-3 text-[#cfcfcf]"></i>
+        </div>
+      </div>
+
+      <!-- Add Button -->
+       @if(userAuth()){
+        <div class="flex flex-col space-y-1">
+          <label for="rating" class="text-md font-medium text-center mb-2">Add</label>
+          <button pButton icon="pi pi-plus" class="glass h-full min-h-[40px]" [routerLink]="['/movies/new']"></button>
+        </div>
+       }
+    </div>
+
+  </div>
+
+  @if(cards.length > 0){
+    <!-- Cards List -->
+    <shared-card-list [cards]="cards"></shared-card-list>
+
+    <!-- Footer -->
+    <div class="flex justify-center w-full" style="margin-bottom: 2rem; margin-top: .8rem;">
+      <p-paginator 
+        [style]="{ borderRadius: '.8rem', color: '#fff', fontSize: '10pt' }" 
+        [rows]="pagination" 
+        [totalRecords]="totalMovies" 
+        (onPageChange)="handlePageChange($event)" 
+        class="w-[50%]">
+      </p-paginator>
+    </div>
+  }
+  @else {
+    <div class="flex justify-center items-center h-96">
+      <p class="text-2xl font-bold text-gray-400">There is nothing here...</p>
+    </div>
+  }
+</div>

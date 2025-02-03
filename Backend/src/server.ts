@@ -10,12 +10,15 @@ const app = express();
 
 const port = process.env.SERVER_PORT;
 
-const allowedOrigins = ['http://localhost:3000'];
+const allowedOrigins = [
+    'http://localhost:3000',
+    'http://localhost:4200'
+];
 
 const corsOptions: cors.CorsOptions = {
   origin: allowedOrigins,
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
   allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
 };
 
