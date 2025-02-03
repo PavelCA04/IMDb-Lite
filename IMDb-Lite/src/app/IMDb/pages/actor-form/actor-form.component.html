@@ -3,17 +3,17 @@
 </div>
 
 <form [formGroup]="actorForm">
-  <div class="relative z-10 -mt-36 mx-20 flex flex-row gap-10 mb-10">
+  <div class="relative z-10 -mt-28 mx-20 flex flex-row gap-10 mb-10">
     <div class="flex flex-col gap-6 items-center flex-none basis-3/12">
 
       <div class="flex flex-col gap-2 text-center">
-        <div class="w-64 h-64 border-2 border-dashed border-surface-200 dark:border-surface-700 rounded-full bg-surface-50 dark:bg-surface-950 font-medium flex relative overflow-hidden">
+        <div class="w-56 h-56 border-2 border-dashed border-surface-200 dark:border-surface-700 rounded-full bg-surface-50 dark:bg-surface-950 font-medium flex relative overflow-hidden">
           <p-toast></p-toast>
           <img *ngIf="actorForm.get('mainImageUrl')?.value" [src]="actorForm.get('mainImageUrl')?.value" alt="Actor Image"
             class="absolute inset-0 w-full h-full object-cover rounded-full">
           <p *ngIf="!actorForm.get('mainImageUrl')?.value"
-            class="absolute inset-0 flex items-center justify-center text-[#696969] text-center">
-            Click here to add the main image of the actor.
+            class="absolute inset-0 flex items-center justify-center text-[#696969] text-center m-2">
+            Enter a URL in the input below to upload the actor's main image.
           </p>
         </div>
   
@@ -79,7 +79,7 @@
       </div>
     </div>
 
-    <div class="mt-44 w-full">
+    <div class="mt-36 w-full">
       <div class="card flex justify-center">
         <p-stepper [value]="1" class="basis-[50rem]">
           <p-step-list>
@@ -137,9 +137,10 @@
 
                     <ul class="flex flex-col gap-3">
                       <li *ngFor="let url of urls; let i = index">
-                        <p-chip [label]="url" [removable]="true" (onRemove)="removeUrl(i)"
-                          class="overflow-hidden truncate-chip">
-                        </p-chip>
+                        <div class="flex flex-row gap-3">
+                          <p-chip [label]="url" class="p-chip-gallery"></p-chip>
+                          <p-button icon="pi pi-times" [rounded]="true" [text]="true" severity="danger" (click)="removeUrl(i)" />
+                        </div>
                       </li>
                     </ul>
                   </div>

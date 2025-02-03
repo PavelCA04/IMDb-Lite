@@ -19,3 +19,7 @@ p-floatLabel label {
     border-color: #44010588;
   }
 }
+
+:host ::ng-deep .p-datepicker-clear-button {
+  margin-left: 1rem;
+}

@@ -19,6 +19,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ActorInformation, Movie } from '../../interfaces/imdb.interfaces';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { ChipModule } from 'primeng/chip';
 
 @Component({
   selector: 'app-movie-form',
@@ -38,7 +40,9 @@ import { ActorInformation, Movie } from '../../interfaces/imdb.interfaces';
     HttpClientModule,
     CardModule, 
     InputTextModule, 
-    AutoCompleteModule
+    AutoCompleteModule,
+    InputGroupModule,
+    ChipModule
   ],
   templateUrl: './movie-form.component.html',
   styleUrl: './movie-form.component.scss',
@@ -49,7 +53,6 @@ export class MovieFormComponent {
   public uploadedFiles: any[] = [];                                                       // files received for the images
   public castSuggestions: any[] = [];                                                     // cast (actors) suggestions for autocomplete
   public formMode: 'new' | 'edit' = 'new';    
-  
   
   public movie: Movie | undefined = undefined;
   public id: string = '';
@@ -67,7 +70,6 @@ export class MovieFormComponent {
     images: new FormControl<File[] | null>(null),
     newUrl: new FormControl<string>(''),
   });
-  
 
   constructor(
     private messageService: MessageService,

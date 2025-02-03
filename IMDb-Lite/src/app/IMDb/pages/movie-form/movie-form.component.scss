@@ -26,3 +26,20 @@
   --p-inputtext-focus-border-color: #cfcfcf !important;
   --p-card-body-padding: 0;
 }
+
+.p-chip-gallery {
+  width: 44rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+
+.p-chip-gallery label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex-grow: 1;
+  min-width: 0;
+}
