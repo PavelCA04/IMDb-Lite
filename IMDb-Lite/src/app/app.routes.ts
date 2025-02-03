@@ -6,6 +6,7 @@ import { ActorPageComponent } from './IMDb/pages/actor-page/actor-page.component
 import { MoviePageComponent } from './IMDb/pages/movie-page/movie-page.component';
 import { MovieFormComponent } from './IMDb/pages/movie-form/movie-form.component';
 import { ActorFormComponent } from './IMDb/pages/actor-form/actor-form.component';
+import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -22,11 +23,13 @@ export const routes: Routes = [
   }, 
   {
     path: 'movies/new',
-    component: MovieFormComponent
+    component: MovieFormComponent,
+    canActivate: [AuthGuard] 
   }, 
   {
     path: 'movies/edit/:id',
-    component: MovieFormComponent
+    component: MovieFormComponent,
+    canActivate: [AuthGuard]
   }, 
   {
     path: 'movies/:id',
@@ -38,11 +41,13 @@ export const routes: Routes = [
   }, 
   {
     path: 'actors/new',
-    component: ActorFormComponent
+    component: ActorFormComponent,
+    canActivate: [AuthGuard]
   }, 
   {
     path: 'actors/edit/:id',
-    component: ActorFormComponent
+    component: ActorFormComponent,
+    canActivate: [AuthGuard]
   }, 
   {
     path: 'actors/:id',
