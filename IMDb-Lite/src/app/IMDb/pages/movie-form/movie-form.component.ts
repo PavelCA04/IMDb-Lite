@@ -18,12 +18,27 @@ import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ActorInformation, Movie } from '../../interfaces/imdb.interfaces';
 
 @Component({
   selector: 'app-movie-form',
-  imports: [MainHeaderComponent, RatingModule, FormsModule, StepperModule, ButtonModule, ReactiveFormsModule,
-    InplaceModule, DatePickerModule, TextareaModule, FileUploadModule, CommonModule, ToastModule, HttpClientModule,
-    CardModule, InputTextModule, AutoCompleteModule
+  imports: [
+    MainHeaderComponent, 
+    RatingModule, 
+    FormsModule, 
+    StepperModule, 
+    ButtonModule, 
+    ReactiveFormsModule,
+    InplaceModule, 
+    DatePickerModule, 
+    TextareaModule, 
+    FileUploadModule, 
+    CommonModule, 
+    ToastModule, 
+    HttpClientModule,
+    CardModule, 
+    InputTextModule, 
+    AutoCompleteModule
   ],
   templateUrl: './movie-form.component.html',
   styleUrl: './movie-form.component.scss',
@@ -31,18 +46,26 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class MovieFormComponent {
 
-  public uploadedFiles: any[] = [];                                                       // files received for the gallery
+  public uploadedFiles: any[] = [];                                                       // files received for the images
   public castSuggestions: any[] = [];                                                     // cast (actors) suggestions for autocomplete
-  public formMode: 'new' | 'edit' = 'new';                                                // form mode
+  public formMode: 'new' | 'edit' = 'new';    
+  
+  
+  public movie: Movie | undefined = undefined;
+  public id: string = '';
+  public urls: string[] = [];
+  public items: any[] = [];
+  public value: any = [];
 
   public movieForm: FormGroup = new FormGroup({
     title: new FormControl<string>('', Validators.required),
-    releaseDate: new FormControl<Date | null>(null, Validators.required),
+    release_year: new FormControl<Date | null>(null, Validators.required),
     rating: new FormControl<number>(0, Validators.required),
-    about: new FormControl<string>('', Validators.required),
-    cast: new FormControl<string[]>([], Validators.required),
+    description: new FormControl<string>('', Validators.required),
+    cast: new FormControl<ActorInformation[]>([], Validators.required),
     mainImage: new FormControl<File | null>(null, Validators.required),
-    gallery: new FormControl<File[] | null>(null)
+    images: new FormControl<File[] | null>(null),
+    newUrl: new FormControl<string>(''),
   });
   
 
@@ -50,52 +73,33 @@ export class MovieFormComponent {
     private messageService: MessageService,
     private router: Router,
     private route: ActivatedRoute,
-    private IMDbService: IMDbService
+    private imdbService: IMDbService
   ) { }
 
-  public movieId: string | null = null;
-
   public ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
+    this.route.paramMap.subscribe((params) => {      
       if (this.router.url.includes('edit')) {
         this.formMode = 'edit';
-        this.movieId = params.get('id'); 
-        if (this.movieId) {
-          this.loadMovie(this.movieId);
-        }
-      }
-    });
-  }
-
-  private loadMovie(id: string): void {
-    this.IMDbService.getMovieById(id).subscribe((movie) => {
-      if (movie) {
-        this.movieForm.patchValue({
-          title: movie.title,
-          releaseDate: new Date(movie.release_year),
-          rating: movie.rating,
-          about: movie.description,
-          cast: movie.cast.map(c => c.actor_id), // Solo los IDs de los actores
-          mainImage: movie.images.find(img => img.is_cover)?.url || null,
-          gallery: movie.images.map(img => img.url) || []
+        this.route.params.subscribe(params => {        
+          this.id = params['id'];          
+          this.getMovie();
         });
       }
     });
   }
 
-  public onGalleryUpload(event: FileUploadEvent): void {
-    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Gallery uploaded successfully' });
+  public onImagesUpload(event: FileUploadEvent): void {
+    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'images uploaded successfully' });
   
     const uploadedFiles: File[] = event.files || [];
-    const currentGallery = this.movieForm.get('gallery')?.value || [];
+    const currentImages = this.movieForm.get('images')?.value || [];
   
     if (uploadedFiles.length > 0) {
-      this.movieForm.patchValue({ gallery: [...currentGallery, ...uploadedFiles] });
+      this.movieForm.patchValue({ images: [...currentImages, ...uploadedFiles] });
     } else {
-      this.movieForm.patchValue({ gallery: null }); 
+      this.movieForm.patchValue({ images: null }); 
     }
   }
-  
 
   public onMainImageUpload(event: FileUploadEvent): void {
     this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Main image uploaded successfully' });
@@ -104,10 +108,18 @@ export class MovieFormComponent {
     this.movieForm.patchValue({ mainImage: uploadedFile.name });
   }
 
-  public search(event: AutoCompleteCompleteEvent): void {
-    this.IMDbService.getActors({ query: event.query }).subscribe((actors) => {
-      this.castSuggestions = actors;
-    });
+  public search(event: AutoCompleteCompleteEvent): void {        
+    let _items: ActorInformation[] = [];
+
+    this.imdbService.getActors({ limit: 10, name: event.query }).subscribe((response: any) => {    
+      _items = response.actors.map((actor: any) => ({
+        actor_id: actor._id,  
+        actor_name: actor.name,
+        character_name: ''
+      }));
+      this.items = _items;
+            
+    });    
   }
 
   public onSubmit(): void {
@@ -115,16 +127,19 @@ export class MovieFormComponent {
       this.messageService.add({ severity: 'error', summary: 'Fail', detail: 'Invalid, please complete all required fields.' });
       return;
     }
-  
     const movieData = this.movieForm.value;
 
-    if (!movieData.gallery || movieData.gallery.length === 0) {
-      movieData.gallery = null;
+    if (!movieData.images || movieData.images.length === 0) {
+      movieData.images = null;
     }
   
-    if (this.formMode === 'edit' && this.movieId) {
-      movieData._id = this.movieId; 
-      this.IMDbService.updateMovie(movieData).subscribe({
+    if (this.formMode === 'edit' && this.id) {
+      movieData._id = this.id; 
+      movieData.images = this.urls.map((url) => ({ url, is_cover: false }));
+      movieData.images.push({ url: movieData.mainImage, is_cover: true });
+      movieData.release_year = new Date(movieData.release_year).getFullYear();
+      
+      this.imdbService.updateMovie(movieData).subscribe({
         next: () => {
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Movie updated successfully!' });
           this.router.navigate(['/movies']);
@@ -134,8 +149,11 @@ export class MovieFormComponent {
         }
       });
     } else {
-      console.log(movieData);
-      this.IMDbService.addMovie(movieData).subscribe({
+      movieData.images = this.urls.map((url) => ({ url, is_cover: false }));
+      movieData.images.push({ url: movieData.mainImage, is_cover: true });
+      movieData.release_year = new Date(movieData.release_year).getFullYear();
+      
+      this.imdbService.addMovie(movieData).subscribe({
         next: () => {
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Movie added successfully!' });
           this.router.navigate(['/movies']);
@@ -146,6 +164,39 @@ export class MovieFormComponent {
       });
     }
   }
-  
 
+  public getMovie() {
+    this.imdbService.getMovieById(this.id).subscribe(movie => {
+
+      this.movieForm.patchValue({ title: movie?.title || '' });
+      this.movieForm.patchValue({ release_year: movie?.release_year || null });
+      this.movieForm.patchValue({ rating:  new Date(movie?.rating || 0 )});
+      this.movieForm.patchValue({ description: movie?.description || '' });
+      this.movieForm.patchValue({ cast: movie?.cast || [] });
+      this.movieForm.patchValue({ mainImage: movie?.images.find((image: any) => image.is_cover === true)?.url || null });
+      this.urls = movie?.images
+        .filter((image: any) => image.is_cover === false)
+        .map((image: any) => image.url) || [];
+      this.value = movie?.cast.map(movie => {
+        return {
+          actor_id: movie.actor_id,
+          actor_name: movie.actor_name,
+          character_name: movie.character_name
+        }
+      }) || [] ;
+      
+    });
+  }
+
+  addUrl() {
+    const newUrl = this.movieForm.get('newUrl')?.value;    
+    if (newUrl) {
+      this.urls.push(newUrl);
+      this.movieForm.patchValue({ newUrl: '' });
+    }
+  }
+
+  removeUrl(index: number) {
+    this.urls.splice(index, 1);
+  }
 }

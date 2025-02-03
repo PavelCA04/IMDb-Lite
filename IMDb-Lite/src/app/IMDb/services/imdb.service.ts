@@ -44,13 +44,11 @@ export class IMDbService {
   }
 
   addMovie(movie:Movie):Observable<Movie>{
-    return this.httpClient.post<Movie>(this.url, movie)
+    return this.httpClient.post<Movie>(`${this.url}/movie`, movie)
   }
 
   getActors(searchParams: { [key: string]: any } = {}): Observable<Actor[]> {
-    const params = new HttpParams({ fromObject: searchParams });    
-    console.log(`${this.url}/actor`);
-    
+    const params = new HttpParams({ fromObject: searchParams });        
     return this.httpClient.get<Actor[]>(`${this.url}/actor`, { params });
   }
 

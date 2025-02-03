@@ -38,23 +38,16 @@ import { CommonModule } from '@angular/common';
 export class MoviePageComponent {
 
   public imgPath = '';
+  private id = '';
+  public movie: Movie | undefined = undefined;
+  public movieRating : number = 5;
+  public selectedRating : number = 5;
+  public images: string[] = [];
 
   constructor(
     private imdbService: IMDbService,
     private route: ActivatedRoute,
   ) { }
-
-  private id = '';
-
-  // data to test the id of the url when edit
-  public movie: Movie | undefined = undefined;
-  public movieRating : number = 5;
-
-  // data to test the rating
-  public selectedRating : number = 5;
-
-  // data to test the gallery component
-  public images: string[] = [];
 
   public getMovie() {
     this.imdbService.getMovieById(this.id).subscribe(movie => {
@@ -64,9 +57,6 @@ export class MoviePageComponent {
       this.images = movie?.images
         .filter((image: any) => image.is_cover !== true)
         .map((image: any) => image.url) || [];
-      console.log('Movie', this.images);
-  
-      
     });
   }
 
@@ -74,8 +64,6 @@ export class MoviePageComponent {
     this.route.params.subscribe(params => {
       this.id = params['id'];
       this.getMovie();
-      
     });
   }
-
 }

@@ -47,6 +47,11 @@ export interface Actor {
   movies: MovieInformation[];
 }
 
+export interface ActorInformation {
+  actor_id: string;
+  character_name: string;
+}
+
 export interface MovieInformation {
   movie_id: string;
   title: string;

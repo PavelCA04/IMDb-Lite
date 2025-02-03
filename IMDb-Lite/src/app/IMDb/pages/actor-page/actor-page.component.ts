@@ -42,7 +42,6 @@ export class ActorPageComponent {
   public getActor() {
     this.imdbService.getActorById(this.id).subscribe(actor => {
       this.actor = actor;
-      console.log(this.actor);
 
       this.imgPath = actor?.images.find((image: any) => image.is_profile === true)?.url || '';  
       this.images = actor?.images

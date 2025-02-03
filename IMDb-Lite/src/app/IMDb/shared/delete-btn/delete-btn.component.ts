@@ -37,10 +37,34 @@ export class DeleteBtnComponent {
   }
 
   private deleteActor(): void {
-    this.imdbService.deleteActorById(this.id).subscribe(() => {
-      this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: 'The data was eliminated' });
+    this.imdbService.deleteActorById(this.id).subscribe({
+      next: () => {
+        this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: 'The data was eliminated' });
+        setTimeout(() => {
+          this.router.navigate(['actors']);
+        }, 2500);
+      },
+      error: () => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to delete actor.' });
+      }
     });
   }
+  
+
+  private deleteMovie(): void {
+    this.imdbService.deleteMovieById(this.id).subscribe({
+      next: () => {
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Movie updated successfully!' });
+        setTimeout(() => {
+          this.router.navigate(['movies']);
+        }, 2500);
+      },
+      error: () => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to update movie.' });
+      }
+    });
+  }
+  
 
   public confirm(): void {
     this.confirmationService.confirm({
@@ -49,11 +73,11 @@ export class DeleteBtnComponent {
       accept: () => {
         if (this.currentPage === 'actors') {
           this.deleteActor();
+        } else if (this.currentPage === 'movies') {
+          this.deleteMovie();
+        } else{
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to update.' });
         }
-        this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: 'The data was eliminated' });
-        setTimeout(() => {
-          this.router.navigate(['actors']);
-        }, 3000);
       }
     });
   }

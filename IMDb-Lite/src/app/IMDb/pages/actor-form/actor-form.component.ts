@@ -108,7 +108,7 @@ export class ActorFormComponent {
 
   public movieSuggestions: MovieInformation[] = [];
 
-  search(event: AutoCompleteCompleteEvent) {
+  public search(event: AutoCompleteCompleteEvent) {
     let _items: MovieInformation[] = [];
 
     this.imdbService.getMovies({ limit: 10, title: event.query }).subscribe((response: any) => {
