@@ -12,14 +12,12 @@ interface Movie {
   cast: Cast[];
   release_year: number;
   rating: number;
-  // Add other fields here as needed
 }
 
 interface Cast {
-  actor_id: string; // or ObjectId, depending on your setup
+  actor_id: string;
   character_name: string;
 }
-
 
 const movieController = {
     createMovie: async (req: Request, res: Response): Promise<void> => {

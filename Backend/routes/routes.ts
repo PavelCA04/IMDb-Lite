@@ -2,6 +2,7 @@ import express from 'express';
 
 import actorController from '../controllers/actor';
 import movieController from '../controllers/movie';
+import userController from '../controllers/user';
 
 const routes = express.Router();
 
@@ -16,5 +17,8 @@ routes.get('/movie', movieController.readMovies);
 routes.get('/movie/:id', movieController.readMovieByID);
 routes.patch('/movie/:id', movieController.updateMovie);
 routes.delete('/movie/:id', movieController.deleteMovie);
+
+routes.post('/signup', userController.createUser);
+routes.post('/login', userController.loginUser);
 
 export default routes;
