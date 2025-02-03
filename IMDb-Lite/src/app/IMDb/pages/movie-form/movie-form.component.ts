@@ -75,6 +75,7 @@ export class MovieFormComponent {
     release_year: new FormControl<Date | null>(null, Validators.required),
     rating: new FormControl<number>(0, Validators.required),
     description: new FormControl<string>('', Validators.required),
+    director: new FormControl<string>('', Validators.required),
     genre: new FormControl<Genre[]>([]),
     cast: new FormControl<ActorInformation[]>([], Validators.required),
     mainImage: new FormControl<File | null>(null, Validators.required),
@@ -197,7 +198,8 @@ export class MovieFormComponent {
 
     if (this.formMode === 'edit' && this.id) {
       movieData._id = this.id;
-
+      console.log('movieData', movieData);
+      
       this.imdbService.updateMovie(movieData).subscribe({
         next: () => {
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Movie updated successfully!' });
@@ -228,6 +230,7 @@ export class MovieFormComponent {
       this.movieForm.patchValue({ description: movie?.description || '' });
       this.movieForm.patchValue({ cast: movie?.cast || [] });
       this.movieForm.patchValue({ mainImage: movie?.images.find((image: any) => image.is_cover === true)?.url || null });
+      this.movieForm.patchValue({ director: movie?.director || '' });
       this.urls = movie?.images
         .filter((image: any) => image.is_cover === false)
         .map((image: any) => image.url) || [];
@@ -245,6 +248,8 @@ export class MovieFormComponent {
       }).filter(Boolean) || [];
 
       this.genreForm.patchValue({ selectedGenres });
+      console.log('Selected Genres', this.genreForm.get('selectedGenres')?.value);
+      
     });
   }
 

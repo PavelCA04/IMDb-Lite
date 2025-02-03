@@ -52,6 +52,7 @@ const movieController = {
             title: title.trim(),
             description: description.trim(),
             genre,
+            director,
             cast,
             release_year,
             rating,

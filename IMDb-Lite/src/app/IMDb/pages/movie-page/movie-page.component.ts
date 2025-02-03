@@ -43,6 +43,7 @@ export class MoviePageComponent {
   public movieRating : number = 5;
   public selectedRating : number = 5;
   public images: string[] = [];
+  public director: string = '';
 
   constructor(
     private imdbService: IMDbService,
@@ -57,8 +58,9 @@ export class MoviePageComponent {
       this.images = movie?.images
         .filter((image: any) => image.is_cover !== true)
         .map((image: any) => image.url) || [];
-    });
-  }
+      });
+      this.movie!.director = this.movie?.director ? this.movie.director.toLocaleLowerCase() : '';
+    }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
