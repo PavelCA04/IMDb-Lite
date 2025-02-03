@@ -157,7 +157,6 @@ const movieController = {
                 if (actor) {
                     c.actor_name = actor.name;
                     c.images = actor.images;
-                    
                 }
                 return c;
             })

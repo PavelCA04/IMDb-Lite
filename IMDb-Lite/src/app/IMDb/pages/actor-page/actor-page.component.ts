@@ -40,14 +40,20 @@ export class ActorPageComponent {
   ){}
 
   public getActor() {
+    console.log(this.id);
     this.imdbService.getActorById(this.id).subscribe(actor => {
       this.actor = actor;
+      console.log(actor);
+      
 
       this.imgPath = actor?.images.find((image: any) => image.is_profile === true)?.url || '';  
       this.images = actor?.images
         .filter((image: any) => image.is_profile === false)
         .map((image: any) => image.url) || [];
       });
+      
+      console.log(this.actor);
+      
   }
 
   ngOnInit() {

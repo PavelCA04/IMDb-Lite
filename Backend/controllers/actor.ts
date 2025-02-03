@@ -20,7 +20,7 @@ interface Actor {
   birth_date: string;
   biography: string;
   images: { url: string; is_profile: boolean }[];
-  movies: { movie_id: ObjectId; character_name: string }[];
+  movies: { movie_id: ObjectId; character_name: string, title?: string }[];
 }
 
 const actorController = {
@@ -43,13 +43,8 @@ const actorController = {
             return;
           }
       
-          if (!Array.isArray(images) || images.some((img) => typeof img !== 'string')) {
+          if (!Array.isArray(images)) {
             res.status(400).json({ message: 'Invalid images. Provide an array of strings.' });
-            return;
-          }
-      
-          if (!Array.isArray(movies) || movies.some((movie) => typeof movie !== 'string')) {
-            res.status(400).json({ message: 'Invalid movies. Provide an array of strings.' });
             return;
           }
       
@@ -130,53 +125,50 @@ const actorController = {
           const actorCollection = db.collection<Actor>('Actor');
           const movieCollection = db.collection<Movie>('Movie');
   
-          const actorId = new ObjectId(req.params.id);
+          const actorId = req.params.id;
           const actor = await actorCollection.findOne({ _id: new ObjectId(actorId) });
   
           if (!actor) {
               res.status(404).json({ message: 'Actor not found' });
               return;
           }
-          actor.movies.forEach(async (movie) => {
-            movie.movie_id = new ObjectId(movie.movie_id); 
-          });
-
-          const movies: Movie[] = await movieCollection.find({ "cast.actor_id": new ObjectId(actorId) }).toArray();
-          
-          actor.movies = movies.map((movie: Movie) => {
-              const castEntry = movie.cast.find((c: { actor_id: ObjectId; character_name: string }) => c.actor_id.equals(actorId));
-              
-              return {
-                  movie_id: movie._id,
-                  title: movie.title,
-                  images: movie.images,
-                  character_name: castEntry ? castEntry.character_name : 'Unknown'
-              };
-          });
   
-          res.status(200).json(actor);
+          actor.movies = await Promise.all(
+              actor.movies.map(async (movie) => {
+                  const movieId = movie.movie_id;
+                  const movieData = await movieCollection.findOne({ _id: new ObjectId( movieId) });
+  
+                  return {
+                      ...movie,
+                      title: movieData?.title || 'Unknown Title',
+                      images: movieData?.images
+                  };
+              })
+          );
+            res.status(200).json(actor);
       } catch (error) {
           console.error('Error reading actor by ID:', error);
           res.status(500).json({ message: 'Internal Server Error' });
       }
-  },
+  }
+  ,
   
   
     updateActor: async (req: Request, res: Response): Promise<void> => {
         try {
           const db = await connectToDatabase();
           const collection = db.collection('Actor');
-      
+          
           const actorId = new ObjectId(req.params.id);
           const updateFields = req.body;
       
           const actorToUpdate = await collection.findOne({ _id: actorId });
-      
+          
           if (!actorToUpdate) {
             res.status(404).json({ message: 'Actor not found' });
             return;
           }
-      
+
           const result = await collection.updateOne(
             { _id: actorId },
             { $set: updateFields }

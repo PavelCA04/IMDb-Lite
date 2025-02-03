@@ -153,6 +153,9 @@ export class ActorFormComponent {
         movie_id: movie.movie_id
       }));
     }
+    console.log('Params', this.params);
+    console.log('Value', this.value);
+    
     this.imdbService.addActor(this.params).subscribe(actor => {
       if (actor) {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Actor submitted successfully!' });
@@ -163,10 +166,11 @@ export class ActorFormComponent {
   }
 
   public updateActor(): void {
+    console.log('Params', this.params);
     this.imdbService.updateActor(this.id, this.params).subscribe(actor => {
       this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Actor submitted successfully!' });
     });
-    this.router.navigate(['/actors', this.id]);
+    //this.router.navigate(['/actors', this.id]);
   }
 
   public getActor() {
