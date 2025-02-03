@@ -25,8 +25,7 @@ const movieController = {
     createMovie: async (req: Request, res: Response): Promise<void> => {
         try {
           const { title, description, genre, director, cast, release_year, rating, images } = req.body;
-      
-          if (!title || typeof title !== 'string' || title.trim().length < 3) {
+          if (!title || title.trim().length < 3) {
             res.status(400).json({ message: 'Invalid title. It must be a non-empty string with at least 3 characters.' });
             return;
           }
@@ -36,22 +35,7 @@ const movieController = {
             return;
           }
       
-          if (!Array.isArray(genre) || genre.some((g) => typeof g !== 'string')) {
-            res.status(400).json({ message: 'Invalid genre. Provide an array of strings.' });
-            return;
-          }
-      
-          if (!director || typeof director !== 'string' || director.trim().length < 3) {
-            res.status(400).json({ message: 'Invalid director. It must be a non-empty string with at least 3 characters.' });
-            return;
-          }
-      
-          if (!Array.isArray(cast) || cast.some((c) => typeof c !== 'object' || !c.name)) {
-            res.status(400).json({ message: 'Invalid cast. Each cast member must be an object with a `name` field.' });
-            return;
-          }
-      
-          if (!release_year || typeof release_year !== 'number' || release_year < 1900 || release_year > new Date().getFullYear() + 1) {
+          if (!release_year) {
             res.status(400).json({ message: 'Invalid release year. Provide a valid year.' });
             return;
           }
@@ -70,7 +54,6 @@ const movieController = {
             title: title.trim(),
             description: description.trim(),
             genre,
-            director: director.trim(),
             cast,
             release_year,
             rating,
@@ -169,7 +152,8 @@ const movieController = {
           movie.cast = await Promise.all(
             movie.cast.map(async (c: any) => {
                 const actorId = new ObjectId(c.actor_id);
-                const actor = await actorCollection.findOne({ _id: actorId });
+                const actor = await actorCollection.findOne({ _id: new ObjectId(actorId) });
+                
                 if (actor) {
                     c.actor_name = actor.name;
                     c.images = actor.images;
@@ -189,12 +173,12 @@ const movieController = {
       updateMovie: async (req: Request, res: Response): Promise<void> => {
         try {
           const db = await connectToDatabase();
-          const collection = db.collection('Movie');
+          const movieCollection = db.collection("Movie");
+          const actorCollection = db.collection("Actor");
       
           const { id } = req.params;
-      
           const { title, description, genre, director, cast, release_year, rating, images } = req.body;
-    
+      
           const updateData: any = {};
       
           if (title) updateData.title = title;
@@ -206,23 +190,35 @@ const movieController = {
           if (rating) updateData.rating = rating;
           if (images) updateData.images = images;
       
-          const result = await collection.updateOne(
-            { _id: new ObjectId(id) }, 
-            { $set: updateData } 
+          const result = await movieCollection.updateOne(
+            { _id: new ObjectId(id) },
+            { $set: updateData }
           );
       
           if (result.matchedCount === 0) {
-            res.status(404).json({ message: 'Movie not found' });
+            res.status(404).json({ message: "Movie not found" });
             return;
           }
       
-          const updatedMovie = await collection.findOne({ _id: new ObjectId(id) });
-          res.status(200).json({ message: 'Movie updated successfully', movie: updatedMovie });
+          if (cast) {
+            for (const actor of cast) {
+              const actorId = new ObjectId(actor.actor_id);
+              
+              await actorCollection.updateOne(
+                { _id: actorId },
+                { $addToSet: { movies: { movie_id: id } } }
+              );
+            }
+          }
+      
+          const updatedMovie = await movieCollection.findOne({ _id: new ObjectId(id) });
+          res.status(200).json({ message: "Movie updated successfully", movie: updatedMovie });
+      
         } catch (error) {
-          console.error('Error updating movie:', error);
-          res.status(500).json({ message: 'Internal Server Error' });
+          console.error("Error updating movie:", error);
+          res.status(500).json({ message: "Internal Server Error" });
         }
-    },
+      },
     deleteMovie: async (req: Request, res: Response): Promise<void> => {
         try {
           const db = await connectToDatabase();

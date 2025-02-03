@@ -131,19 +131,19 @@ const actorController = {
           const movieCollection = db.collection<Movie>('Movie');
   
           const actorId = new ObjectId(req.params.id);
-          const actor = await actorCollection.findOne({ _id: actorId });
+          const actor = await actorCollection.findOne({ _id: new ObjectId(actorId) });
   
           if (!actor) {
               res.status(404).json({ message: 'Actor not found' });
               return;
           }
-  
-          // Fetch all movies where this actor appears in the cast
-          const movies: Movie[] = await movieCollection.find({ "cast.actor_id": actorId }).toArray();
-  
-          // Enrich movies with character_name from the cast
+          actor.movies.forEach(async (movie) => {
+            movie.movie_id = new ObjectId(movie.movie_id); 
+          });
+
+          const movies: Movie[] = await movieCollection.find({ "cast.actor_id": new ObjectId(actorId) }).toArray();
+          
           actor.movies = movies.map((movie: Movie) => {
-              // Find the character_name for this actor in the cast array
               const castEntry = movie.cast.find((c: { actor_id: ObjectId; character_name: string }) => c.actor_id.equals(actorId));
               
               return {
